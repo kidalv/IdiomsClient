@@ -28,6 +28,7 @@ dependencies:
   material_design_icons_flutter: ^4.0.5855
   outline_material_icons: ^0.1.1
   flag: ^3.2.0
+  flutter_speed_dial: ^1.2.5
 
   flutter:
     sdk: flutter

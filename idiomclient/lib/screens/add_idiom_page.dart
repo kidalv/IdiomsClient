@@ -34,7 +34,7 @@ class AddIdiomPage extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text("Language: "),
                 ),
-                FlagRow()
+                FlagRow(code: "LV")
               ],
             ),
             Align(

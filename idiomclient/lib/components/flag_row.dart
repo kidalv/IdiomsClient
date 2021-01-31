@@ -4,19 +4,23 @@ import 'package:flutter/material.dart';
 class FlagRow extends StatelessWidget {
   final String code;
   final double length;
-  const FlagRow({Key key, this.code, this.length = 40}) : super(key: key);
+  final bool flagOnly;
+  const FlagRow({Key key, this.code, this.length = 40, this.flagOnly = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          width: MediaQuery.of(context).size.width * 0.06,
-          child: Text(
-            code,
-            style: TextStyle(color: Colors.grey[400], fontWeight: FontWeight.w500, fontSize: 18),
-          ),
-        ),
+        !flagOnly
+            ? Container(
+                width: MediaQuery.of(context).size.width * 0.06,
+                child: Text(
+                  code,
+                  style:
+                      TextStyle(color: Colors.grey[400], fontWeight: FontWeight.w500, fontSize: 18),
+                ),
+              )
+            : Container(),
         Container(
           margin: EdgeInsets.only(left: 3),
           width: length,

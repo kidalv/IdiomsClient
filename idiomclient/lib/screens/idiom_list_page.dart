@@ -46,7 +46,7 @@ class IdiomListPage extends StatelessWidget {
                   IconButton(
                       padding: EdgeInsets.zero,
                       icon: Icon(
-                        Icons.arrow_drop_up,
+                        Icons.arrow_drop_up_rounded,
                         color: Colors.grey[400],
                         size: 45,
                       ),
@@ -67,7 +67,15 @@ class IdiomListPage extends StatelessWidget {
             Text("Languages: "),
             Container(
               margin: EdgeInsets.all(10),
-              child: DropdownSearch())
+              child: DropdownSearch(
+                list: {
+                  "Latvian":"LV",
+                  "Russian":"RU",
+                  "English":"GB",
+                  "Spanish":"ES",
+                  "Lithuanian":"LT"
+                },
+              ))
           ],
         ),
       ),
@@ -104,7 +112,7 @@ class IdiomListPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.arrow_drop_up_outlined,
+                        Icons.arrow_drop_up_rounded,
                         size: 60,
                         color: Colors.grey[400],
                       ),
@@ -192,8 +200,7 @@ class IdiomListPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      Icons.arrow_drop_up_outlined,
-                      //MdiIcons.arrowUpBoldOutline,
+                      Icons.arrow_drop_up_rounded,
                       size: 60,
                       color: Colors.grey[400],
                     ),
