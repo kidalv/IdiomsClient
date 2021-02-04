@@ -1,6 +1,7 @@
 import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:idiomclient/components/flag_row.dart';
+import 'package:idiomclient/components/my_button.dart';
 import 'package:idiomclient/components/my_app_bar.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
@@ -34,35 +35,42 @@ class IdiomDetailsPage extends StatelessWidget {
         children: [
           SpeedDialChild(
             child: Icon(Icons.favorite_border_outlined, size: 35),
-            backgroundColor: theme.backgroundColor,
-            label: 'Favorite',
-            labelBackgroundColor: theme.backgroundColor,
-            labelStyle: TextStyle(fontSize: 18.0),
+            backgroundColor: Colors.pink,
+            foregroundColor: Colors.white,
+            labelWidget: SpeedDialLabel(
+              text: "Favorite",
+              color: Colors.pink,
+            ),
           ),
           SpeedDialChild(
             child: Icon(Icons.arrow_drop_down_rounded, size: 40),
-            backgroundColor: theme.backgroundColor,
-            label: 'Devote',
-            elevation: 0,
-            labelBackgroundColor: theme.backgroundColor,
-            labelStyle: TextStyle(fontSize: 18.0),
+            backgroundColor: Colors.blue[400],
+            foregroundColor: Colors.white,
+            labelWidget: SpeedDialLabel(
+              text: "Devote",
+              color: Colors.blue[400],
+            ),
           ),
           SpeedDialChild(
             child: Icon(
               Icons.arrow_drop_up_rounded,
               size: 40,
             ),
-            backgroundColor: theme.backgroundColor,
-            label: 'Upvote',
-            labelBackgroundColor: theme.backgroundColor,
-            labelStyle: TextStyle(fontSize: 18.0),
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.white,
+            labelWidget: SpeedDialLabel(
+              text: "Upvote",
+              color: Colors.green,
+            ),
           ),
           SpeedDialChild(
             child: Icon(Icons.error_outline, size: 35),
-            backgroundColor: theme.backgroundColor,
-            label: 'Report',
-            labelBackgroundColor: theme.backgroundColor,
-            labelStyle: TextStyle(fontSize: 18.0, color: Colors.grey[100]),
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            labelWidget: SpeedDialLabel(
+              text: "Report",
+              color: Colors.red,
+            ),
           ),
         ],
       ),
@@ -159,7 +167,7 @@ class IdiomDetailsPage extends StatelessWidget {
           Center(
             child: Container(
               padding: EdgeInsets.only(top: 10),
-              width: 98,
+              width: 105,
               child: Row(
                 children: [
                   Icon(Icons.arrow_back_ios, color: Colors.grey[400]),
@@ -182,17 +190,17 @@ class IdiomDetailsPage extends StatelessWidget {
                   ),
                   Container(
                     margin: EdgeInsets.all(5),
-                    width: 15,
-                    height: 15,
+                    width: 20,
+                    height: 20,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(20),
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(20),
                       child: Flag(
                         "RU",
-                        width: 15,
-                        height: 15,
+                        width: 20,
+                        height: 20,
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -205,8 +213,15 @@ class IdiomDetailsPage extends StatelessWidget {
           Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: Text("Nozime: "),
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Text(
+                  "Meaning: ",
+                  style: TextStyle(
+                      fontFamily: "Nexa",
+                      color: Colors.grey[700],
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24),
+                ),
               )),
           Container(
             height: height * 0.2,
@@ -220,8 +235,15 @@ class IdiomDetailsPage extends StatelessWidget {
           Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: Text("Piemers: "),
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Text(
+                  "Example: ",
+                  style: TextStyle(
+                      fontFamily: "Nexa",
+                      color: Colors.grey[700],
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24),
+                ),
               )),
           Container(
             padding: EdgeInsets.all(10),
@@ -236,12 +258,73 @@ class IdiomDetailsPage extends StatelessWidget {
           Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: Text("Komentari: "),
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Text(
+                  "Comments: ",
+                  style: TextStyle(
+                      fontFamily: "Nexa",
+                      color: Colors.grey[700],
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24),
+                ),
               )),
+          Center(
+            child: Container(
+              height: height * 0.2,
+              width: width - 60,
+              margin: EdgeInsets.only(top: 20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey.withOpacity(0.1), width: 1.0),
+              ),
+            ),
+          ),
+          Align(
+              alignment: Alignment.centerRight,
+              child: Container(
+                margin: const EdgeInsets.only(top: 20, right: 30),
+                child: MyButton(
+                  text: "Comment",
+                  onPress: () {},
+                ),
+              )),
+          Container(
+            height: height * 0.2,
+            margin: EdgeInsets.only(left: 10, right: 10),
+            decoration: BoxDecoration(
+                border:
+                    Border(bottom: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0))),
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Shut up motherfucker",
+                  style: theme.textTheme.headline4,
+                )),
+          )
         ],
       ),
     );
+  }
+}
+
+class SpeedDialLabel extends StatelessWidget {
+  final Color color;
+  final String text;
+  const SpeedDialLabel({Key key, this.color, this.text}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: color,
+        ),
+        padding: const EdgeInsets.all(8.0),
+        margin: const EdgeInsets.only(right: 10),
+        child: Text(
+          text,
+          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+        ));
   }
 }
 

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:idiomclient/components/flag_row.dart';
 import 'package:idiomclient/components/dropdown_search.dart';
-import 'package:idiomclient/screens/idiom_details_page.dart';
+import 'package:idiomclient/components/idiom_list_tile.dart';
+import 'package:idiomclient/protos/idiom.pb.dart';
+import 'package:idiomclient/protos/models.pb.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:idiomclient/components/my_app_bar.dart';
@@ -34,9 +36,11 @@ class IdiomListPage extends StatelessWidget {
             Container(
               margin: EdgeInsets.all(10.0),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.grey.withOpacity(0.1), width: 1.0),
-              ),
+                  //borderRadius: BorderRadius.circular(10),
+                  border:
+                      Border(bottom: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0))
+                  //border: Border.all(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                  ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -66,16 +70,16 @@ class IdiomListPage extends StatelessWidget {
             ),
             Text("Languages: "),
             Container(
-              margin: EdgeInsets.all(10),
-              child: DropdownSearch(
-                list: {
-                  "Latvian":"LV",
-                  "Russian":"RU",
-                  "English":"GB",
-                  "Spanish":"ES",
-                  "Lithuanian":"LT"
-                },
-              ))
+                margin: EdgeInsets.all(10),
+                child: DropdownSearch(
+                  list: {
+                    "Latvian": "LV",
+                    "Russian": "RU",
+                    "English": "GB",
+                    "Spanish": "ES",
+                    "Lithuanian": "LT"
+                  },
+                ))
           ],
         ),
       ),
@@ -84,7 +88,7 @@ class IdiomListPage extends StatelessWidget {
         iconButton: Builder(
           builder: (context) => IconButton(
               icon: Icon(
-                Icons.filter_alt_outlined,
+                MdiIcons.filterOutline,
                 size: 35,
                 color: Colors.grey[400],
               ),
@@ -92,188 +96,41 @@ class IdiomListPage extends StatelessWidget {
               onPressed: () => Scaffold.of(context).openEndDrawer()),
         ),
       ),
-      body: Column(
+      body: ListView(
+        physics: BouncingScrollPhysics(),
         children: [
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => IdiomDetailsPage()),
-              );
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border(bottom: BorderSide(color: Colors.grey.withOpacity(0.1)))),
-              margin: EdgeInsets.only(left: 10, right: 10),
-              height: height * 0.25,
-              child: Row(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.arrow_drop_up_rounded,
-                        size: 60,
-                        color: Colors.grey[400],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 50.0),
-                        child: Text("15",
-                            style: TextStyle(
-                                color: Colors.grey[400],
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500)),
-                      )
-                    ],
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(right: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          height: height * 0.185,
-                          child: Center(
-                            child: Text(
-                              "Saņemt pa purnu",
-                              style: Theme.of(context).textTheme.headline4,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(bottom: 5.0),
-                          width: width - 20 - 70,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 5.0),
-                                child: Icon(
-                                  OMIcons.favoriteBorder,
-                                  size: 35,
-                                  color: Colors.grey[400],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 15.0),
-                                child: Text("10",
-                                    style: TextStyle(
-                                        color: Colors.grey[400],
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w500)),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 5.0),
-                                child: Icon(
-                                  Icons.translate_outlined,
-                                  size: 30,
-                                  color: Colors.grey[400],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 15.0),
-                                child: Text("2",
-                                    style: TextStyle(
-                                        color: Colors.grey[400],
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w500)),
-                              ),
-                              FlagRow(code: 'LV',)
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          IdiomListTile(
+            idiom: IdiomReply()
+              ..text = "Saņemt pa purnu"
+              ..upvoteCount = 16
+              ..favoritesCount = 12
+              ..language = (LanguageReply()..locale = "LV")
+              ..isFavorite = true,
           ),
-          Container(
-            decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.grey.withOpacity(0.1)))),
-            margin: EdgeInsets.only(left: 10, right: 10),
-            height: height * 0.25,
-            child: Row(
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.arrow_drop_up_rounded,
-                      size: 60,
-                      color: Colors.grey[400],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 50.0),
-                      child: Text("12",
-                          style: TextStyle(
-                              color: Colors.grey[400], fontSize: 18, fontWeight: FontWeight.w500)),
-                    )
-                  ],
-                ),
-                Container(
-                  padding: EdgeInsets.only(right: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        height: height * 0.185,
-                        child: Center(
-                          child: Text(
-                            "Nu jobanijs v rots",
-                            style: Theme.of(context).textTheme.headline4,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(bottom: 5),
-                        width: width - 20 - 70,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 5.0),
-                              child: Icon(
-                                OMIcons.favoriteBorder,
-                                size: 30,
-                                color: Colors.grey[400],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 15.0),
-                              child: Text("9",
-                                  style: TextStyle(
-                                      color: Colors.grey[400],
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500)),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 5.0),
-                              child: Icon(
-                                Icons.translate_outlined,
-                                size: 30,
-                                color: Colors.grey[400],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 15.0),
-                              child: Text("2",
-                                  style: TextStyle(
-                                      color: Colors.grey[400],
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500)),
-                            ),
-                            FlagRow(code: 'RU')
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          )
+          IdiomListTile(
+            idiom: IdiomReply()
+              ..text = "Saņemt pa purnu"
+              ..upvoteCount = 16
+              ..favoritesCount = 12
+              ..language = (LanguageReply()..locale = "LV")
+              ..isFavorite = true,
+          ),
+          IdiomListTile(
+            idiom: IdiomReply()
+              ..text = "Trying to be a King, but the Ace is back"
+              ..upvoteCount = 35
+              ..favoritesCount = 12
+              ..language = (LanguageReply()..locale = "GB")
+              ..isFavorite = false,
+          ),
+          IdiomListTile(
+            idiom: IdiomReply()
+              ..text = "Слишком много сук наравят сойти за брата, хотя судьба и так на подлости богата"
+              ..upvoteCount = 25
+              ..favoritesCount = 23
+              ..language = (LanguageReply()..locale = "RU")
+              ..isFavorite = true,
+          ),
         ],
       ),
     );

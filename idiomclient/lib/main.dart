@@ -29,7 +29,8 @@ class MyApp extends StatelessWidget {
         // Define the default brightness and colors.
         brightness: Brightness.dark,
         primaryColor: Colors.lightBlue[800],
-        accentColor: Colors.cyan[600],
+        accentColor: Colors.lightBlue[300],
+        buttonColor: Colors.grey[400],
 
         // Define the default font family.
         fontFamily: 'Georgia',
@@ -38,8 +39,10 @@ class MyApp extends StatelessWidget {
         // text styling for headlines, titles, bodies of text, and more.
         textTheme: TextTheme(
           headline1: TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold),
+          headline4: TextStyle(fontSize: 28.0, fontFamily: 'Open Sans'),
           headline6: TextStyle(fontSize: 24.0, fontStyle: FontStyle.italic),
           bodyText2: TextStyle(fontSize: 18.0, fontFamily: 'Hind'),
+          headline5: TextStyle(fontFamily: "Nexa", color: Colors.grey[700], fontWeight: FontWeight.bold, fontSize: 24)
         ),
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),

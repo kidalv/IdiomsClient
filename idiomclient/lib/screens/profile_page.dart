@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:idiomclient/components/my_app_bar.dart';
+import 'package:idiomclient/screens/settings_page.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key key}) : super(key: key);
@@ -11,7 +12,12 @@ class ProfilePage extends StatelessWidget {
       appBar: MyAppBar(
         text: "Profile",
         icon: OMIcons.settings,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SettingsPage()),
+          );
+        },
       ),
       body: Container(
         width: double.infinity,

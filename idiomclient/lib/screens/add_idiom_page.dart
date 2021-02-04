@@ -8,6 +8,7 @@ class AddIdiomPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Scaffold(
       appBar: MyAppBar(
         text: "New Idiom",
@@ -22,31 +23,48 @@ class AddIdiomPage extends StatelessWidget {
           children: [
             Align(
               alignment: Alignment.centerLeft,
-              child: Text("Idiom"),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 30.0, bottom: 10, left: 10),
+                child: Text("Idiom", style: theme.textTheme.headline5,)),
             ),
-            MyTextField(
-              text: "Idiom Text"
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: MyTextField(
+                text: "Idiom Text"
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text("Language: "),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10.0, bottom: 20, left: 10),
+                    child: Text("Language: "),
+                  ),
                 ),
                 FlagRow(code: "LV")
               ],
             ),
             Align(
               alignment: Alignment.centerLeft,
-              child: Text("Meaning"),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text("Meaning", style: theme.textTheme.headline5,),
+              ),
             ),
-            MyTextField(
-              text: "Meaning"
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: MyTextField(
+                text: "Meaning"
+              ),
             ),
             Align(
               alignment: Alignment.centerLeft,
-              child: Text("Example"),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text("Example", style: theme.textTheme.headline5,),
+              ),
             ),
             MyTextField(
               text: "Example"

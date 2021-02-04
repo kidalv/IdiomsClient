@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:idiomclient/components/my_app_bar.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class FavoritesPage extends StatelessWidget {
   const FavoritesPage({Key key}) : super(key: key);
@@ -9,7 +10,7 @@ class FavoritesPage extends StatelessWidget {
     return Scaffold(
       appBar: MyAppBar(
         text: "Favorites",
-        icon: Icons.filter_alt_outlined,
+        icon: MdiIcons.filterOutline,
         onPressed: () {},
       ),
       body: Container(
