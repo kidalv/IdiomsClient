@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: Protos/action.proto
+//  source: action.proto
 //
 // @dart = 2.7
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
@@ -8,6 +8,8 @@
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
+
+import 'models.pb.dart' as $1;
 
 class AddUpvoteRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddUpvoteRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
@@ -563,6 +565,35 @@ class RequestTranslationRequest extends $pb.GeneratedMessage {
   void clearLanguageId() => clearField(2);
 }
 
+class GetAllLanguagesRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetAllLanguagesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  GetAllLanguagesRequest._() : super();
+  factory GetAllLanguagesRequest() => create();
+  factory GetAllLanguagesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetAllLanguagesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetAllLanguagesRequest clone() => GetAllLanguagesRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetAllLanguagesRequest copyWith(void Function(GetAllLanguagesRequest) updates) => super.copyWith((message) => updates(message as GetAllLanguagesRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GetAllLanguagesRequest create() => GetAllLanguagesRequest._();
+  GetAllLanguagesRequest createEmptyInstance() => create();
+  static $pb.PbList<GetAllLanguagesRequest> createRepeated() => $pb.PbList<GetAllLanguagesRequest>();
+  @$core.pragma('dart2js:noInline')
+  static GetAllLanguagesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetAllLanguagesRequest>(create);
+  static GetAllLanguagesRequest _defaultInstance;
+}
+
 class DeleteReply extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteReply', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'result')
@@ -1011,5 +1042,46 @@ class RequestTranslationReply extends $pb.GeneratedMessage {
   $core.bool hasUserId() => $_has(3);
   @$pb.TagNumber(4)
   void clearUserId() => clearField(4);
+}
+
+class GetAllLanguagesResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetAllLanguagesResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
+    ..pc<$1.LanguageReply>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'languages', $pb.PbFieldType.PM, subBuilder: $1.LanguageReply.create)
+    ..hasRequiredFields = false
+  ;
+
+  GetAllLanguagesResponse._() : super();
+  factory GetAllLanguagesResponse({
+    $core.Iterable<$1.LanguageReply> languages,
+  }) {
+    final _result = create();
+    if (languages != null) {
+      _result.languages.addAll(languages);
+    }
+    return _result;
+  }
+  factory GetAllLanguagesResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetAllLanguagesResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetAllLanguagesResponse clone() => GetAllLanguagesResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetAllLanguagesResponse copyWith(void Function(GetAllLanguagesResponse) updates) => super.copyWith((message) => updates(message as GetAllLanguagesResponse)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GetAllLanguagesResponse create() => GetAllLanguagesResponse._();
+  GetAllLanguagesResponse createEmptyInstance() => create();
+  static $pb.PbList<GetAllLanguagesResponse> createRepeated() => $pb.PbList<GetAllLanguagesResponse>();
+  @$core.pragma('dart2js:noInline')
+  static GetAllLanguagesResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetAllLanguagesResponse>(create);
+  static GetAllLanguagesResponse _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$1.LanguageReply> get languages => $_getList(0);
 }
 

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:idiomclient/components/flag_row.dart';
+import 'package:idiomclient/providers/idiom_info_provider.dart';
 import 'package:idiomclient/protos/idiom.pb.dart';
-import 'package:idiomclient/screens/idiom_details_page.dart';
+import 'package:idiomclient/screens/idiom_info_page.dart';
 
 class IdiomListTile extends StatelessWidget {
   final IdiomReply idiom;
@@ -16,7 +17,7 @@ class IdiomListTile extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => IdiomDetailsPage()),
+          MaterialPageRoute(builder: (context) => IdiomInfoPage(provider: IdiomInfoProvider(idiom.idiomId),)),
         );
       },
       child: Container(

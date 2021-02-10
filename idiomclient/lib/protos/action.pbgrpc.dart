@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: Protos/action.proto
+//  source: action.proto
 //
 // @dart = 2.7
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
@@ -66,6 +66,12 @@ class ActionClient extends $grpc.Client {
       ($0.RequestTranslationRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) =>
           $0.RequestTranslationReply.fromBuffer(value));
+  static final _$getAllLanguages =
+      $grpc.ClientMethod<$0.GetAllLanguagesRequest, $0.GetAllLanguagesResponse>(
+          '/idiom.Action/GetAllLanguages',
+          ($0.GetAllLanguagesRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.GetAllLanguagesResponse.fromBuffer(value));
 
   ActionClient($grpc.ClientChannel channel,
       {$grpc.CallOptions options,
@@ -127,6 +133,12 @@ class ActionClient extends $grpc.Client {
       $0.RequestTranslationRequest request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$requestTranslation, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.GetAllLanguagesResponse> getAllLanguages(
+      $0.GetAllLanguagesRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$getAllLanguages, request, options: options);
   }
 }
 
@@ -212,6 +224,15 @@ abstract class ActionServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $0.RequestTranslationRequest.fromBuffer(value),
         ($0.RequestTranslationReply value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.GetAllLanguagesRequest,
+            $0.GetAllLanguagesResponse>(
+        'GetAllLanguages',
+        getAllLanguages_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.GetAllLanguagesRequest.fromBuffer(value),
+        ($0.GetAllLanguagesResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.UpvoteReply> addUpvote_Pre($grpc.ServiceCall call,
@@ -265,6 +286,12 @@ abstract class ActionServiceBase extends $grpc.Service {
     return requestTranslation(call, await request);
   }
 
+  $async.Future<$0.GetAllLanguagesResponse> getAllLanguages_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.GetAllLanguagesRequest> request) async {
+    return getAllLanguages(call, await request);
+  }
+
   $async.Future<$0.UpvoteReply> addUpvote(
       $grpc.ServiceCall call, $0.AddUpvoteRequest request);
   $async.Future<$0.UpvoteReply> changeUpvote(
@@ -285,4 +312,6 @@ abstract class ActionServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.DeleteCommentRequest request);
   $async.Future<$0.RequestTranslationReply> requestTranslation(
       $grpc.ServiceCall call, $0.RequestTranslationRequest request);
+  $async.Future<$0.GetAllLanguagesResponse> getAllLanguages(
+      $grpc.ServiceCall call, $0.GetAllLanguagesRequest request);
 }

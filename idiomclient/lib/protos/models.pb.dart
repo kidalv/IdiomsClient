@@ -9,7 +9,7 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../google/protobuf/timestamp.pb.dart' as $0;
+import 'timestamp.pb.dart' as $0;
 
 class UserReply extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UserReply', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
@@ -77,6 +77,8 @@ class LanguageReply extends $pb.GeneratedMessage {
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'languageId', $pb.PbFieldType.O3)
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'locale')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'region')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nativeName')
     ..hasRequiredFields = false
   ;
 
@@ -85,6 +87,8 @@ class LanguageReply extends $pb.GeneratedMessage {
     $core.int languageId,
     $core.String name,
     $core.String locale,
+    $core.String region,
+    $core.String nativeName,
   }) {
     final _result = create();
     if (languageId != null) {
@@ -95,6 +99,12 @@ class LanguageReply extends $pb.GeneratedMessage {
     }
     if (locale != null) {
       _result.locale = locale;
+    }
+    if (region != null) {
+      _result.region = region;
+    }
+    if (nativeName != null) {
+      _result.nativeName = nativeName;
     }
     return _result;
   }
@@ -145,6 +155,24 @@ class LanguageReply extends $pb.GeneratedMessage {
   $core.bool hasLocale() => $_has(2);
   @$pb.TagNumber(3)
   void clearLocale() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get region => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set region($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasRegion() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearRegion() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get nativeName => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set nativeName($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasNativeName() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearNativeName() => clearField(5);
 }
 
 class CommentReply extends $pb.GeneratedMessage {

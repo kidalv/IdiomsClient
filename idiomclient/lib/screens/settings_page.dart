@@ -27,6 +27,15 @@ class SettingsPage extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 10.0, left: 20.0, top: 20.0),
             child: Text("System Language", style: theme.textTheme.headline5),
           ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10.0, left: 20.0, top: 20.0),
+            child: Row(
+              children: [
+                Text("Display Flags", style: theme.textTheme.headline5),
+                Switch(value: true, activeTrackColor: Colors.grey[700], inactiveTrackColor: Colors.grey[700], activeColor: theme.accentColor, onChanged: (val) {})
+              ],
+            ),
+          ),
           MyButton(
             text: "Change Password",
             onPress: () {},

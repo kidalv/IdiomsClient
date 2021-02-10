@@ -24,11 +24,11 @@ dependencies:
   grpc: ^2.8.0
   protobuf: ^1.1.0
   async: ^2.4.2
-  flutter_glow: ^0.1.2
   material_design_icons_flutter: ^4.0.5855
   outline_material_icons: ^0.1.1
   flag: ^3.2.0
   flutter_speed_dial: ^1.2.5
+  provider: ^4.3.3
 
   flutter:
     sdk: flutter

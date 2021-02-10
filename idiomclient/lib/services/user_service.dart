@@ -2,16 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:grpc/grpc.dart';
 import 'package:idiomclient/protos/user.pbgrpc.dart';
 
+import 'grpc_client_singleton.dart';
+
 class UserService {
   static UserClient client;
 
   UserService() {
-    var channel = ClientChannel(
-      "10.0.2.2",
-      port: 5000,
-      options: ChannelOptions(credentials: ChannelCredentials.insecure())
-    );
-    client = UserClient(channel);
+    client = UserClient(GrpcClientSingleton().client);
   }
 
   Future<UserProfileReply> getUsersInfo() async{
