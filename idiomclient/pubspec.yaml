@@ -29,6 +29,8 @@ dependencies:
   flag: ^3.2.0
   flutter_speed_dial: ^1.2.5
   provider: ^4.3.3
+  simple_tooltip: ^0.1.16
+  shared_preferences: ^0.5.12+4
 
   flutter:
     sdk: flutter

@@ -4,17 +4,41 @@ import 'package:idiomclient/protos/idiom.pbgrpc.dart';
 import 'package:idiomclient/services/grpc_client_singleton.dart';
 
 class IdiomService {
-  static IdiomClient client;
+  static IdiomClient _client;
 
   IdiomService() {
-    client = IdiomClient(GrpcClientSingleton().client);
+    _client = IdiomClient(GrpcClientSingleton().client);
   }
 
-  Future<List<IdiomReply>> getIdiomsList() async{
-    return (await client.getIdiomList(GetIdiomListRequest()..count = 50)).idioms;
+  Future<List<IdiomReply>> getIdiomsList() async {
+    return (await _client.getIdiomList(GetIdiomListRequest()..count = 50)).idioms;
   }
 
-  Future<GetIdiomInfoReply> getIdiomsInfo(int idiomId) async{
-    return await client.getIdiomInfo(GetIdiomInfoRequest()..idiomId = idiomId);
+  Future<GetIdiomInfoReply> getIdiomsInfo(int idiomId) async {
+    return await _client.getIdiomInfo(GetIdiomInfoRequest()..idiomId = idiomId);
+  }
+
+  Future<GetIdiomInfoReply> addIdiom(
+      int languageId, String text, String meaning, String usage) async {
+    return await _client.addIdiom(AddIdiomRequest()
+      ..languageId = languageId
+      ..text = text
+      ..meaning = meaning
+      ..usage = usage);
+  }
+
+  Future<GetIdiomInfoReply> changeIdiom(
+      int idiomId, int languageId, String text, String meaning, String usage) async {
+    return await _client.changeIdiom(ChangeIdiomRequest()
+      ..idiomId = idiomId
+      ..languageId = languageId
+      ..text = text
+      ..meaning = meaning
+      ..usage = usage);
+  }
+
+  Future<bool> deleteIdiom(int idiomId) async {
+    var result = await _client.deleteIdiom(DeleteIdiomRequest()..idiomId = idiomId);
+    return result != null;
   }
 }

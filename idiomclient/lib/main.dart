@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
           headline4: TextStyle(fontSize: 28.0, fontFamily: 'Open Sans'),
           headline6: TextStyle(fontSize: 24.0, fontStyle: FontStyle.italic),
           bodyText2: TextStyle(fontSize: 18.0, fontFamily: 'Hind'),
+          button:  TextStyle(fontSize: 18.0, fontFamily: 'Hind', color: Colors.grey[800], fontWeight: FontWeight.w500),
           headline5: TextStyle(fontFamily: "Nexa", color: Colors.grey[700], fontWeight: FontWeight.bold, fontSize: 24)
         ),
       ),
