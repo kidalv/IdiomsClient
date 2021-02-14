@@ -14,7 +14,7 @@ class FavoritesProvider with ChangeNotifier {
  }
 
 
- getList() async {
+ Future<void> getList() async {
    isLoading = true;
    notifyListeners();
    list = await _service.getIdiomsList();

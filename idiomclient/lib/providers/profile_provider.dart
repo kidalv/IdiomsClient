@@ -6,7 +6,7 @@ class ProfileProvider with ChangeNotifier {
  bool isLoading;
 
  ProfileProvider(){
-   _service = new UserService();
+   _service = UserService();
    isLoading = true;
  }
  

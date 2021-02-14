@@ -10,13 +10,13 @@ class IdiomListProvider with ChangeNotifier {
  bool isLoading;
 
  IdiomListProvider(){
-   _service = new IdiomService();
+   _service = IdiomService();
    isLoading = true;
    list = [];
  }
 
 
- getList() async {
+ Future<void> getList() async {
    isLoading = true;
    notifyListeners();
    list = await _service.getIdiomsList();

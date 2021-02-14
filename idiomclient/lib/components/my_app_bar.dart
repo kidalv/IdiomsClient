@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String text;
   final IconData icon;
-  final Function onPressed;
+  final void Function() onPressed;
   final bool disableIcon;
   final Widget iconButton;
   final bool backArrow;
@@ -39,21 +39,17 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         },
       ) : Container(),
       actions: [
-        disableIcon
-            ? Container()
-            : Container(
-                margin: EdgeInsets.only(right: 12),
-                child: iconButton == null
-                    ? IconButton(
-                        padding: EdgeInsets.only(bottom: 2.0),
+        if (!disableIcon) Container(
+                margin: const EdgeInsets.only(right: 12),
+                child: iconButton ?? IconButton(
+                        padding: const EdgeInsets.only(bottom: 2.0),
                         splashRadius: 25,
                         icon: Icon(
                           icon,
                           size: 35,
                           color: Colors.grey[400],
                         ),
-                        onPressed: onPressed)
-                    : iconButton,
+                        onPressed: onPressed),
               ),
       ],
     );
@@ -61,5 +57,5 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(50);
+  Size get preferredSize => const Size.fromHeight(50);
 }

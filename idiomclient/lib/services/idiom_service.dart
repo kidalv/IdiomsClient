@@ -18,13 +18,8 @@ class IdiomService {
     return await _client.getIdiomInfo(GetIdiomInfoRequest()..idiomId = idiomId);
   }
 
-  Future<GetIdiomInfoReply> addIdiom(
-      int languageId, String text, String meaning, String usage) async {
-    return await _client.addIdiom(AddIdiomRequest()
-      ..languageId = languageId
-      ..text = text
-      ..meaning = meaning
-      ..usage = usage);
+  Future<GetIdiomInfoReply> addIdiom(AddIdiomRequest idiom) async {
+    return await _client.addIdiom(idiom);
   }
 
   Future<GetIdiomInfoReply> changeIdiom(

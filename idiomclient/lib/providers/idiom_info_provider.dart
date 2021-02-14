@@ -5,21 +5,21 @@ import 'package:idiomclient/services/idiom_service.dart';
 class IdiomInfoProvider with ChangeNotifier {
  IdiomService _service;
  bool isLoading;
- int idiomId;
+ int _idiomId;
  GetIdiomInfoReply idiom;
 
  IdiomInfoProvider(int idiomId){
-   _service = new IdiomService();
+   _service = IdiomService();
    isLoading = true;
-   this.idiomId = idiomId;
+   _idiomId = idiomId;
    getIdiom();
  }
 
 
- getIdiom() async {
+ Future<void> getIdiom() async {
    isLoading = true;
    notifyListeners();
-   idiom = await _service.getIdiomsInfo(idiomId);
+   idiom = await _service.getIdiomsInfo(_idiomId);
    isLoading = false;
    notifyListeners();
  }

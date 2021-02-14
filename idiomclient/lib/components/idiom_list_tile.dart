@@ -10,9 +10,9 @@ class IdiomListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
-    var theme = Theme.of(context);
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    final theme = Theme.of(context);
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -23,7 +23,7 @@ class IdiomListTile extends StatelessWidget {
       child: Container(
         decoration:
             BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.withOpacity(0.1)))),
-        margin: EdgeInsets.only(left: 10, right: 10),
+        margin: const EdgeInsets.only(left: 10, right: 10),
         height: height * 0.25,
         child: Row(
           children: [
@@ -44,11 +44,11 @@ class IdiomListTile extends StatelessWidget {
               ],
             ),
             Container(
-              padding: EdgeInsets.only(right: 10),
+              padding: const EdgeInsets.only(right: 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(
+                  SizedBox(
                     height: height * 0.185,
                     width: width - 90,
                     child: Center(
@@ -59,7 +59,7 @@ class IdiomListTile extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(bottom: 5.0),
+                    padding: const EdgeInsets.only(bottom: 5.0),
                     width: width - 20 - 70,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,

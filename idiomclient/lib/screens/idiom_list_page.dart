@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:idiomclient/components/flag_row.dart';
 import 'package:idiomclient/components/dropdown_search.dart';
 import 'package:idiomclient/components/idiom_list_tile.dart';
 import 'package:idiomclient/components/my_button.dart';
 import 'package:idiomclient/providers/idiom_list_provider.dart';
-import 'package:idiomclient/protos/idiom.pb.dart';
-import 'package:idiomclient/protos/models.pb.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:idiomclient/components/my_app_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -16,8 +12,8 @@ class IdiomListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
         endDrawer: Drawer(
           child: Column(
@@ -25,7 +21,7 @@ class IdiomListPage extends StatelessWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: IconButton(
-                    padding: EdgeInsets.only(top: 30, left: 10, bottom: 8),
+                    padding: const EdgeInsets.only(top: 30, left: 10, bottom: 8),
                     icon: Icon(
                       Icons.arrow_forward,
                       size: 35,
@@ -35,14 +31,12 @@ class IdiomListPage extends StatelessWidget {
                       Navigator.of(context).pop();
                     }),
               ),
-              Text("Sort by"),
+              const Text("Sort by"),
               Container(
-                margin: EdgeInsets.all(10.0),
+                margin: const EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
-                    //borderRadius: BorderRadius.circular(10),
                     border:
-                        Border(bottom: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0))
-                    //border: Border.all(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                        Border(bottom: BorderSide(color: Colors.grey.withOpacity(0.1)))
                     ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -72,11 +66,11 @@ class IdiomListPage extends StatelessWidget {
                   ],
                 ),
               ),
-              Text("Languages: "),
+              const Text("Languages: "),
               Container(
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   child: DropdownSearch(
-                    list: {
+                    list: const {
                       "Latvian": "LV",
                       "Russian": "RU",
                       "English": "GB",
@@ -101,8 +95,8 @@ class IdiomListPage extends StatelessWidget {
           ),
         ),
         body: context.watch<IdiomListProvider>().isLoading
-            ? Center(child: CircularProgressIndicator())
-            : context.watch<IdiomListProvider>().list.length == 0
+            ? const Center(child: CircularProgressIndicator())
+            : context.watch<IdiomListProvider>().list.isEmpty
                 ? Center(
                     child: MyButton(
                       text: "Refresh",
@@ -112,17 +106,17 @@ class IdiomListPage extends StatelessWidget {
                   )
                 : Column(
                     children: [
-                      Container(
+                      SizedBox(
                         height: height * 0.6,
                         child: ListView(
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             children: context
                                 .watch<IdiomListProvider>()
                                 .list
                                 .map((x) => IdiomListTile(idiom: x))
                                 .toList()),
                       ),
-                      Container(
+                      SizedBox(
                         height: height * 0.2,
                         child: Center(
                           child: MyButton(
@@ -133,45 +127,6 @@ class IdiomListPage extends StatelessWidget {
                         ),
                       ),
                     ],
-                  )
-        // ListView(
-        //     physics: BouncingScrollPhysics(),
-        //     children: [
-        //       IdiomListTile(
-        //         idiom: IdiomReply()
-        //           ..text = "Saņemt pa purnu"
-        //           ..upvoteCount = 16
-        //           ..favoritesCount = 12
-        //           ..language = (LanguageReply()..locale = "LV")
-        //           ..isFavorite = true,
-        //       ),
-        //       IdiomListTile(
-        //         idiom: IdiomReply()
-        //           ..text = "Saņemt pa purnu"
-        //           ..upvoteCount = 16
-        //           ..favoritesCount = 12
-        //           ..language = (LanguageReply()..locale = "LV")
-        //           ..isFavorite = true,
-        //       ),
-        //       IdiomListTile(
-        //         idiom: IdiomReply()
-        //           ..text = "Trying to be a King, but the Ace is back"
-        //           ..upvoteCount = 35
-        //           ..favoritesCount = 12
-        //           ..language = (LanguageReply()..locale = "GB")
-        //           ..isFavorite = false,
-        //       ),
-        //       IdiomListTile(
-        //         idiom: IdiomReply()
-        //           ..text =
-        //               "Слишком много сук наравят сойти за брата, хотя судьба и так на подлости богата"
-        //           ..upvoteCount = 25
-        //           ..favoritesCount = 23
-        //           ..language = (LanguageReply()..locale = "RU")
-        //           ..isFavorite = true,
-        //       ),
-        //     ],
-        //   ),
-        );
+                  ));
   }
 }

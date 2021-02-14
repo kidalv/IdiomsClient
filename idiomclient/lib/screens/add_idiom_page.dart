@@ -40,10 +40,10 @@ class AddIdiomPage extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: const EdgeInsets.only(top: 10.0, bottom: 20, left: 10),
-                    child: Text("Language: "),
+                    child: Text("Language: ", style: theme.textTheme.headline5,),
                   ),
                 ),
-                FlagRow(code: "LV")
+                const FlagRow(code: "LV")
               ],
             ),
             Align(

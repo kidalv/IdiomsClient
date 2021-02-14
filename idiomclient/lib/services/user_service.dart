@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:grpc/grpc.dart';
 import 'package:idiomclient/protos/user.pbgrpc.dart';
 
 import 'grpc_client_singleton.dart';

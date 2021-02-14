@@ -108,42 +108,42 @@ class _DropdownSearchState extends State<DropdownSearch> {
             ],
           ),
         ),
-        selectedLanguages.length > 0
-            ? Container(
-                padding: EdgeInsets.only(top: 20.0, bottom: 10),
-                child: Text("Selected languages: "))
-            : Container(),
-        selectedLanguages.length > 0
-            ? Container(
-                padding: EdgeInsets.all(5.0),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.grey.withOpacity(0.1))),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Wrap(
-                    children: selectedLanguages.entries
-                        .map((e) => InkWell(
-                              onTap: () {setState(() {
-                                selectedLanguages.removeWhere((x, y) => y == e.value);
-                                allItems[e.key] = e.value;
-                                tempList = allItems.entries;
-                              });},
-                              child: Container(
-                                padding: EdgeInsets.all(5.0),
-                                width: 44,
-                                child: FlagRow(
-                                  code: e.value,
-                                  length: 30,
-                                  flagOnly: true,
-                                ),
-                              ),
-                            ))
-                        .toList(),
-                  ),
-                ),
-              )
-            : Container()
+        if (selectedLanguages.isNotEmpty)
+          Container(
+              padding: const EdgeInsets.only(top: 20.0, bottom: 10),
+              child: const Text("Selected languages: ")),
+        if (selectedLanguages.isNotEmpty)
+          Container(
+            padding: const EdgeInsets.all(5.0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey.withOpacity(0.1))),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Wrap(
+                children: selectedLanguages.entries
+                    .map((e) => InkWell(
+                          onTap: () {
+                            setState(() {
+                              selectedLanguages.removeWhere((x, y) => y == e.value);
+                              allItems[e.key] = e.value;
+                              tempList = allItems.entries;
+                            });
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(5.0),
+                            width: 44,
+                            child: FlagRow(
+                              code: e.value,
+                              length: 30,
+                              flagOnly: true,
+                            ),
+                          ),
+                        ))
+                    .toList(),
+              ),
+            ),
+          )
       ],
     );
   }
@@ -152,7 +152,7 @@ class _DropdownSearchState extends State<DropdownSearch> {
 class LanguageRow extends StatelessWidget {
   final String language;
   final String code;
-  final Function onPress;
+  final void Function() onPress;
   const LanguageRow({Key key, this.language, this.code, this.onPress}) : super(key: key);
 
   @override

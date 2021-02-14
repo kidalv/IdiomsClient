@@ -12,13 +12,13 @@ class MyTextField extends StatelessWidget {
         border: Border.all(color: Colors.grey.withOpacity(0.1), width: 1.0),
       ),
       child: TextField(
-        decoration: new InputDecoration(
+        decoration: InputDecoration(
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
             enabledBorder: InputBorder.none,
             errorBorder: InputBorder.none,
             disabledBorder: InputBorder.none,
-            contentPadding: EdgeInsets.only(left: 15, bottom: 10, top: 10, right: 15),
+            contentPadding: const EdgeInsets.only(left: 15, bottom: 10, top: 10, right: 15),
             hintText: text),
       ),
     );

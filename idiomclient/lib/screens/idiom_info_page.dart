@@ -13,45 +13,38 @@ class IdiomInfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-    var theme = Theme.of(context);
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    final theme = Theme.of(context);
     return ChangeNotifierProvider.value(
       value: provider,
       builder: (context, _) {
         return context.watch<IdiomInfoProvider>().isLoading
-            ? Center(child: CircularProgressIndicator())
+            ? const Center(child: CircularProgressIndicator())
             : Scaffold(
                 floatingActionButton: SpeedDial(
-                  // both default to 16
                   marginRight: 18,
                   marginBottom: 20,
                   animatedIcon: AnimatedIcons.menu_close,
-                  animatedIconTheme: IconThemeData(size: 24.0),
-                  // this is ignored if animatedIcon is non null
-                  // child: Icon(Icons.add),
-                  // If true user is forced to close dial manually
-                  // by tapping main button and overlay is not rendered.
-                  closeManually: false,
+                  animatedIconTheme: const IconThemeData(size: 24.0),
                   curve: Curves.bounceIn,
                   overlayColor: Colors.black,
                   overlayOpacity: 0.6,
                   backgroundColor: Colors.white,
                   foregroundColor: Colors.black,
                   elevation: 8.0,
-                  shape: CircleBorder(),
                   children: [
                     SpeedDialChild(
-                      child: Icon(Icons.favorite_border_outlined, size: 35),
+                      child: const Icon(Icons.favorite_border_outlined, size: 35),
                       backgroundColor: Colors.pink,
                       foregroundColor: Colors.white,
-                      labelWidget: SpeedDialLabel(
+                      labelWidget: const SpeedDialLabel(
                         text: "Favorite",
                         color: Colors.pink,
                       ),
                     ),
                     SpeedDialChild(
-                      child: Icon(Icons.arrow_drop_down_rounded, size: 40),
+                      child: const Icon(Icons.arrow_drop_down_rounded, size: 40),
                       backgroundColor: Colors.blue[400],
                       foregroundColor: Colors.white,
                       labelWidget: SpeedDialLabel(
@@ -60,22 +53,22 @@ class IdiomInfoPage extends StatelessWidget {
                       ),
                     ),
                     SpeedDialChild(
-                      child: Icon(
+                      child: const Icon(
                         Icons.arrow_drop_up_rounded,
                         size: 40,
                       ),
                       backgroundColor: Colors.green,
                       foregroundColor: Colors.white,
-                      labelWidget: SpeedDialLabel(
+                      labelWidget: const SpeedDialLabel(
                         text: "Upvote",
                         color: Colors.green,
                       ),
                     ),
                     SpeedDialChild(
-                      child: Icon(Icons.error_outline, size: 35),
+                      child: const Icon(Icons.error_outline, size: 35),
                       backgroundColor: Colors.red,
                       foregroundColor: Colors.white,
-                      labelWidget: SpeedDialLabel(
+                      labelWidget: const SpeedDialLabel(
                         text: "Report",
                         color: Colors.red,
                       ),
@@ -89,9 +82,9 @@ class IdiomInfoPage extends StatelessWidget {
                   icon: Icons.edit_outlined,
                 ),
                 body: ListView(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   children: [
-                    Container(
+                    SizedBox(
                       height: height * 0.3 + 45,
                       child: Stack(
                         children: [
@@ -100,18 +93,16 @@ class IdiomInfoPage extends StatelessWidget {
                               width: width - 20,
                               height: height * 0.3,
                               decoration: BoxDecoration(
-                                  //borderRadius: BorderRadius.circular(10),
                                   border: Border(
                                       bottom: BorderSide(
-                                          color: Colors.grey.withOpacity(0.1), width: 1.0))
-                                  //border: Border.all(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                                          color: Colors.grey.withOpacity(0.1)))
                                   ),
-                              margin: EdgeInsets.only(bottom: 10, top: 10),
+                              margin: const EdgeInsets.only(bottom: 10, top: 10),
                               child: Column(
                                 children: [
                                   Container(
                                     height: height * 0.24,
-                                    padding: EdgeInsets.only(left: 25, right: 25),
+                                    padding: const EdgeInsets.only(left: 25, right: 25),
                                     child: Center(
                                       child: Text(
                                         context.watch<IdiomInfoProvider>().idiom.text,
@@ -120,7 +111,7 @@ class IdiomInfoPage extends StatelessWidget {
                                     ),
                                   ),
                                   Container(
-                                    margin: EdgeInsets.only(right: 10, bottom: 10),
+                                    margin: const EdgeInsets.only(right: 10, bottom: 10),
                                     height: height * 0.06 - 12,
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
@@ -179,7 +170,7 @@ class IdiomInfoPage extends StatelessWidget {
                           Align(
                             alignment: Alignment.bottomRight,
                             child: Container(
-                                padding: EdgeInsets.only(right: 25),
+                                padding: const EdgeInsets.only(right: 25),
                                 child: Text(
                                     "Added by: ${context.watch<IdiomInfoProvider>().idiom.user.name}",
                                     style: TextStyle(
@@ -201,9 +192,9 @@ class IdiomInfoPage extends StatelessWidget {
                                 fontSize: 24),
                           ),
                         )),
-                    Center(
+                    const Center(
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 30.0, bottom: 40),
+                        padding: EdgeInsets.only(top: 30.0, bottom: 40),
                         child: TranslationSwitch(
                           languages: [
                             "LV",
@@ -238,7 +229,7 @@ class IdiomInfoPage extends StatelessWidget {
                                 fontSize: 24),
                           ),
                         )),
-                    Container(
+                    SizedBox(
                       height: height * 0.2,
                       child: Center(
                         child: Text(
@@ -261,7 +252,7 @@ class IdiomInfoPage extends StatelessWidget {
                           ),
                         )),
                     Container(
-                      margin: EdgeInsets.only(top: 10, bottom: 50, left: 25, right: 25),
+                      margin: const EdgeInsets.only(top: 10, bottom: 50, left: 25, right: 25),
                       height: height * 0.2,
                       child: Center(
                         child: Text(
@@ -287,10 +278,10 @@ class IdiomInfoPage extends StatelessWidget {
                       child: Container(
                         height: height * 0.2,
                         width: width - 50,
-                        margin: EdgeInsets.only(top: 20),
+                        margin: const EdgeInsets.only(top: 20),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.grey.withOpacity(0.1), width: 1.0),
+                          border: Border.all(color: Colors.grey.withOpacity(0.1)),
                         ),
                       ),
                     ),
@@ -305,10 +296,10 @@ class IdiomInfoPage extends StatelessWidget {
                         )),
                     Container(
                       height: height * 0.2,
-                      margin: EdgeInsets.only(left: 10, right: 10),
+                      margin: const EdgeInsets.only(left: 10, right: 10),
                       decoration: BoxDecoration(
                           border: Border(
-                              bottom: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1.0))),
+                              bottom: BorderSide(color: Colors.grey.withOpacity(0.1)))),
                       child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -331,16 +322,16 @@ class TranslationSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 54.0 + languages.length * 50,
       child: Column(
         children: [
-          Container(
+          SizedBox(
             width: 54.0 + languages.take(6).length * 55,
             child: Row(
               children: [
                 Icon(Icons.arrow_back_ios, size: 25, color: Colors.grey[400]),
-                Container(
+                SizedBox(
                   width: languages.take(6).length * 55.0,
                   child: Wrap(
                     alignment: WrapAlignment.center,
@@ -377,7 +368,7 @@ class FlagCircle extends StatelessWidget {
           ? BoxDecoration(
               borderRadius: BorderRadius.circular(25),
               border: Border.all(width: 1.5, color: Theme.of(context).accentColor))
-          : BoxDecoration(),
+          : const BoxDecoration(),
       child: ClipOval(
         child: Flag(
           flag,
@@ -406,7 +397,7 @@ class SpeedDialLabel extends StatelessWidget {
         margin: const EdgeInsets.only(right: 10),
         child: Text(
           text,
-          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
         ));
   }
 }
@@ -419,7 +410,7 @@ class UpvoteRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         width: width,
         height: height,
         child: Row(

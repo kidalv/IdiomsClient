@@ -5,26 +5,18 @@ import 'package:simple_tooltip/simple_tooltip.dart';
 
 class MyHint extends StatefulWidget {
   final String text;
-  Timer timer;
-  MyHint({Key key, this.text}) : super(key: key);
+  const MyHint({Key key, this.text}) : super(key: key);
 
   @override
   _MyHintState createState() => _MyHintState();
-
-  @protected
-  @mustCallSuper
-  void dispose() {
-    if (timer != null) {
-      timer.cancel();
-    }
-  }
 }
 
 class _MyHintState extends State<MyHint> {
+  Timer timer;
   bool showHint = false;
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
+    final theme = Theme.of(context);
     return SimpleTooltip(
       ballonPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       show: showHint,
@@ -47,14 +39,14 @@ class _MyHintState extends State<MyHint> {
               showHint = !showHint;
             });
             if (showHint) {
-              widget.timer = Timer(Duration(seconds: 5), () {
+              timer = Timer(const Duration(seconds: 5), () {
                 setState(() {
                   showHint = false;
                 });
               });
             } else {
-              if (widget.timer != null) {
-                widget.timer.cancel();
+              if (timer != null) {
+                timer.cancel();
               }
             }
           },
@@ -65,5 +57,13 @@ class _MyHintState extends State<MyHint> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    if (timer != null) {
+      timer.cancel();
+    }
+    super.dispose();
   }
 }

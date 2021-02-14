@@ -11,18 +11,16 @@ class FlagRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        !flagOnly
-            ? Container(
+        if (!flagOnly) SizedBox(
                 width: MediaQuery.of(context).size.width * 0.06,
                 child: Text(
                   code,
                   style:
                       TextStyle(color: Colors.grey[400], fontWeight: FontWeight.w500, fontSize: 18),
                 ),
-              )
-            : Container(),
+              ),
         Container(
-          margin: EdgeInsets.only(left: 3),
+          margin: const EdgeInsets.only(left: 3),
           width: length,
           height: length * 0.75,
           child: Container(

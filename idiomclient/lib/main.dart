@@ -6,6 +6,7 @@ import 'package:idiomclient/screens/add_idiom_page.dart';
 import 'package:idiomclient/screens/favorites_page.dart';
 import 'package:idiomclient/screens/profile_page.dart';
 import 'package:idiomclient/screens/idiom_list_page.dart';
+import 'package:idiomclient/services/shared_prefs.dart';
 import 'package:idiomclient/services/user_service.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
@@ -14,7 +15,9 @@ import 'package:provider/provider.dart';
 
 import 'providers/idiom_list_provider.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedPrefs().init();
   runApp(MyApp());
 }
 
