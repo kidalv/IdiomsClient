@@ -14,6 +14,8 @@ const String refreshTokenKey = "refreshToken_key";
 class SharedPrefs {
   static SharedPreferences _sharedPrefs;
   ActionService _actionService;
+  bool _hideTooltips;
+  bool _showFlags;
 
   factory SharedPrefs() => SharedPrefs._internal();
 
@@ -22,7 +24,7 @@ class SharedPrefs {
   Future<void> init() async {
     _sharedPrefs ??= await SharedPreferences.getInstance();
     _actionService = ActionService();
-    this.languages =  await _actionService.getAllLAnguages();
+    languages =  await _actionService.getAllLAnguages();
   }
 
   String get name => _sharedPrefs.getString(nameKey) ?? "";
@@ -41,9 +43,9 @@ class SharedPrefs {
     return _mapLanguageReplies(_sharedPrefs.getStringList(userLanguagesKey));
   }
 
-  bool get showFlags => _sharedPrefs.getBool(showFlagsKey) ?? true;
+  bool get showFlags => _showFlags ??= _sharedPrefs.getBool(showFlagsKey) ?? true;
 
-  bool get hideTooltips => _sharedPrefs.getBool(hideTooltipsKey) ?? false;
+  bool get hideTooltips => _hideTooltips ??= _sharedPrefs.getBool(hideTooltipsKey) ?? false;
 
   set name(String value) {
     _sharedPrefs.setString(nameKey, value);
@@ -70,10 +72,12 @@ class SharedPrefs {
   }
 
   set showFlags(bool value) {
+    _showFlags = value;
     _sharedPrefs.setBool(showFlagsKey, value);
   }
 
   set hideTooltips(bool value) {
+    _hideTooltips = value;
     _sharedPrefs.setBool(hideTooltipsKey, value);
   }
 

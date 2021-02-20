@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:idiomclient/components/flag_row.dart';
-import 'package:idiomclient/providers/idiom_info_provider.dart';
 import 'package:idiomclient/protos/idiom.pb.dart';
 import 'package:idiomclient/screens/idiom_info_page.dart';
 
@@ -17,12 +16,12 @@ class IdiomListTile extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => IdiomInfoPage(provider: IdiomInfoProvider(idiom.idiomId),)),
+          MaterialPageRoute(builder: (context) => IdiomInfoPage(idiomId: idiom.idiomId,)),
         );
       },
       child: Container(
         decoration:
-            BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.withOpacity(0.1)))),
+            BoxDecoration(border: Border(bottom: BorderSide(color: theme.dividerColor))),
         margin: const EdgeInsets.only(left: 10, right: 10),
         height: height * 0.25,
         child: Row(
@@ -33,13 +32,13 @@ class IdiomListTile extends StatelessWidget {
                 Icon(
                   Icons.arrow_drop_up_rounded,
                   size: 60,
-                  color: Colors.grey[400],
+                  color: theme.buttonColor,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 50.0),
                   child: Text(idiom.upvoteCount.toString(),
                       style: TextStyle(
-                          color: Colors.grey[400], fontSize: 18, fontWeight: FontWeight.w500)),
+                          color: theme.buttonColor, fontSize: 18, fontWeight: FontWeight.w500)),
                 )
               ],
             ),
@@ -54,7 +53,7 @@ class IdiomListTile extends StatelessWidget {
                     child: Center(
                       child: Text(
                         idiom.text,
-                        style: Theme.of(context).textTheme.headline4,
+                        style: theme.textTheme.headline4,
                       ),
                     ),
                   ),
@@ -69,14 +68,14 @@ class IdiomListTile extends StatelessWidget {
                           child: Icon(
                             Icons.favorite_border,
                             size: 35,
-                            color: idiom.isFavorite ? theme.accentColor : Colors.grey[400],
+                            color: idiom.isFavorite ? theme.accentColor : theme.buttonColor,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: 15.0),
                           child: Text(idiom.favoritesCount.toString(),
                               style: TextStyle(
-                                  color: Colors.grey[400],
+                                  color: theme.buttonColor,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500)),
                         ),
@@ -85,19 +84,19 @@ class IdiomListTile extends StatelessWidget {
                           child: Icon(
                             Icons.translate_outlined,
                             size: 30,
-                            color: Colors.grey[400],
+                            color: theme.buttonColor,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: 15.0),
                           child: Text("2",
                               style: TextStyle(
-                                  color: Colors.grey[400],
+                                  color: theme.buttonColor,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500)),
                         ),
                         FlagRow(
-                          code: idiom.language.locale,
+                          code: idiom.language.region,
                         )
                       ],
                     ),
