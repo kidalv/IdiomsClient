@@ -10,6 +10,7 @@ const String tokenKey = "token_key";
 const String showFlagsKey = "show_flags_key";
 const String hideTooltipsKey = "show_tooltips_key";
 const String refreshTokenKey = "refreshToken_key";
+const String systemLanguageKey = "systemLanguage_key";
 
 class SharedPrefs {
   static SharedPreferences _sharedPrefs;
@@ -35,12 +36,14 @@ class SharedPrefs {
 
   String get refreshToken => _sharedPrefs.getString(refreshTokenKey);
 
+  String get systemLanguage => _sharedPrefs.getString(systemLanguageKey) ?? "GB";
+
   List<LanguageReply> get languages {
     return _mapLanguageReplies(_sharedPrefs.getStringList(languagesKey));
   }
 
   List<LanguageReply> get userLanguages {
-    return _mapLanguageReplies(_sharedPrefs.getStringList(userLanguagesKey));
+    return _mapLanguageReplies(_sharedPrefs.getStringList(userLanguagesKey) ?? []);
   }
 
   bool get showFlags => _showFlags ??= _sharedPrefs.getBool(showFlagsKey) ?? true;
@@ -69,6 +72,10 @@ class SharedPrefs {
 
   set userLanguages(List<LanguageReply> languages) {
     _sharedPrefs.setStringList(userLanguagesKey, _mapLanguages(languages));
+  }
+
+  set systemLanguage(String language) {
+    _sharedPrefs.setString(systemLanguageKey, language);
   }
 
   set showFlags(bool value) {

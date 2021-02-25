@@ -1,4 +1,4 @@
-import 'package:flag/flag.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiomclient/components/flag_row.dart';
@@ -37,44 +37,45 @@ class IdiomInfoPage extends StatelessWidget {
         elevation: 8.0,
         children: [
           SpeedDialChild(
-            child: const Icon(Icons.favorite_border_outlined, size: 35),
-            backgroundColor: Colors.pink,
-            foregroundColor: Colors.white,
-            labelWidget: const SpeedDialLabel(
-              text: "Favorite",
-              color: Colors.pink,
-            ),
-          ),
+              child: const Icon(Icons.favorite_border_outlined, size: 35),
+              backgroundColor: Colors.pink,
+              foregroundColor: Colors.white,
+              labelWidget: const SpeedDialLabel(
+                text: "Favorite",
+                color: Colors.pink,
+              ),
+              onTap: () => context.read(idiomInfoProvider).addFavorite()),
           SpeedDialChild(
-            child: const Icon(Icons.arrow_drop_down_rounded, size: 40),
-            backgroundColor: Colors.blue[400],
-            foregroundColor: Colors.white,
-            labelWidget: SpeedDialLabel(
-              text: "Devote",
-              color: Colors.blue[400],
-            ),
-          ),
+              child: const Icon(Icons.arrow_drop_down_rounded, size: 40),
+              backgroundColor: Colors.blue[400],
+              foregroundColor: Colors.white,
+              labelWidget: SpeedDialLabel(
+                text: "Devote",
+                color: Colors.blue[400],
+              ),
+              onTap: () => context.read(idiomInfoProvider).addDevote()),
           SpeedDialChild(
-            child: const Icon(
-              Icons.arrow_drop_up_rounded,
-              size: 40,
-            ),
-            backgroundColor: Colors.green,
-            foregroundColor: Colors.white,
-            labelWidget: const SpeedDialLabel(
-              text: "Upvote",
-              color: Colors.green,
-            ),
-          ),
+              child: const Icon(
+                Icons.arrow_drop_up_rounded,
+                size: 40,
+              ),
+              backgroundColor: Colors.green,
+              foregroundColor: Colors.white,
+              labelWidget: const SpeedDialLabel(
+                text: "Upvote",
+                color: Colors.green,
+              ),
+              onTap: () => context.read(idiomInfoProvider).addUpvote()),
           SpeedDialChild(
-            child: const Icon(Icons.error_outline, size: 35),
-            backgroundColor: Colors.red,
-            foregroundColor: Colors.white,
-            labelWidget: const SpeedDialLabel(
-              text: "Report",
-              color: Colors.red,
-            ),
-          ),
+              child: const Icon(Icons.error_outline, size: 35),
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+              labelWidget: const SpeedDialLabel(
+                text: "Report",
+                color: Colors.red,
+              ),
+              onTap: () {} // TODO open dialog then send report
+              ),
         ],
       ),
       appBar: MyAppBar(
@@ -138,11 +139,20 @@ class IdiomInfoPage extends StatelessWidget {
                                             fontSize: 18),
                                       );
                               }),
-                              Icon(
-                                Icons.arrow_drop_up_rounded,
-                                size: 30,
-                                color: Colors.grey[400],
-                              ),
+                              Consumer(builder: (_, watch, __) {
+                                final provider = watch(idiomInfoProvider);
+                                return Icon(
+                                  provider.isLoading ||
+                                          !provider.idiom.isUserUpvoted ||
+                                          provider.idiom.isUpvote
+                                      ? Icons.arrow_drop_up_rounded
+                                      : Icons.arrow_drop_down_rounded,
+                                  size: 30,
+                                  color: provider.isLoading || !provider.idiom.isUserUpvoted
+                                      ? Colors.grey[400]
+                                      : theme.accentColor,
+                                );
+                              }),
                               Padding(
                                 padding: const EdgeInsets.only(right: 4.0, left: 12.0),
                                 child: Consumer(builder: (_, watch, __) {
@@ -158,14 +168,19 @@ class IdiomInfoPage extends StatelessWidget {
                                         );
                                 }),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 12.0),
-                                child: Icon(
-                                  Icons.favorite_border,
-                                  color: Colors.grey[400],
-                                  size: 30,
-                                ),
-                              ),
+                              Consumer(builder: (_, watch, __) {
+                                final provider = watch(idiomInfoProvider);
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 12.0),
+                                  child: Icon(
+                                    Icons.favorite_border,
+                                    color: provider.isLoading || !provider.idiom.isFavorite
+                                        ? Colors.grey[400]
+                                        : theme.accentColor,
+                                    size: 30,
+                                  ),
+                                );
+                              }),
                               Consumer(builder: (_, watch, __) {
                                 final provider = watch(idiomInfoProvider);
                                 return provider.isLoading
@@ -334,15 +349,19 @@ class IdiomInfoPage extends StatelessWidget {
               )),
           Consumer(builder: (_, watch, __) {
             final provider = watch(idiomInfoProvider);
-            return provider.idiom != null && provider.idiom.comments.isNotEmpty ? Container(
-              margin: EdgeInsets.only(top: height * 0.1, bottom: height * 0.1),
-              child: Column(
-                  children: provider.idiom.comments
-                      .map((x) => CommentTile(
-                            comment: x,
-                          ))
-                      .toList()),
-            ) : const Center(child: Text("No comments"),);
+            return provider.idiom != null && provider.idiom.comments.isNotEmpty
+                ? Container(
+                    margin: EdgeInsets.only(top: height * 0.1, bottom: height * 0.1),
+                    child: Column(
+                        children: provider.idiom.comments
+                            .map((x) => CommentTile(
+                                  comment: x,
+                                ))
+                            .toList()),
+                  )
+                : const Center(
+                    child: Text("No comments"),
+                  );
           }),
         ],
       ),
@@ -405,13 +424,19 @@ class FlagCircle extends StatelessWidget {
               border: Border.all(width: 1.5, color: Theme.of(context).accentColor))
           : const BoxDecoration(),
       child: ClipOval(
-        child: Flag(
-          flag,
+          child: CachedNetworkImage(
+        imageUrl: "https://flagpedia.net/data/flags/w80/${flag.toLowerCase()}.jpg",
+        width: 40,
+        height: 40,
+        fit: BoxFit.fill,
+        placeholder: (context, url) => const PlaceholderContainer(
           width: 40,
           height: 40,
-          fit: BoxFit.fill,
         ),
-      ),
+      )
+          // child: Image.network("https://flagpedia.net/data/flags/w80/${flag.toLowerCase()}.jpg",
+          //     width: 40, height: 40, fit: BoxFit.fill),
+          ),
     );
   }
 }

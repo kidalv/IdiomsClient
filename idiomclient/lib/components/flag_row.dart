@@ -1,5 +1,6 @@
-import 'package:flag/flag.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:idiomclient/components/placeholder_container.dart';
 import 'package:idiomclient/services/shared_prefs.dart';
 
 class FlagRow extends StatelessWidget {
@@ -15,7 +16,7 @@ class FlagRow extends StatelessWidget {
       children: [
         if (!flagOnly)
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.06,
+            width: 30,
             child: Text(
               code,
               style: TextStyle(color: Colors.grey[400], fontWeight: FontWeight.w500, fontSize: 18),
@@ -32,15 +33,20 @@ class FlagRow extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5.0),
               child: (code != "EO" && code != "LA" && code != "GL") && SharedPrefs().showFlags
-                  ? Flag(
-                      code,
+                  ? CachedNetworkImage(
+                      imageUrl: "https://flagpedia.net/data/flags/w80/${code.toLowerCase()}.jpg",
+                      placeholder: (context, url) =>
+                          PlaceholderContainer(width: length, height: length * 0.75),
                       width: length,
                       height: length * 0.75,
-                      fit: BoxFit.fill,
-                    )
+                      fit: BoxFit.fill)
                   : Container(
-                    color: theme.buttonColor,
-                    child: Center(child: Text(code, style: theme.textTheme.button,))),
+                      color: theme.buttonColor,
+                      child: Center(
+                          child: Text(
+                        code,
+                        style: theme.textTheme.button,
+                      ))),
             ),
           ),
         ),

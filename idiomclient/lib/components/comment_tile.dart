@@ -11,7 +11,6 @@ class CommentTile extends StatelessWidget {
     final height = MediaQuery.of(context).size.height * 0.25;
     final width = MediaQuery.of(context).size.width;
     final theme = Theme.of(context);
-    final dateFormat = DateFormat.yMd();
     return Container(
       decoration: BoxDecoration(border: Border(bottom: BorderSide(color: theme.dividerColor))),
       margin: const EdgeInsets.only(left: 10, right: 10),
@@ -25,26 +24,17 @@ class CommentTile extends StatelessWidget {
                 height: height * 0.20,
                 child: Row(
                   children: [
-                    SizedBox(
-                      width: width * 0.6 - 30,
-                      child: Align(
-                        alignment: Alignment.bottomLeft,
-                        child: Text(comment.user.name,
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.grey[600])),
-                      ),
-                    ),
-                    SizedBox(
-                      width: width * 0.4 - 30,
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: Text(
-                          dateFormat.format(comment.date.toDateTime()),
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500, color: Colors.grey[600]),
-                        ),
+                    Text(comment.user.name,
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey[600])),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: Text(
+                        getPastDays(DateTime.now().difference(comment.date.toDateTime()).inDays),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500, color: Colors.grey[600]),
                       ),
                     )
                   ],
@@ -57,4 +47,17 @@ class CommentTile extends StatelessWidget {
       ),
     );
   }
+}
+
+String getPastDays(int days) {
+  if (days > 30) {
+    return "${days/30} months ago";
+  }
+  if (days == 0) {
+    return "today";
+  }
+  if (days == 1) {
+    return "yesterday";
+  }
+  return "$days days ago";
 }

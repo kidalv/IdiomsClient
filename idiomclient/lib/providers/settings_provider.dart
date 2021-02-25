@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:idiomclient/protos/models.pb.dart';
 import 'package:idiomclient/services/shared_prefs.dart';
 
 class SettingsProvider with ChangeNotifier {
  bool isLoading;
  SharedPrefs _prefs;
+ String systemLanguage;
+ List<LanguageReply> userLanguages; 
 
  SettingsProvider(){
    isLoading = true;
    _prefs = SharedPrefs();
+   systemLanguage = _prefs.systemLanguage;
+   userLanguages = _prefs.userLanguages;
  }
  
  bool get showFlags => _prefs.showFlags;
@@ -21,6 +26,24 @@ class SettingsProvider with ChangeNotifier {
 
  void setHideTooltips(bool value) {
    _prefs.hideTooltips = value;
+   notifyListeners();
+ }
+
+ void setSystemLanguage(String language) {
+   _prefs.systemLanguage = language;
+   systemLanguage = language;
+   notifyListeners();
+ }
+
+ void addLanguage(LanguageReply language) {
+   _prefs.userLanguages.add(language);
+   userLanguages.add(language);
+   notifyListeners();
+ }
+
+ void removeLanguage(LanguageReply language) {
+   _prefs.userLanguages.remove(language);
+   userLanguages.remove(language);
    notifyListeners();
  }
 }

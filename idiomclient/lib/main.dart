@@ -10,7 +10,6 @@ import 'package:idiomclient/services/shared_prefs.dart';
 import 'package:idiomclient/services/user_service.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
-import 'package:flag/flag.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'providers/idiom_list_provider.dart';

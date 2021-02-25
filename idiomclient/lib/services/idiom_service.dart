@@ -33,7 +33,7 @@ class IdiomService {
   }
 
   Future<bool> deleteIdiom(int idiomId) async {
-    var result = await _client.deleteIdiom(DeleteIdiomRequest()..idiomId = idiomId);
+    final result = await _client.deleteIdiom(DeleteIdiomRequest()..idiomId = idiomId);
     return result != null;
   }
 }

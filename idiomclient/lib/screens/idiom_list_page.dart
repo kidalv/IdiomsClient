@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:idiomclient/components/dropdown_search.dart';
+import 'package:idiomclient/components/dropdown_search_drawer.dart';
 import 'package:idiomclient/components/idiom_list_tile.dart';
 import 'package:idiomclient/components/list_tile_placeholder.dart';
 import 'package:idiomclient/components/my_button.dart';
 import 'package:idiomclient/providers/idiom_list_provider.dart';
+import 'package:idiomclient/services/shared_prefs.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:idiomclient/components/my_app_bar.dart';
 
@@ -17,6 +18,7 @@ class IdiomListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    final theme = Theme.of(context);
     return Scaffold(
       endDrawer: Drawer(
         child: Column(
@@ -39,45 +41,63 @@ class IdiomListPage extends StatelessWidget {
               margin: const EdgeInsets.all(10.0),
               decoration: BoxDecoration(
                   border: Border(bottom: BorderSide(color: Colors.grey.withOpacity(0.1)))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                      icon: Icon(Icons.calendar_today_outlined, color: Colors.grey[400]),
-                      onPressed: () {}),
-                  IconButton(
-                      padding: EdgeInsets.zero,
+              child: Consumer(builder: (_, watch, __) {
+                final provider = watch(idiomListProvider);
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    IconButton(
+                        icon: Icon(
+                          Icons.calendar_today_outlined,
+                          color: provider.currentSort == Sort.date
+                              ? theme.accentColor
+                              : Colors.grey[400],
+                        ),
+                        onPressed: () => provider.changeSort(Sort.date)),
+                    IconButton(
+                        padding: EdgeInsets.zero,
+                        icon: Icon(
+                          Icons.arrow_drop_up_rounded,
+                          color: provider.currentSort == Sort.upvotes
+                              ? theme.accentColor
+                              : Colors.grey[400],
+                          size: 45,
+                        ),
+                        onPressed: () => provider.changeSort(Sort.upvotes)),
+                    IconButton(
+                        icon: Icon(
+                          Icons.favorite_border,
+                          color: provider.currentSort == Sort.favorites
+                              ? theme.accentColor
+                              : Colors.grey[400],
+                        ),
+                        onPressed: () => provider.changeSort(Sort.favorites)),
+                    IconButton(
                       icon: Icon(
-                        Icons.arrow_drop_up_rounded,
-                        color: Colors.grey[400],
-                        size: 45,
+                        Icons.translate,
+                        color: provider.currentSort == Sort.languages
+                            ? theme.accentColor
+                            : Colors.grey[400],
                       ),
-                      onPressed: () {}),
-                  IconButton(
-                      icon: Icon(Icons.favorite_border, color: Colors.grey[400]), onPressed: () {}),
-                  IconButton(
-                    icon: Icon(Icons.translate, color: Colors.grey[400]),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.comment_outlined, color: Colors.grey[400]),
-                    onPressed: () {},
-                  )
-                ],
-              ),
+                      onPressed: () => provider.changeSort(Sort.languages),
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.comment_outlined,
+                        color: provider.currentSort == Sort.comments
+                            ? theme.accentColor
+                            : Colors.grey[400],
+                      ),
+                      onPressed: () => provider.changeSort(Sort.comments),
+                    )
+                  ],
+                );
+              }),
             ),
             const Text("Languages: "),
             Container(
                 margin: const EdgeInsets.all(10),
-                child: DropdownSearch(
-                  list: const {
-                    "Latvian": "LV",
-                    "Russian": "RU",
-                    "English": "GB",
-                    "Spanish": "ES",
-                    "Lithuanian": "LT"
-                  },
-                ))
+                child: DropdownSearchDrawer(list: SharedPrefs().languages))
           ],
         ),
       ),
@@ -97,14 +117,15 @@ class IdiomListPage extends StatelessWidget {
       body: Consumer(builder: (_, watch, __) {
         final provider = watch(idiomListProvider);
         if (provider.isLoading) {
-          return ListView(
-                physics: const BouncingScrollPhysics(),
-                children: const [
-                  ListTilePlaceholder(),
-                  ListTilePlaceholder(),
-                  ListTilePlaceholder(),
-                  ListTilePlaceholder(),
-                ]);
+          return RefreshIndicator(
+            onRefresh: provider.getList,
+            child: ListView(physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()), children: const [
+              ListTilePlaceholder(),
+              ListTilePlaceholder(),
+              ListTilePlaceholder(),
+              ListTilePlaceholder(),
+            ]),
+          );
         } else {
           if (provider.list.isEmpty) {
             return Center(
@@ -114,9 +135,12 @@ class IdiomListPage extends StatelessWidget {
               ),
             );
           } else {
-            return ListView(
-                physics: const BouncingScrollPhysics(),
-                children: provider.list.map((x) => IdiomListTile(idiom: x)).toList());
+            return RefreshIndicator(
+              onRefresh: provider.getList,
+              child: ListView(
+                  physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                  children: provider.list.map((x) => IdiomListTile(idiom: x)).toList()),
+            );
           }
         }
       }),
