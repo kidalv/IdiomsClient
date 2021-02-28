@@ -12,6 +12,6 @@ class GrpcClientSingleton {
         port: 5000,
         options: ChannelOptions(
           credentials: ChannelCredentials.insecure(),
-        ));
+        ),);
   }
 }
