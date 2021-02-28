@@ -2,12 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:grpc/grpc.dart';
 import 'package:idiomclient/protos/idiom.pbgrpc.dart';
 import 'package:idiomclient/services/grpc_client_singleton.dart';
+import 'package:idiomclient/services/shared_prefs.dart';
 
 class IdiomService {
   static IdiomClient _client;
 
   IdiomService() {
-    _client = IdiomClient(GrpcClientSingleton().client);
+    final bearer = SharedPrefs().token;
+    if (bearer != null && bearer.isNotEmpty) {
+      _client = IdiomClient(GrpcClientSingleton().client,
+          options: CallOptions(metadata: {'Authorization': 'Bearer $bearer'}));
+    } else {
+      _client = IdiomClient(GrpcClientSingleton().client);
+    }
   }
 
   Future<List<IdiomReply>> getIdiomsList() async {

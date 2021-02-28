@@ -38,7 +38,7 @@ class SettingsPage extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10.0, left: 40.0, top: 20.0),
-                  child: Text("Select", style: theme.textTheme.headline3),
+                  child: Text("Add", style: theme.textTheme.headline3),
                 ),
                 Consumer(builder: (_, watch, __) {
                   final provider = watch(settingsProvider);
@@ -104,9 +104,13 @@ class SettingsPage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Display Flags", style: theme.textTheme.headline5),
-                      const MyHint(
-                        text: "Show flags to represent languages",
+                      Row(
+                        children: [
+                          Text("Display Flags", style: theme.textTheme.headline5),
+                          const MyHint(
+                            text: "Show flags to represent languages",
+                          ),
+                        ],
                       ),
                       Consumer(builder: (_, watch, __) {
                         final provider = watch(settingsProvider);
@@ -171,7 +175,18 @@ class SettingsPage extends StatelessWidget {
             Positioned(
               top: 58,
               left: width * 0.26,
-              child: DropdownSearch(list: SharedPrefs().languages, onSelect: (value) {context.read(settingsProvider).addLanguage(value);},),
+              child: Consumer(
+                builder: (_, watch, __) {
+                  final provider = watch(settingsProvider);
+                  return DropdownSearch(
+                    list: SharedPrefs().languages,
+                    selectedList: provider.userLanguages,
+                    onSelect: (value) {
+                      context.read(settingsProvider).addLanguage(value);
+                    },
+                  );
+                }
+              ),
             ),
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:idiomclient/components/user_image.dart';
 import 'package:idiomclient/protos/models.pb.dart';
 import 'package:intl/intl.dart';
 
@@ -20,28 +21,53 @@ class CommentTile extends StatelessWidget {
         children: [
           Align(
             alignment: Alignment.centerLeft,
-            child: SizedBox(
-                height: height * 0.20,
+            child: Container(
+                margin: const EdgeInsets.only(top: 10),
+                height: height * 0.25,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(comment.user.name,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey[600])),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: Text(
-                        getPastDays(DateTime.now().difference(comment.date.toDateTime()).inDays),
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500, color: Colors.grey[600]),
-                      ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: UserImage(
+                            user: comment.user,
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(comment.user.name,
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey[400])),
+                            Text(
+                              getPastDays(
+                                  DateTime.now().difference(comment.date.toDateTime()).inDays),
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.grey[600]),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Icon(Icons.thumb_up_alt_outlined, color: theme.buttonColor, size: 24),
+                        Padding(padding: EdgeInsets.only(left: 8, right: 15), child: Text("6", style: theme.textTheme.headline3)),
+                        Icon(Icons.thumb_down_alt_outlined, color: theme.buttonColor, size: 24),
+                        Padding(padding: EdgeInsets.only(left: 8), child: Text("1", style: theme.textTheme.headline3))
+                      ],
                     )
                   ],
                 )),
           ),
           SizedBox(
-              height: height * 0.80 - 1,
+              height: height * 0.75 - 11,
               child: Center(child: Text(comment.text, style: theme.textTheme.headline3)))
         ],
       ),
@@ -51,7 +77,7 @@ class CommentTile extends StatelessWidget {
 
 String getPastDays(int days) {
   if (days > 30) {
-    return "${days/30} months ago";
+    return "${days / 30} months ago";
   }
   if (days == 0) {
     return "today";

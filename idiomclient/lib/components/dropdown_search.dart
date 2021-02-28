@@ -5,22 +5,32 @@ import 'package:idiomclient/protos/models.pb.dart';
 class DropdownSearch extends StatefulWidget {
   final List<LanguageReply> list;
   final Function(LanguageReply) onSelect;
-  const DropdownSearch({Key key, this.list, this.onSelect}) : super(key: key);
+  final double width;
+  final List<LanguageReply> selectedList;
+  const DropdownSearch({Key key, this.list, this.onSelect, this.width = 0, this.selectedList})
+      : super(key: key);
 
   @override
   _DropdownSearchState createState() => _DropdownSearchState(list);
 }
 
 class _DropdownSearchState extends State<DropdownSearch> {
-  List<LanguageReply> tempList;
-  List<LanguageReply> allItems;
   bool collapsed = true;
-  _DropdownSearchState(this.allItems) {
-    tempList = allItems;
-  }
+  bool searchEmpty = true;
+  List<LanguageReply> allItems;
+  List<LanguageReply> searchedItems = [];
+  _DropdownSearchState(this.allItems);
+
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
+    var tempList = widget.list;
+    if(!searchEmpty) {
+      tempList = searchedItems;
+    }
+    if (widget.selectedList != null) {
+      tempList.removeWhere((x) => widget.selectedList.any((y) => y.languageId == x.languageId));
+    }
+    final width = widget.width == 0 ? MediaQuery.of(context).size.width : widget.width;
     final theme = Theme.of(context);
     return Material(
       borderRadius: BorderRadius.circular(10),
@@ -58,7 +68,8 @@ class _DropdownSearchState extends State<DropdownSearch> {
                         },
                         onChanged: (value) {
                           setState(() {
-                            tempList = allItems
+                            searchEmpty = value == null || value == "";
+                            searchedItems = widget.list
                                 .where((x) => x.name.toLowerCase().contains(value.toLowerCase()))
                                 .toList();
                           });

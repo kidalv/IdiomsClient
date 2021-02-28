@@ -1,4 +1,6 @@
+import 'package:grpc/grpc.dart';
 import 'package:idiomclient/protos/user.pbgrpc.dart';
+import 'package:idiomclient/services/shared_prefs.dart';
 
 import 'grpc_client_singleton.dart';
 
@@ -6,7 +8,15 @@ class UserService {
   static UserClient _client;
 
   UserService() {
-    _client = UserClient(GrpcClientSingleton().client);
+    final bearer = SharedPrefs().token;
+    if (bearer != null && bearer.isNotEmpty) {
+      _client = UserClient(GrpcClientSingleton().client,
+          options: CallOptions(metadata: {'Authorization': 'Bearer $bearer'}));
+    } else {
+      _client = UserClient(
+        GrpcClientSingleton().client,
+      );
+    }
   }
 
   Future<UserProfileReply> getUsersInfo() async {

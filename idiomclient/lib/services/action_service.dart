@@ -3,12 +3,21 @@ import 'package:idiomclient/protos/action.pbgrpc.dart';
 import 'package:idiomclient/protos/idiom.pbgrpc.dart';
 import 'package:idiomclient/protos/models.pb.dart';
 import 'package:idiomclient/services/grpc_client_singleton.dart';
+import 'package:idiomclient/services/shared_prefs.dart';
 
 class ActionService {
   static ActionClient _client;
 
   ActionService() {
-    _client = ActionClient(GrpcClientSingleton().client);
+    final bearer = SharedPrefs().token;
+    if (bearer != null && bearer.isNotEmpty) {
+      _client = ActionClient(GrpcClientSingleton().client,
+          options: CallOptions(metadata: {'Authorization': 'Bearer $bearer'}));
+    } else {
+      _client = ActionClient(
+        GrpcClientSingleton().client,
+      );
+    }
   }
 
   Future<bool> addUpvote(int idiomId, bool isUpvote) async {

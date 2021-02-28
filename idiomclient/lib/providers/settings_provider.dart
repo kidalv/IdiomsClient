@@ -36,14 +36,14 @@ class SettingsProvider with ChangeNotifier {
  }
 
  void addLanguage(LanguageReply language) {
-   _prefs.userLanguages.add(language);
    userLanguages.add(language);
+   _prefs.userLanguages = userLanguages;
    notifyListeners();
  }
 
  void removeLanguage(LanguageReply language) {
-   _prefs.userLanguages.remove(language);
    userLanguages.remove(language);
+   _prefs.userLanguages = userLanguages; 
    notifyListeners();
  }
 }
