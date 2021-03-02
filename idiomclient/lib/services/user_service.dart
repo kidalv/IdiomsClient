@@ -19,6 +19,12 @@ class UserService {
     }
   }
 
+  UserService.unAuthorized() {
+    _client = UserClient(
+      GrpcClientSingleton().client,
+    );
+  }
+
   Future<UserProfileReply> getUsersInfo() async {
     return await _client.getUserProfile(GetUserProfileRequest()..userId = 1);
   }
