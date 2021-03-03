@@ -4,6 +4,7 @@ import 'package:idiomclient/protos/models.pb.dart';
 import 'package:idiomclient/protos/timestamp.pb.dart';
 import 'package:idiomclient/services/action_service.dart';
 import 'package:idiomclient/services/idiom_service.dart';
+import 'package:idiomclient/services/shared_prefs.dart';
 
 class IdiomInfoProvider with ChangeNotifier {
   IdiomService _service;

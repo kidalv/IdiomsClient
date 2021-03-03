@@ -12,7 +12,7 @@ class UserImage extends StatelessWidget {
       height: 35,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: Color.fromRGBO(user.userId % 255, (user.userId % 2 == 0 ? user.userId + 100  : user.userId + 150) % 255, (user.userId + 50) % 255, 1)
+        color: Color.fromRGBO(user.userId % 255, (user.userId * 15) % 255, (user.userId * 3 + 50) % 255, 1)
       ),
       child: Center(
         child: Text(user.name[0].toUpperCase() + (user.name.contains(' ') ? user.name[user.name.indexOf(' ') + 1].toUpperCase() : '')),

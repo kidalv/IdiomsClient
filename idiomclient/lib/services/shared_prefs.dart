@@ -17,6 +17,7 @@ class SharedPrefs {
   ActionService _actionService;
   bool _hideTooltips;
   bool _showFlags;
+  String _token;
 
   factory SharedPrefs() => SharedPrefs._internal();
 
@@ -32,7 +33,9 @@ class SharedPrefs {
 
   String get email => _sharedPrefs.getString(emailKey) ?? "";
 
-  String get token => _sharedPrefs.getString(tokenKey);
+  String get token {
+    return _token ??= _sharedPrefs.getString(tokenKey);
+  }
 
   String get refreshToken => _sharedPrefs.getString(refreshTokenKey);
 
