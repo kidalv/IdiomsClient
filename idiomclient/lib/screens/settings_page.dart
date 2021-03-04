@@ -20,10 +20,11 @@ class SettingsPage extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: const MyAppBar(
+      appBar: MyAppBar(
         text: "Settings",
         disableIcon: true,
         backArrow: true,
+        onBack: () {context.read(profileProvider).getProfile();},
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -173,7 +174,7 @@ class SettingsPage extends StatelessWidget {
               ],
             ),
             Positioned(
-              top: 58,
+              top: 70,
               left: width * 0.26,
               child: Consumer(
                 builder: (_, watch, __) {

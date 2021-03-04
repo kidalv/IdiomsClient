@@ -26,7 +26,7 @@ class UserService {
   }
 
   Future<UserProfileReply> getUsersInfo() async {
-    return await _client.getUserProfile(GetUserProfileRequest()..userId = 1);
+    return await _client.getUserProfile(GetUserProfileRequest());
   }
 
   Future<UserCredentialsReply> register(String email, String name, String password) async {

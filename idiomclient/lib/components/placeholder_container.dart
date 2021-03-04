@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 class PlaceholderContainer extends StatefulWidget {
   final double width;
   final double height;
-  const PlaceholderContainer({Key key, this.width, this.height}) : super(key: key);
+  final double borderRadius;
+  const PlaceholderContainer({Key key, this.width, this.height, this.borderRadius = 5}) : super(key: key);
 
   @override
   _PlaceholderContainerState createState() => _PlaceholderContainerState();
@@ -53,7 +54,7 @@ class _PlaceholderContainerState extends State<PlaceholderContainer> {
       width: widget.width,
       height: widget.height,
       duration: const Duration(seconds: 3),
-      decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(5)),
+      decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(widget.borderRadius)),
     );
   }
 }

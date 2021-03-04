@@ -7,6 +7,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool disableIcon;
   final Widget iconButton;
   final bool backArrow;
+  final Function() onBack;
   const MyAppBar(
       {Key key,
       this.text,
@@ -14,7 +15,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       this.onPressed,
       this.disableIcon = false,
       this.iconButton,
-      this.backArrow = false})
+      this.backArrow = false, this.onBack})
       : super(key: key);
 
   @override
@@ -35,6 +36,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         splashRadius: 25,
         onPressed: () {
+          if (onBack != null) {
+            onBack();
+          }
           Navigator.pop(context);
         },
       ) : Container(),

@@ -4,6 +4,7 @@ import 'package:idiomclient/components/my_app_bar.dart';
 import 'package:idiomclient/components/my_button.dart';
 import 'package:idiomclient/components/my_text_field.dart';
 import 'package:idiomclient/providers/providers.dart';
+import 'package:idiomclient/screens/login_page.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class FavoritesPage extends StatelessWidget {
@@ -139,6 +140,12 @@ class FavoritesPage extends StatelessWidget {
                       width: width * 0.40,
                       height: 50,
                       text: "Login",
+                      onPress: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const LoginPage()),
+                        );
+                      },
                     )
                   ]),
                 )
