@@ -1,6 +1,7 @@
 import 'package:idiomclient/protos/models.pb.dart';
 import 'package:idiomclient/services/action_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:idiomclient/providers/idiom_list_provider.dart';
 
 const String userLanguagesKey = "user_languages_key";
 const String languagesKey = "languages_key";
@@ -11,6 +12,7 @@ const String showFlagsKey = "show_flags_key";
 const String hideTooltipsKey = "show_tooltips_key";
 const String refreshTokenKey = "refreshToken_key";
 const String systemLanguageKey = "systemLanguage_key";
+const String listSortKey = "listSort_key";
 
 class SharedPrefs {
   static SharedPreferences _sharedPrefs;
@@ -53,6 +55,8 @@ class SharedPrefs {
 
   bool get hideTooltips => _hideTooltips ??= _sharedPrefs.getBool(hideTooltipsKey) ?? false;
 
+  Sort get listSort => _mapIntToSort(_sharedPrefs.getInt(listSortKey)) ?? Sort.date;
+
   set name(String value) {
     _sharedPrefs.setString(nameKey, value);
   }
@@ -91,6 +95,10 @@ class SharedPrefs {
     _sharedPrefs.setBool(hideTooltipsKey, value);
   }
 
+  set listSort(Sort value) {
+    _sharedPrefs.setInt(listSortKey, _mapSortToInt(value));
+  }
+
   List<String> _mapLanguages(List<LanguageReply> languages) {
     return languages.map((x) => "${x.languageId},${x.locale},${x.name},${x.region},${x.nativeName}").toList();
   }
@@ -105,5 +113,19 @@ class SharedPrefs {
         ..region = values[3]
         ..nativeName = values[4];
     }).toList();
+  }
+
+  int _mapSortToInt(Sort value) {
+    const sorts = Sort.values;
+    for (var i = 0; i < sorts.length; i++) {
+      if(sorts[i] == value) {
+        return i;
+      }
+    }
+    return 0;
+  }
+
+  Sort _mapIntToSort(int sortIndex) {
+    return Sort.values[sortIndex];
   }
 }

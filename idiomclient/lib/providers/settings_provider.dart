@@ -45,9 +45,10 @@ class SettingsProvider with ChangeNotifier {
    await _service.addUserLanguage(language.languageId);
  }
 
- void removeLanguage(LanguageReply language) {
+ Future<void> removeLanguage(LanguageReply language) async {
    userLanguages.remove(language);
-   _prefs.userLanguages = userLanguages; 
+   _prefs.userLanguages = userLanguages;
    notifyListeners();
+   await _service.deleteUserLanguage(language.languageId);
  }
 }

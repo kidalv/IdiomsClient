@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiomclient/components/dropdown_search.dart';
 import 'package:idiomclient/components/flag_row.dart';
 import 'package:idiomclient/components/my_button.dart';
 import 'package:idiomclient/components/my_text_field.dart';
 import 'package:idiomclient/components/my_app_bar.dart';
+import 'package:idiomclient/protos/models.pb.dart';
+import 'package:idiomclient/providers/providers.dart';
 import 'package:idiomclient/services/shared_prefs.dart';
 
 class AddIdiomPage extends StatelessWidget {
@@ -36,34 +39,38 @@ class AddIdiomPage extends StatelessWidget {
                           style: theme.textTheme.headline5,
                         )),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20.0),
-                    child: MyTextField(text: "Idiom Text"),
-                  ),
+                  MyTextField(text: "Idiom Text"),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 10.0, bottom: 20, left: 10),
+                      padding: const EdgeInsets.only(top: 10.0, bottom: 5, left: 10),
                       child: Text(
                         "Language: ",
                         style: theme.textTheme.headline5,
                       ),
                     ),
                   ),
+                  Consumer(builder: (_, watch, __) {
+                    final provider = watch(addIdiomProvider);
+                    return provider.language != null ?
+                      Padding(
+                          padding:
+                              const EdgeInsets.only(bottom: 10.0, left: 40.0, top: 20.0, right: 20),
+                          child: UserLanguageLine(
+                            language: provider.language,
+                          )) : Container(height: 70,);
+                  }),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
-                      padding: const EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(10),
                       child: Text(
                         "Meaning",
                         style: theme.textTheme.headline5,
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20.0),
-                    child: MyTextField(text: "Meaning"),
-                  ),
+                  MyTextField(text: "Meaning"),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -89,26 +96,75 @@ class AddIdiomPage extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: Padding(
                         padding: const EdgeInsets.only(top: 30.0, right: 5.0),
-                        child: MyButton(
-                          width: width * 0.3,
-                          height: 50,
-                          text: "Add Idiom",
+                        child: Consumer(
+                          builder: (_, watch, __) {
+                            final provider = watch(addIdiomProvider);
+                            return MyButton(
+                              width: width * 0.3,
+                              height: 50,
+                              text: "Add Idiom",
+                              disabled: !provider.buttonAvailable(),
+                              isLoading: provider.saving,
+                              onPress: provider.saveIdiom,
+                            );
+                          }
                         ),
                       ))
                 ],
               ),
-              Positioned(
-                top: 135,
-                left: width * 0.35,
-                child: DropdownSearch(
-                  list: SharedPrefs().languages,
-                  width: width * 0.75,
-                ),
-              )
+              Consumer(builder: (_, watch, __) {
+                final provider = watch(addIdiomProvider);
+                return Positioned(
+                  top: 150,
+                  left: width * 0.35,
+                  child: DropdownSearch(
+                    list: SharedPrefs().languages,
+                    selectedList: provider.language != null ? [provider.language] : [],
+                    width: width * 0.75,
+                    onSelect: (x) {
+                      provider.language = x;
+                    },
+                  ),
+                );
+              })
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class UserLanguageLine extends StatelessWidget {
+  final LanguageReply language;
+  const UserLanguageLine({Key key, this.language}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            FlagRow(
+              code: language.region,
+              flagOnly: true,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Text(language.name, style: theme.textTheme.headline3),
+            ),
+          ],
+        ),
+        IconButton(
+          splashRadius: 20,
+            icon: const Icon(Icons.cancel_rounded, size: 35),
+            onPressed: () {
+              context.read(addIdiomProvider).removeLanguage();
+            },
+            color: theme.buttonColor)
+      ],
     );
   }
 }

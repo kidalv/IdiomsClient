@@ -17,9 +17,10 @@ class IdiomListProvider with ChangeNotifier {
     _service = IdiomService();
     isLoading = true;
     list = [];
-    currentSort = Sort.date;
+    currentSort = SharedPrefs().listSort;
     selectedLanguages = [];
     allLanguages = SharedPrefs().languages;
+
   }
 
   Future<void> getList() async {
@@ -35,12 +36,14 @@ class IdiomListProvider with ChangeNotifier {
     //   ..language = (LanguageReply()
     //     ..locale = "lv"
     //     ..region = "LV"));
+    _applySort();
     isLoading = false;
     notifyListeners();
   }
 
   void changeSort(Sort sort) {
     currentSort = sort;
+    SharedPrefs().listSort = sort;
     _applySort();
     notifyListeners();
   }
@@ -48,7 +51,7 @@ class IdiomListProvider with ChangeNotifier {
   void _applySort() {
     switch (currentSort) {
       case Sort.date:
-        list.sort((a, b) => a.dateAdded.toDateTime().compareTo(b.dateAdded.toDateTime()));
+        list.sort((a, b) => b.dateAdded.toDateTime().compareTo(a.dateAdded.toDateTime()));
         break;
       case Sort.comments:
         break;
