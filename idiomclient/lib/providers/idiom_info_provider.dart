@@ -34,17 +34,6 @@ class IdiomInfoProvider with ChangeNotifier {
     isLoading = true;
     notifyListeners();
     idiom = await _service.getIdiomsInfo(_idiomId);
-    //  idiom = GetIdiomInfoReply()
-    //     ..text = "shit"
-    //     ..meaning = "shit"
-    //     ..usage = "shit"
-    //     ..dateAdded = Timestamp()
-    //     ..favoritesCount = 1
-    //     ..idiomId = 1
-    //     ..upvoteCount = 1
-    //     ..language = (LanguageReply()
-    //       ..locale = "lv"
-    //       ..region = "LV");
     sortComments();
     isLoading = false;
     notifyListeners();
@@ -89,22 +78,50 @@ class IdiomInfoProvider with ChangeNotifier {
   }
 
   Future<void> addUpvote() async {
-    if (!idiom.isUserUpvoted || !idiom.isUpvote) {
+    if (!idiom.isUserUpvoted) {
       final result = await _actionService.addUpvote(_idiomId, true);
       idiom..isUserUpvoted = result;
       idiom..isUpvote = true;
       idiom.upvoteCount += 1;
       notifyListeners();
+    } else {
+      if (!idiom.isUpvote) {
+        final result = await _actionService.addUpvote(_idiomId, true);
+        idiom..isUserUpvoted = result;
+        idiom..isUpvote = true;
+        idiom.upvoteCount += 2;
+        notifyListeners();
+      } else {
+        await _actionService.deleteUpvote(_idiomId);
+        idiom..isUserUpvoted = false;
+        idiom..isUpvote = false;
+        idiom.upvoteCount -= 1;
+        notifyListeners();
+      }
     }
   }
 
   Future<void> addDevote() async {
-    if (!idiom.isUserUpvoted || idiom.isUpvote) {
+    if (!idiom.isUserUpvoted) {
       final result = await _actionService.addUpvote(_idiomId, false);
       idiom..isUserUpvoted = result;
       idiom..isUpvote = false;
       idiom.upvoteCount -= 1;
       notifyListeners();
+    } else {
+      if (idiom.isUpvote) {
+        final result = await _actionService.addUpvote(_idiomId, false);
+        idiom..isUserUpvoted = result;
+        idiom..isUpvote = false;
+        idiom.upvoteCount -= 2;
+        notifyListeners();
+      } else {
+        await _actionService.deleteUpvote(_idiomId);
+        idiom..isUserUpvoted = false;
+        idiom..isUpvote = false;
+        idiom.upvoteCount += 1;
+        notifyListeners();
+      }
     }
   }
 

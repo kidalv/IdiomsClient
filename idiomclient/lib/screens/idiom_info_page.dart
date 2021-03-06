@@ -135,22 +135,31 @@ class IdiomInfoPage extends StatelessWidget {
                                         provider.idiom.upvoteCount.toString(),
                                         style: TextStyle(
                                             color: Colors.grey[400],
-                                            fontWeight: FontWeight.bold,
+                                            fontWeight: FontWeight.w500,
                                             fontSize: 18),
                                       );
                               }),
                               Consumer(builder: (_, watch, __) {
                                 final provider = watch(idiomInfoProvider);
-                                return Icon(
-                                  provider.isLoading ||
+                                return IconButton(
+                                  onPressed: provider.isLoading ||
                                           !provider.idiom.isUserUpvoted ||
                                           provider.idiom.isUpvote
-                                      ? Icons.arrow_drop_up_rounded
-                                      : Icons.arrow_drop_down_rounded,
-                                  size: 30,
-                                  color: provider.isLoading || !provider.idiom.isUserUpvoted
-                                      ? Colors.grey[400]
-                                      : theme.accentColor,
+                                      ? provider.addUpvote
+                                      : provider.addDevote,
+                                  padding: EdgeInsets.zero,
+                                  splashRadius: 20,
+                                  icon: Icon(
+                                    provider.isLoading ||
+                                            !provider.idiom.isUserUpvoted ||
+                                            provider.idiom.isUpvote
+                                        ? Icons.arrow_drop_up_rounded
+                                        : Icons.arrow_drop_down_rounded,
+                                    size: 30,
+                                    color: provider.isLoading || !provider.idiom.isUserUpvoted
+                                        ? Colors.grey[400]
+                                        : theme.accentColor,
+                                  ),
                                 );
                               }),
                               Padding(
@@ -172,12 +181,17 @@ class IdiomInfoPage extends StatelessWidget {
                                 final provider = watch(idiomInfoProvider);
                                 return Padding(
                                   padding: const EdgeInsets.only(right: 12.0),
-                                  child: Icon(
-                                    Icons.favorite_border,
-                                    color: provider.isLoading || !provider.idiom.isFavorite
-                                        ? Colors.grey[400]
-                                        : theme.accentColor,
-                                    size: 30,
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    splashRadius: 20,
+                                    onPressed: provider.addFavorite,
+                                    icon: Icon(
+                                      Icons.favorite_border,
+                                      color: provider.isLoading || !provider.idiom.isFavorite
+                                          ? Colors.grey[400]
+                                          : theme.accentColor,
+                                      size: 30,
+                                    ),
                                   ),
                                 );
                               }),
@@ -260,7 +274,8 @@ class IdiomInfoPage extends StatelessWidget {
                       fontSize: 24),
                 ),
               )),
-          SizedBox(
+          Container(
+            margin: const EdgeInsets.only(top: 10, bottom: 50, left: 25, right: 25),
             height: height * 0.2,
             child: Center(
               child: Consumer(builder: (_, watch, __) {

@@ -52,7 +52,7 @@ class ActionService {
   }
 
   Future<bool> deleteUpvote(int idiomId) async {
-    final result = await _client.deleteUpvote(DeleteUpvoteRequest()..idiomId);
+    final result = await _client.deleteUpvote(DeleteUpvoteRequest()..idiomId = idiomId);
     return result != null;
   }
 
