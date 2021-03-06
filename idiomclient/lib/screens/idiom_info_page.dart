@@ -371,6 +371,8 @@ class IdiomInfoPage extends StatelessWidget {
                         children: provider.idiom.comments
                             .map((x) => CommentTile(
                                   comment: x,
+                                  onLike: () {provider.addLike(x);},
+                                  onDislike: () {provider.addDisLike(x);},
                                 ))
                             .toList()),
                   )

@@ -639,13 +639,13 @@ class GetIdiomInfoReply extends $pb.GeneratedMessage {
 
 class GetIdiomListReply extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetIdiomListReply', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
-    ..pc<IdiomReply>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'idioms', $pb.PbFieldType.PM, subBuilder: IdiomReply.create)
+    ..pc<$2.IdiomReply>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'idioms', $pb.PbFieldType.PM, subBuilder: $2.IdiomReply.create)
     ..hasRequiredFields = false
   ;
 
   GetIdiomListReply._() : super();
   factory GetIdiomListReply({
-    $core.Iterable<IdiomReply> idioms,
+    $core.Iterable<$2.IdiomReply> idioms,
   }) {
     final _result = create();
     if (idioms != null) {
@@ -675,157 +675,6 @@ class GetIdiomListReply extends $pb.GeneratedMessage {
   static GetIdiomListReply _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<IdiomReply> get idioms => $_getList(0);
-}
-
-class IdiomReply extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'IdiomReply', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'idiomId', $pb.PbFieldType.O3)
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'text')
-    ..aOM<$1.Timestamp>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dateAdded', subBuilder: $1.Timestamp.create)
-    ..aOM<$2.LanguageReply>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'language', subBuilder: $2.LanguageReply.create)
-    ..aOM<$2.UserReply>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'user', subBuilder: $2.UserReply.create)
-    ..a<$core.int>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'upvoteCount', $pb.PbFieldType.O3)
-    ..a<$core.int>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'favoritesCount', $pb.PbFieldType.O3)
-    ..aOB(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'isFavorite')
-    ..hasRequiredFields = false
-  ;
-
-  IdiomReply._() : super();
-  factory IdiomReply({
-    $core.int idiomId,
-    $core.String text,
-    $1.Timestamp dateAdded,
-    $2.LanguageReply language,
-    $2.UserReply user,
-    $core.int upvoteCount,
-    $core.int favoritesCount,
-    $core.bool isFavorite,
-  }) {
-    final _result = create();
-    if (idiomId != null) {
-      _result.idiomId = idiomId;
-    }
-    if (text != null) {
-      _result.text = text;
-    }
-    if (dateAdded != null) {
-      _result.dateAdded = dateAdded;
-    }
-    if (language != null) {
-      _result.language = language;
-    }
-    if (user != null) {
-      _result.user = user;
-    }
-    if (upvoteCount != null) {
-      _result.upvoteCount = upvoteCount;
-    }
-    if (favoritesCount != null) {
-      _result.favoritesCount = favoritesCount;
-    }
-    if (isFavorite != null) {
-      _result.isFavorite = isFavorite;
-    }
-    return _result;
-  }
-  factory IdiomReply.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory IdiomReply.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  IdiomReply clone() => IdiomReply()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  IdiomReply copyWith(void Function(IdiomReply) updates) => super.copyWith((message) => updates(message as IdiomReply)); // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static IdiomReply create() => IdiomReply._();
-  IdiomReply createEmptyInstance() => create();
-  static $pb.PbList<IdiomReply> createRepeated() => $pb.PbList<IdiomReply>();
-  @$core.pragma('dart2js:noInline')
-  static IdiomReply getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<IdiomReply>(create);
-  static IdiomReply _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.int get idiomId => $_getIZ(0);
-  @$pb.TagNumber(1)
-  set idiomId($core.int v) { $_setSignedInt32(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasIdiomId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearIdiomId() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.String get text => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set text($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasText() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearText() => clearField(2);
-
-  @$pb.TagNumber(5)
-  $1.Timestamp get dateAdded => $_getN(2);
-  @$pb.TagNumber(5)
-  set dateAdded($1.Timestamp v) { setField(5, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasDateAdded() => $_has(2);
-  @$pb.TagNumber(5)
-  void clearDateAdded() => clearField(5);
-  @$pb.TagNumber(5)
-  $1.Timestamp ensureDateAdded() => $_ensure(2);
-
-  @$pb.TagNumber(6)
-  $2.LanguageReply get language => $_getN(3);
-  @$pb.TagNumber(6)
-  set language($2.LanguageReply v) { setField(6, v); }
-  @$pb.TagNumber(6)
-  $core.bool hasLanguage() => $_has(3);
-  @$pb.TagNumber(6)
-  void clearLanguage() => clearField(6);
-  @$pb.TagNumber(6)
-  $2.LanguageReply ensureLanguage() => $_ensure(3);
-
-  @$pb.TagNumber(7)
-  $2.UserReply get user => $_getN(4);
-  @$pb.TagNumber(7)
-  set user($2.UserReply v) { setField(7, v); }
-  @$pb.TagNumber(7)
-  $core.bool hasUser() => $_has(4);
-  @$pb.TagNumber(7)
-  void clearUser() => clearField(7);
-  @$pb.TagNumber(7)
-  $2.UserReply ensureUser() => $_ensure(4);
-
-  @$pb.TagNumber(9)
-  $core.int get upvoteCount => $_getIZ(5);
-  @$pb.TagNumber(9)
-  set upvoteCount($core.int v) { $_setSignedInt32(5, v); }
-  @$pb.TagNumber(9)
-  $core.bool hasUpvoteCount() => $_has(5);
-  @$pb.TagNumber(9)
-  void clearUpvoteCount() => clearField(9);
-
-  @$pb.TagNumber(10)
-  $core.int get favoritesCount => $_getIZ(6);
-  @$pb.TagNumber(10)
-  set favoritesCount($core.int v) { $_setSignedInt32(6, v); }
-  @$pb.TagNumber(10)
-  $core.bool hasFavoritesCount() => $_has(6);
-  @$pb.TagNumber(10)
-  void clearFavoritesCount() => clearField(10);
-
-  @$pb.TagNumber(11)
-  $core.bool get isFavorite => $_getBF(7);
-  @$pb.TagNumber(11)
-  set isFavorite($core.bool v) { $_setBool(7, v); }
-  @$pb.TagNumber(11)
-  $core.bool hasIsFavorite() => $_has(7);
-  @$pb.TagNumber(11)
-  void clearIsFavorite() => clearField(11);
+  $core.List<$2.IdiomReply> get idioms => $_getList(0);
 }
 

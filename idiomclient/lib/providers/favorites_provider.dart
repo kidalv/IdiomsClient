@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:idiomclient/protos/idiom.pb.dart';
+import 'package:idiomclient/protos/models.pb.dart';
 import 'package:idiomclient/services/idiom_service.dart';
 
 class FavoritesProvider with ChangeNotifier {
@@ -8,7 +8,7 @@ class FavoritesProvider with ChangeNotifier {
  bool isLoading;
 
  FavoritesProvider(){
-   _service = new IdiomService();
+   _service = IdiomService();
    isLoading = true;
    list = [];
  }

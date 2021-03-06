@@ -72,67 +72,6 @@ class AddUpvoteRequest extends $pb.GeneratedMessage {
   void clearIsUpvote() => clearField(2);
 }
 
-class ChangeUpvoteRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ChangeUpvoteRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'idiomId', $pb.PbFieldType.O3)
-    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'isUpvote')
-    ..hasRequiredFields = false
-  ;
-
-  ChangeUpvoteRequest._() : super();
-  factory ChangeUpvoteRequest({
-    $core.int idiomId,
-    $core.bool isUpvote,
-  }) {
-    final _result = create();
-    if (idiomId != null) {
-      _result.idiomId = idiomId;
-    }
-    if (isUpvote != null) {
-      _result.isUpvote = isUpvote;
-    }
-    return _result;
-  }
-  factory ChangeUpvoteRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ChangeUpvoteRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  ChangeUpvoteRequest clone() => ChangeUpvoteRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  ChangeUpvoteRequest copyWith(void Function(ChangeUpvoteRequest) updates) => super.copyWith((message) => updates(message as ChangeUpvoteRequest)); // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static ChangeUpvoteRequest create() => ChangeUpvoteRequest._();
-  ChangeUpvoteRequest createEmptyInstance() => create();
-  static $pb.PbList<ChangeUpvoteRequest> createRepeated() => $pb.PbList<ChangeUpvoteRequest>();
-  @$core.pragma('dart2js:noInline')
-  static ChangeUpvoteRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ChangeUpvoteRequest>(create);
-  static ChangeUpvoteRequest _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.int get idiomId => $_getIZ(0);
-  @$pb.TagNumber(1)
-  set idiomId($core.int v) { $_setSignedInt32(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasIdiomId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearIdiomId() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.bool get isUpvote => $_getBF(1);
-  @$pb.TagNumber(2)
-  set isUpvote($core.bool v) { $_setBool(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasIsUpvote() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearIsUpvote() => clearField(2);
-}
-
 class DeleteUpvoteRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteUpvoteRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'idiomId', $pb.PbFieldType.O3)
@@ -894,67 +833,6 @@ class ReportReply extends $pb.GeneratedMessage {
   void clearText() => clearField(4);
 }
 
-class UserModel extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UserModel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userId', $pb.PbFieldType.O3)
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..hasRequiredFields = false
-  ;
-
-  UserModel._() : super();
-  factory UserModel({
-    $core.int userId,
-    $core.String name,
-  }) {
-    final _result = create();
-    if (userId != null) {
-      _result.userId = userId;
-    }
-    if (name != null) {
-      _result.name = name;
-    }
-    return _result;
-  }
-  factory UserModel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory UserModel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  UserModel clone() => UserModel()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  UserModel copyWith(void Function(UserModel) updates) => super.copyWith((message) => updates(message as UserModel)); // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static UserModel create() => UserModel._();
-  UserModel createEmptyInstance() => create();
-  static $pb.PbList<UserModel> createRepeated() => $pb.PbList<UserModel>();
-  @$core.pragma('dart2js:noInline')
-  static UserModel getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UserModel>(create);
-  static UserModel _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.int get userId => $_getIZ(0);
-  @$pb.TagNumber(1)
-  set userId($core.int v) { $_setSignedInt32(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasUserId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearUserId() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.String get name => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set name($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasName() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearName() => clearField(2);
-}
-
 class RequestTranslationReply extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RequestTranslationReply', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'requestId', $pb.PbFieldType.O3)
@@ -1083,5 +961,207 @@ class GetAllLanguagesResponse extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.List<$1.LanguageReply> get languages => $_getList(0);
+}
+
+class AddCommentLikeRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddCommentLikeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'commentId', $pb.PbFieldType.O3)
+    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'isLike')
+    ..hasRequiredFields = false
+  ;
+
+  AddCommentLikeRequest._() : super();
+  factory AddCommentLikeRequest({
+    $core.int commentId,
+    $core.bool isLike,
+  }) {
+    final _result = create();
+    if (commentId != null) {
+      _result.commentId = commentId;
+    }
+    if (isLike != null) {
+      _result.isLike = isLike;
+    }
+    return _result;
+  }
+  factory AddCommentLikeRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddCommentLikeRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddCommentLikeRequest clone() => AddCommentLikeRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddCommentLikeRequest copyWith(void Function(AddCommentLikeRequest) updates) => super.copyWith((message) => updates(message as AddCommentLikeRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AddCommentLikeRequest create() => AddCommentLikeRequest._();
+  AddCommentLikeRequest createEmptyInstance() => create();
+  static $pb.PbList<AddCommentLikeRequest> createRepeated() => $pb.PbList<AddCommentLikeRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AddCommentLikeRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddCommentLikeRequest>(create);
+  static AddCommentLikeRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get commentId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set commentId($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasCommentId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCommentId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.bool get isLike => $_getBF(1);
+  @$pb.TagNumber(2)
+  set isLike($core.bool v) { $_setBool(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasIsLike() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearIsLike() => clearField(2);
+}
+
+class AddCommentLikeResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddCommentLikeResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'isSuccessful')
+    ..hasRequiredFields = false
+  ;
+
+  AddCommentLikeResponse._() : super();
+  factory AddCommentLikeResponse({
+    $core.bool isSuccessful,
+  }) {
+    final _result = create();
+    if (isSuccessful != null) {
+      _result.isSuccessful = isSuccessful;
+    }
+    return _result;
+  }
+  factory AddCommentLikeResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddCommentLikeResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddCommentLikeResponse clone() => AddCommentLikeResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddCommentLikeResponse copyWith(void Function(AddCommentLikeResponse) updates) => super.copyWith((message) => updates(message as AddCommentLikeResponse)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AddCommentLikeResponse create() => AddCommentLikeResponse._();
+  AddCommentLikeResponse createEmptyInstance() => create();
+  static $pb.PbList<AddCommentLikeResponse> createRepeated() => $pb.PbList<AddCommentLikeResponse>();
+  @$core.pragma('dart2js:noInline')
+  static AddCommentLikeResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddCommentLikeResponse>(create);
+  static AddCommentLikeResponse _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get isSuccessful => $_getBF(0);
+  @$pb.TagNumber(1)
+  set isSuccessful($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasIsSuccessful() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearIsSuccessful() => clearField(1);
+}
+
+class DeleteCommentLikeRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteCommentLikeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'commentId', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  DeleteCommentLikeRequest._() : super();
+  factory DeleteCommentLikeRequest({
+    $core.int commentId,
+  }) {
+    final _result = create();
+    if (commentId != null) {
+      _result.commentId = commentId;
+    }
+    return _result;
+  }
+  factory DeleteCommentLikeRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DeleteCommentLikeRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  DeleteCommentLikeRequest clone() => DeleteCommentLikeRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  DeleteCommentLikeRequest copyWith(void Function(DeleteCommentLikeRequest) updates) => super.copyWith((message) => updates(message as DeleteCommentLikeRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static DeleteCommentLikeRequest create() => DeleteCommentLikeRequest._();
+  DeleteCommentLikeRequest createEmptyInstance() => create();
+  static $pb.PbList<DeleteCommentLikeRequest> createRepeated() => $pb.PbList<DeleteCommentLikeRequest>();
+  @$core.pragma('dart2js:noInline')
+  static DeleteCommentLikeRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DeleteCommentLikeRequest>(create);
+  static DeleteCommentLikeRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get commentId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set commentId($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasCommentId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCommentId() => clearField(1);
+}
+
+class DeleteCommentLikeResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteCommentLikeResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'isRemoved')
+    ..hasRequiredFields = false
+  ;
+
+  DeleteCommentLikeResponse._() : super();
+  factory DeleteCommentLikeResponse({
+    $core.bool isRemoved,
+  }) {
+    final _result = create();
+    if (isRemoved != null) {
+      _result.isRemoved = isRemoved;
+    }
+    return _result;
+  }
+  factory DeleteCommentLikeResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DeleteCommentLikeResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  DeleteCommentLikeResponse clone() => DeleteCommentLikeResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  DeleteCommentLikeResponse copyWith(void Function(DeleteCommentLikeResponse) updates) => super.copyWith((message) => updates(message as DeleteCommentLikeResponse)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static DeleteCommentLikeResponse create() => DeleteCommentLikeResponse._();
+  DeleteCommentLikeResponse createEmptyInstance() => create();
+  static $pb.PbList<DeleteCommentLikeResponse> createRepeated() => $pb.PbList<DeleteCommentLikeResponse>();
+  @$core.pragma('dart2js:noInline')
+  static DeleteCommentLikeResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DeleteCommentLikeResponse>(create);
+  static DeleteCommentLikeResponse _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get isRemoved => $_getBF(0);
+  @$pb.TagNumber(1)
+  set isRemoved($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasIsRemoved() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearIsRemoved() => clearField(1);
 }
 

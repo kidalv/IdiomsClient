@@ -70,4 +70,22 @@ class ActionService {
     final result = await _client.getAllLanguages(GetAllLanguagesRequest());
     return result.languages;
   }
+
+  Future<bool> addCommentLike(int commentId) async {
+    return (await _client.addCommentLike(AddCommentLikeRequest()
+          ..commentId = commentId
+          ..isLike = true))
+        .isSuccessful;
+  }
+
+  Future<bool> addCommentDisLike(int commentId) async {
+    return (await _client.addCommentLike(AddCommentLikeRequest()
+          ..commentId = commentId
+          ..isLike = false))
+        .isSuccessful;
+  }
+
+  Future<bool> deleteCommentLike(int commentId) async {
+    return (await _client.deleteCommentLike(DeleteCommentLikeRequest()..commentId = commentId)).isRemoved;
+  }
 }

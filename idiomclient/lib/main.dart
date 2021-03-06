@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
           subtitle1: TextStyle(fontSize: 16, color: Colors.red[500], height: 1.0),
           headline6: TextStyle(fontSize: 24.0, fontFamily: 'Open Sans', color: Colors.grey[400]),
           headline3: TextStyle(fontSize: 20.0, fontFamily: 'Open Sans', color: Colors.grey[400]),
-          bodyText2: const TextStyle(fontSize: 18.0, fontFamily: 'Hind'),
+          bodyText2: TextStyle(fontSize: 18.0, fontFamily: 'Hind', color: Colors.grey[400]),
           button:  TextStyle(fontSize: 18.0, fontFamily: 'Hind', color: Colors.grey[800], fontWeight: FontWeight.w500),
           headline5: TextStyle(fontFamily: "Nexa", color: Colors.grey[700], fontWeight: FontWeight.bold, fontSize: 24)
         ),

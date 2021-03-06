@@ -20,11 +20,6 @@ class ActionClient extends $grpc.Client {
           '/idiom.Action/AddUpvote',
           ($0.AddUpvoteRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.UpvoteReply.fromBuffer(value));
-  static final _$changeUpvote =
-      $grpc.ClientMethod<$0.ChangeUpvoteRequest, $0.UpvoteReply>(
-          '/idiom.Action/ChangeUpvote',
-          ($0.ChangeUpvoteRequest value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) => $0.UpvoteReply.fromBuffer(value));
   static final _$deleteUpvote =
       $grpc.ClientMethod<$0.DeleteUpvoteRequest, $0.DeleteReply>(
           '/idiom.Action/DeleteUpvote',
@@ -72,6 +67,18 @@ class ActionClient extends $grpc.Client {
           ($0.GetAllLanguagesRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.GetAllLanguagesResponse.fromBuffer(value));
+  static final _$addCommentLike =
+      $grpc.ClientMethod<$0.AddCommentLikeRequest, $0.AddCommentLikeResponse>(
+          '/idiom.Action/AddCommentLike',
+          ($0.AddCommentLikeRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.AddCommentLikeResponse.fromBuffer(value));
+  static final _$deleteCommentLike = $grpc.ClientMethod<
+          $0.DeleteCommentLikeRequest, $0.DeleteCommentLikeResponse>(
+      '/idiom.Action/DeleteCommentLike',
+      ($0.DeleteCommentLikeRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) =>
+          $0.DeleteCommentLikeResponse.fromBuffer(value));
 
   ActionClient($grpc.ClientChannel channel,
       {$grpc.CallOptions options,
@@ -81,12 +88,6 @@ class ActionClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.UpvoteReply> addUpvote($0.AddUpvoteRequest request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$addUpvote, request, options: options);
-  }
-
-  $grpc.ResponseFuture<$0.UpvoteReply> changeUpvote(
-      $0.ChangeUpvoteRequest request,
-      {$grpc.CallOptions options}) {
-    return $createUnaryCall(_$changeUpvote, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.DeleteReply> deleteUpvote(
@@ -140,6 +141,18 @@ class ActionClient extends $grpc.Client {
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$getAllLanguages, request, options: options);
   }
+
+  $grpc.ResponseFuture<$0.AddCommentLikeResponse> addCommentLike(
+      $0.AddCommentLikeRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$addCommentLike, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.DeleteCommentLikeResponse> deleteCommentLike(
+      $0.DeleteCommentLikeRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$deleteCommentLike, request, options: options);
+  }
 }
 
 abstract class ActionServiceBase extends $grpc.Service {
@@ -152,14 +165,6 @@ abstract class ActionServiceBase extends $grpc.Service {
         false,
         false,
         ($core.List<$core.int> value) => $0.AddUpvoteRequest.fromBuffer(value),
-        ($0.UpvoteReply value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.ChangeUpvoteRequest, $0.UpvoteReply>(
-        'ChangeUpvote',
-        changeUpvote_Pre,
-        false,
-        false,
-        ($core.List<$core.int> value) =>
-            $0.ChangeUpvoteRequest.fromBuffer(value),
         ($0.UpvoteReply value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.DeleteUpvoteRequest, $0.DeleteReply>(
         'DeleteUpvote',
@@ -233,16 +238,29 @@ abstract class ActionServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $0.GetAllLanguagesRequest.fromBuffer(value),
         ($0.GetAllLanguagesResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.AddCommentLikeRequest,
+            $0.AddCommentLikeResponse>(
+        'AddCommentLike',
+        addCommentLike_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.AddCommentLikeRequest.fromBuffer(value),
+        ($0.AddCommentLikeResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.DeleteCommentLikeRequest,
+            $0.DeleteCommentLikeResponse>(
+        'DeleteCommentLike',
+        deleteCommentLike_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.DeleteCommentLikeRequest.fromBuffer(value),
+        ($0.DeleteCommentLikeResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.UpvoteReply> addUpvote_Pre($grpc.ServiceCall call,
       $async.Future<$0.AddUpvoteRequest> request) async {
     return addUpvote(call, await request);
-  }
-
-  $async.Future<$0.UpvoteReply> changeUpvote_Pre($grpc.ServiceCall call,
-      $async.Future<$0.ChangeUpvoteRequest> request) async {
-    return changeUpvote(call, await request);
   }
 
   $async.Future<$0.DeleteReply> deleteUpvote_Pre($grpc.ServiceCall call,
@@ -292,10 +310,20 @@ abstract class ActionServiceBase extends $grpc.Service {
     return getAllLanguages(call, await request);
   }
 
+  $async.Future<$0.AddCommentLikeResponse> addCommentLike_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.AddCommentLikeRequest> request) async {
+    return addCommentLike(call, await request);
+  }
+
+  $async.Future<$0.DeleteCommentLikeResponse> deleteCommentLike_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.DeleteCommentLikeRequest> request) async {
+    return deleteCommentLike(call, await request);
+  }
+
   $async.Future<$0.UpvoteReply> addUpvote(
       $grpc.ServiceCall call, $0.AddUpvoteRequest request);
-  $async.Future<$0.UpvoteReply> changeUpvote(
-      $grpc.ServiceCall call, $0.ChangeUpvoteRequest request);
   $async.Future<$0.DeleteReply> deleteUpvote(
       $grpc.ServiceCall call, $0.DeleteUpvoteRequest request);
   $async.Future<$0.FavoriteReply> addFavorite(
@@ -314,4 +342,8 @@ abstract class ActionServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.RequestTranslationRequest request);
   $async.Future<$0.GetAllLanguagesResponse> getAllLanguages(
       $grpc.ServiceCall call, $0.GetAllLanguagesRequest request);
+  $async.Future<$0.AddCommentLikeResponse> addCommentLike(
+      $grpc.ServiceCall call, $0.AddCommentLikeRequest request);
+  $async.Future<$0.DeleteCommentLikeResponse> deleteCommentLike(
+      $grpc.ServiceCall call, $0.DeleteCommentLikeRequest request);
 }

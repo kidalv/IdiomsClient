@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:idiomclient/components/flag_row.dart';
-import 'package:idiomclient/protos/idiom.pb.dart';
+import 'package:idiomclient/protos/models.pb.dart';
 import 'package:idiomclient/screens/idiom_info_page.dart';
 
 class IdiomListTile extends StatelessWidget {

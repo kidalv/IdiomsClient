@@ -125,6 +125,52 @@ class IdiomInfoProvider with ChangeNotifier {
     }
   }
 
+  Future<void> addLike(CommentReply comment) async {
+    if (comment.userCommentLikeAdded) {
+      if (comment.isUserLike) {
+        await _actionService.deleteCommentLike(comment.commentId);
+        comment.userCommentLikeAdded = false;
+        comment.isUserLike = false;
+        comment.likesCount -= 1;
+      } else {
+        await _actionService.addCommentLike(comment.commentId);
+        comment.userCommentLikeAdded = true;
+        comment.isUserLike = true;
+        comment.likesCount += 1;
+        comment.dislikesCount -= 1;
+      }
+    } else {
+      await _actionService.addCommentLike(comment.commentId);
+      comment.userCommentLikeAdded = true;
+      comment.isUserLike = true;
+      comment.likesCount += 1;
+    }
+    notifyListeners();
+  }
+
+    Future<void> addDisLike(CommentReply comment) async {
+    if (comment.userCommentLikeAdded) {
+      if (!comment.isUserLike) {
+        await _actionService.deleteCommentLike(comment.commentId);
+        comment.userCommentLikeAdded = false;
+        comment.isUserLike = false;
+        comment.dislikesCount -= 1;
+      } else {
+        await _actionService.addCommentDisLike(comment.commentId);
+        comment.userCommentLikeAdded = true;
+        comment.isUserLike = false;
+        comment.likesCount -= 1;
+        comment.dislikesCount += 1;
+      }
+    } else {
+      await _actionService.addCommentDisLike(comment.commentId);
+      comment.userCommentLikeAdded = true;
+      comment.isUserLike = false;
+      comment.dislikesCount += 1;
+    }
+    notifyListeners();
+  }
+
   Future<void> addReport(String text) async {
     final result = await _actionService.addReport(_idiomId, text);
     // TODO Something

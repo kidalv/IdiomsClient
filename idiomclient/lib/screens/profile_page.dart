@@ -107,10 +107,91 @@ class ProfilePage extends StatelessWidget {
                             ),
                           ),
                         );
+                }),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                      padding: const EdgeInsets.only(top: 40.0, bottom: 10, left: 10),
+                      child: Text(
+                        "Stats",
+                        style: theme.textTheme.headline5,
+                      )),
+                ),
+                Consumer(builder: (_, watch, __) {
+                  final provider = watch(profileProvider);
+                  return Wrap(children: [
+                    StatTile(
+                      icon: Icons.translate,
+                      stat: provider.isLoading ? 0 : provider.profile.idiomsCount,
+                      isLoading: provider.isLoading,
+                    ),
+                    StatTile(
+                      icon: Icons.arrow_drop_up_rounded,
+                      stat: provider.isLoading ? 0 : provider.profile.upvotes,
+                      isLoading: provider.isLoading,
+                    ),
+                    StatTile(
+                      icon: Icons.favorite_outline,
+                      stat: provider.isLoading ? 0 : provider.profile.favorites,
+                      isLoading: provider.isLoading,
+                    ),
+                    Center(
+                      child: Container(
+                        width: width * 0.8,
+                        margin: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            border: Border(bottom: BorderSide(color: theme.dividerColor))),
+                      ),
+                    ),
+                    StatTile(
+                      icon: Icons.comment_outlined,
+                      stat: provider.isLoading ? 0 : provider.profile.comments,
+                      isLoading: provider.isLoading,
+                    ),
+                    StatTile(
+                      icon: Icons.thumb_up_alt_outlined,
+                      stat: provider.isLoading ? 0 : provider.profile.likes,
+                      isLoading: provider.isLoading,
+                    ),
+                    StatTile(
+                      icon: Icons.thumb_down_outlined,
+                      stat: provider.isLoading ? 0 : provider.profile.dislikes,
+                      isLoading: provider.isLoading,
+                    )
+                  ]);
                 })
               ],
             ),
           ),
         ));
+  }
+}
+
+class StatTile extends StatelessWidget {
+  final IconData icon;
+  final int stat;
+  final bool isLoading;
+  const StatTile({Key key, this.icon, this.stat, this.isLoading}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final theme = Theme.of(context);
+    return Container(
+      width: width * 0.3,
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 35, color: theme.buttonColor),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: isLoading
+                ? const PlaceholderContainer(width: 10, height: 18)
+                : Text(stat.toString(), style: theme.textTheme.bodyText2),
+          )
+        ],
+      ),
+    );
   }
 }

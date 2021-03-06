@@ -5,7 +5,9 @@ import 'package:intl/intl.dart';
 
 class CommentTile extends StatelessWidget {
   final CommentReply comment;
-  const CommentTile({Key key, this.comment}) : super(key: key);
+  final Function() onLike;
+  final Function() onDislike;
+  const CommentTile({Key key, this.comment, this.onLike, this.onDislike}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,10 +59,22 @@ class CommentTile extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Icon(Icons.thumb_up_alt_outlined, color: theme.buttonColor, size: 24),
-                        Padding(padding: EdgeInsets.only(left: 8, right: 15), child: Text("6", style: theme.textTheme.headline3)),
-                        Icon(Icons.thumb_down_alt_outlined, color: theme.buttonColor, size: 24),
-                        Padding(padding: EdgeInsets.only(left: 8), child: Text("1", style: theme.textTheme.headline3))
+                        IconButton(
+                            onPressed: onLike,
+                            icon: Icon(Icons.thumb_up_alt_outlined,
+                                color: comment.userCommentLikeAdded && comment.isUserLike ? theme.accentColor : theme.buttonColor, size: 24)),
+                        Padding(
+                            padding: const EdgeInsets.only(left: 8, right: 15),
+                            child: Text(comment.likesCount.toString(),
+                                style: theme.textTheme.headline3)),
+                        IconButton(
+                          onPressed: onDislike,
+                            icon: Icon(Icons.thumb_down_alt_outlined,
+                                color: comment.userCommentLikeAdded && !comment.isUserLike ? theme.accentColor : theme.buttonColor, size: 24)),
+                        Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Text(comment.dislikesCount.toString(),
+                                style: theme.textTheme.headline3))
                       ],
                     )
                   ],

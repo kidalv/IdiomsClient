@@ -10,6 +10,7 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'models.pb.dart' as $1;
+import 'timestamp.pb.dart' as $2;
 
 class GetUserProfileRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetUserProfileRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
@@ -203,6 +204,7 @@ class UserCredentialsReply extends $pb.GeneratedMessage {
     ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'token')
     ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'refreshToken')
     ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId', $pb.PbFieldType.O3)
+    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'imageUrl')
     ..hasRequiredFields = false
   ;
 
@@ -215,6 +217,7 @@ class UserCredentialsReply extends $pb.GeneratedMessage {
     $core.String token,
     $core.String refreshToken,
     $core.int roleId,
+    $core.String imageUrl,
   }) {
     final _result = create();
     if (userId != null) {
@@ -237,6 +240,9 @@ class UserCredentialsReply extends $pb.GeneratedMessage {
     }
     if (roleId != null) {
       _result.roleId = roleId;
+    }
+    if (imageUrl != null) {
+      _result.imageUrl = imageUrl;
     }
     return _result;
   }
@@ -323,6 +329,15 @@ class UserCredentialsReply extends $pb.GeneratedMessage {
   $core.bool hasRoleId() => $_has(6);
   @$pb.TagNumber(7)
   void clearRoleId() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.String get imageUrl => $_getSZ(7);
+  @$pb.TagNumber(8)
+  set imageUrl($core.String v) { $_setString(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasImageUrl() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearImageUrl() => clearField(8);
 }
 
 class ChangeUserRequest extends $pb.GeneratedMessage {
@@ -514,6 +529,14 @@ class UserProfileReply extends $pb.GeneratedMessage {
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'email')
     ..pc<$1.LanguageReply>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userLanguages', $pb.PbFieldType.PM, subBuilder: $1.LanguageReply.create)
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'imageUrl')
+    ..aOM<$2.Timestamp>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dateJoined', subBuilder: $2.Timestamp.create)
+    ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'upvotes', $pb.PbFieldType.O3)
+    ..a<$core.int>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'favorites', $pb.PbFieldType.O3)
+    ..a<$core.int>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'comments', $pb.PbFieldType.O3)
+    ..a<$core.int>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'idiomsCount', $pb.PbFieldType.O3)
+    ..a<$core.int>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'likes', $pb.PbFieldType.O3)
+    ..a<$core.int>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dislikes', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -523,6 +546,14 @@ class UserProfileReply extends $pb.GeneratedMessage {
     $core.String name,
     $core.String email,
     $core.Iterable<$1.LanguageReply> userLanguages,
+    $core.String imageUrl,
+    $2.Timestamp dateJoined,
+    $core.int upvotes,
+    $core.int favorites,
+    $core.int comments,
+    $core.int idiomsCount,
+    $core.int likes,
+    $core.int dislikes,
   }) {
     final _result = create();
     if (userId != null) {
@@ -536,6 +567,30 @@ class UserProfileReply extends $pb.GeneratedMessage {
     }
     if (userLanguages != null) {
       _result.userLanguages.addAll(userLanguages);
+    }
+    if (imageUrl != null) {
+      _result.imageUrl = imageUrl;
+    }
+    if (dateJoined != null) {
+      _result.dateJoined = dateJoined;
+    }
+    if (upvotes != null) {
+      _result.upvotes = upvotes;
+    }
+    if (favorites != null) {
+      _result.favorites = favorites;
+    }
+    if (comments != null) {
+      _result.comments = comments;
+    }
+    if (idiomsCount != null) {
+      _result.idiomsCount = idiomsCount;
+    }
+    if (likes != null) {
+      _result.likes = likes;
+    }
+    if (dislikes != null) {
+      _result.dislikes = dislikes;
     }
     return _result;
   }
@@ -589,5 +644,79 @@ class UserProfileReply extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(4)
   $core.List<$1.LanguageReply> get userLanguages => $_getList(3);
+
+  @$pb.TagNumber(5)
+  $core.String get imageUrl => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set imageUrl($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasImageUrl() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearImageUrl() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $2.Timestamp get dateJoined => $_getN(5);
+  @$pb.TagNumber(6)
+  set dateJoined($2.Timestamp v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasDateJoined() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearDateJoined() => clearField(6);
+  @$pb.TagNumber(6)
+  $2.Timestamp ensureDateJoined() => $_ensure(5);
+
+  @$pb.TagNumber(7)
+  $core.int get upvotes => $_getIZ(6);
+  @$pb.TagNumber(7)
+  set upvotes($core.int v) { $_setSignedInt32(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasUpvotes() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearUpvotes() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.int get favorites => $_getIZ(7);
+  @$pb.TagNumber(8)
+  set favorites($core.int v) { $_setSignedInt32(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasFavorites() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearFavorites() => clearField(8);
+
+  @$pb.TagNumber(9)
+  $core.int get comments => $_getIZ(8);
+  @$pb.TagNumber(9)
+  set comments($core.int v) { $_setSignedInt32(8, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasComments() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearComments() => clearField(9);
+
+  @$pb.TagNumber(10)
+  $core.int get idiomsCount => $_getIZ(9);
+  @$pb.TagNumber(10)
+  set idiomsCount($core.int v) { $_setSignedInt32(9, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasIdiomsCount() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearIdiomsCount() => clearField(10);
+
+  @$pb.TagNumber(11)
+  $core.int get likes => $_getIZ(10);
+  @$pb.TagNumber(11)
+  set likes($core.int v) { $_setSignedInt32(10, v); }
+  @$pb.TagNumber(11)
+  $core.bool hasLikes() => $_has(10);
+  @$pb.TagNumber(11)
+  void clearLikes() => clearField(11);
+
+  @$pb.TagNumber(12)
+  $core.int get dislikes => $_getIZ(11);
+  @$pb.TagNumber(12)
+  set dislikes($core.int v) { $_setSignedInt32(11, v); }
+  @$pb.TagNumber(12)
+  $core.bool hasDislikes() => $_has(11);
+  @$pb.TagNumber(12)
+  void clearDislikes() => clearField(12);
 }
 

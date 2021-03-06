@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:grpc/grpc.dart';
 import 'package:idiomclient/protos/idiom.pbgrpc.dart';
+import 'package:idiomclient/protos/models.pb.dart';
 import 'package:idiomclient/services/grpc_client_singleton.dart';
 import 'package:idiomclient/services/shared_prefs.dart';
 
