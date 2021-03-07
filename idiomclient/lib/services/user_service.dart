@@ -56,4 +56,8 @@ class UserService {
   Future<UserProfileReply> deleteUserLanguage(int languageId) async {
     return await _client.deleteUserLanguage(DeleteUserLanguageRequest()..languageId = languageId);
   }
+
+  Future<UserCredentialsReply> googleSignIn(String jwtToken) async {
+    return await _client.googleSignIn(GoogleSignInRequest()..jwtToken = jwtToken);
+  }
 }

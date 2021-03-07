@@ -340,6 +340,53 @@ class UserCredentialsReply extends $pb.GeneratedMessage {
   void clearImageUrl() => clearField(8);
 }
 
+class GoogleSignInRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GoogleSignInRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'jwtToken')
+    ..hasRequiredFields = false
+  ;
+
+  GoogleSignInRequest._() : super();
+  factory GoogleSignInRequest({
+    $core.String jwtToken,
+  }) {
+    final _result = create();
+    if (jwtToken != null) {
+      _result.jwtToken = jwtToken;
+    }
+    return _result;
+  }
+  factory GoogleSignInRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GoogleSignInRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GoogleSignInRequest clone() => GoogleSignInRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GoogleSignInRequest copyWith(void Function(GoogleSignInRequest) updates) => super.copyWith((message) => updates(message as GoogleSignInRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GoogleSignInRequest create() => GoogleSignInRequest._();
+  GoogleSignInRequest createEmptyInstance() => create();
+  static $pb.PbList<GoogleSignInRequest> createRepeated() => $pb.PbList<GoogleSignInRequest>();
+  @$core.pragma('dart2js:noInline')
+  static GoogleSignInRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GoogleSignInRequest>(create);
+  static GoogleSignInRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get jwtToken => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set jwtToken($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasJwtToken() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearJwtToken() => clearField(1);
+}
+
 class ChangeUserRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ChangeUserRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userId', $pb.PbFieldType.O3)

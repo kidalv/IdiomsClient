@@ -50,6 +50,12 @@ class UserClient extends $grpc.Client {
           ($0.DeleteUserLanguageRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.UserProfileReply.fromBuffer(value));
+  static final _$googleSignIn =
+      $grpc.ClientMethod<$0.GoogleSignInRequest, $0.UserCredentialsReply>(
+          '/idiom.User/GoogleSignIn',
+          ($0.GoogleSignInRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.UserCredentialsReply.fromBuffer(value));
 
   UserClient($grpc.ClientChannel channel,
       {$grpc.CallOptions options,
@@ -89,6 +95,12 @@ class UserClient extends $grpc.Client {
       $0.DeleteUserLanguageRequest request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$deleteUserLanguage, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.UserCredentialsReply> googleSignIn(
+      $0.GoogleSignInRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$googleSignIn, request, options: options);
   }
 }
 
@@ -144,6 +156,15 @@ abstract class UserServiceBase extends $grpc.Service {
             ($core.List<$core.int> value) =>
                 $0.DeleteUserLanguageRequest.fromBuffer(value),
             ($0.UserProfileReply value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$0.GoogleSignInRequest, $0.UserCredentialsReply>(
+            'GoogleSignIn',
+            googleSignIn_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $0.GoogleSignInRequest.fromBuffer(value),
+            ($0.UserCredentialsReply value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.UserProfileReply> getUserProfile_Pre($grpc.ServiceCall call,
@@ -178,6 +199,12 @@ abstract class UserServiceBase extends $grpc.Service {
     return deleteUserLanguage(call, await request);
   }
 
+  $async.Future<$0.UserCredentialsReply> googleSignIn_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.GoogleSignInRequest> request) async {
+    return googleSignIn(call, await request);
+  }
+
   $async.Future<$0.UserProfileReply> getUserProfile(
       $grpc.ServiceCall call, $0.GetUserProfileRequest request);
   $async.Future<$0.UserCredentialsReply> register(
@@ -190,4 +217,6 @@ abstract class UserServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.AddUserLanguageRequest request);
   $async.Future<$0.UserProfileReply> deleteUserLanguage(
       $grpc.ServiceCall call, $0.DeleteUserLanguageRequest request);
+  $async.Future<$0.UserCredentialsReply> googleSignIn(
+      $grpc.ServiceCall call, $0.GoogleSignInRequest request);
 }

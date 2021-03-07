@@ -103,18 +103,23 @@ class RegistrationProvider with ChangeNotifier {
   }
 
   Future<void> signInWithGoogle() async {
-    GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
-    GoogleSignInAuthentication googleSignInAuthentication =
+    final GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
         await googleSignInAccount.authentication;
-    // AuthCredential credential = GoogleAuthProvider.getCredential(
-    //   accessToken: googleSignInAuthentication.accessToken,
-    //   idToken: googleSignInAuthentication.idToken,
-    // );
-    // AuthResult authResult = await _auth.signInWithCredential(credential);
-    // _user = authResult.user;
-    // assert(!_user.isAnonymous);
-    // assert(await _user.getIdToken() != null);
-    // FirebaseUser currentUser = await _auth.currentUser();
+    registerLoading = true;
+    notifyListeners();
+    final result = await _service.googleSignIn(googleSignInAuthentication.idToken);
+    if (result != null) {
+      final prefs = SharedPrefs();
+      prefs.email = result.email;
+      prefs.name = result.name;
+      prefs.token = result.token;
+      prefs.refreshToken = result.refreshToken;
+    } else {
+      error = "something wrong";
+    }
+    registerLoading = false;
+    notifyListeners();
   }
 
   bool _verifyEmail() {

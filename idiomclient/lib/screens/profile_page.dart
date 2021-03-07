@@ -62,7 +62,8 @@ class ProfilePage extends StatelessWidget {
                                         size: 60,
                                         user: UserReply()
                                           ..name = provider.profile.name
-                                          ..userId = provider.profile.userId),
+                                          ..userId = provider.profile.userId
+                                          ..imageUrl = provider.profile.imageUrl),
                                   ),
                                 ),
                                 SizedBox(
