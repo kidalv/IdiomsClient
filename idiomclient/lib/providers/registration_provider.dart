@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:idiomclient/services/shared_prefs.dart';
 import 'package:idiomclient/services/user_service.dart';
 
@@ -18,6 +19,7 @@ class RegistrationProvider with ChangeNotifier {
   TextEditingController nameController;
   TextEditingController passwordController;
   TextEditingController repeatPasswordController;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   RegistrationProvider() {
     _service = UserService.unAuthorized();
@@ -98,6 +100,21 @@ class RegistrationProvider with ChangeNotifier {
 
     notifyListeners();
     return result;
+  }
+
+  Future<void> signInWithGoogle() async {
+    GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
+    GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
+    // AuthCredential credential = GoogleAuthProvider.getCredential(
+    //   accessToken: googleSignInAuthentication.accessToken,
+    //   idToken: googleSignInAuthentication.idToken,
+    // );
+    // AuthResult authResult = await _auth.signInWithCredential(credential);
+    // _user = authResult.user;
+    // assert(!_user.isAnonymous);
+    // assert(await _user.getIdToken() != null);
+    // FirebaseUser currentUser = await _auth.currentUser();
   }
 
   bool _verifyEmail() {

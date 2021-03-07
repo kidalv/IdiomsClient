@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:idiomclient/protos/idiom.pb.dart';
 import 'package:idiomclient/protos/models.pb.dart';
 import 'package:idiomclient/protos/timestamp.pb.dart';
+import 'package:idiomclient/providers/idiom_list_provider.dart';
 import 'package:idiomclient/services/action_service.dart';
 import 'package:idiomclient/services/idiom_service.dart';
-import 'package:idiomclient/services/shared_prefs.dart';
+import 'package:idiomclient/providers/providers.dart';
 
 class IdiomInfoProvider with ChangeNotifier {
   IdiomService _service;
@@ -17,13 +18,15 @@ class IdiomInfoProvider with ChangeNotifier {
   TextEditingController commentController;
   bool commentSending;
   bool sortByDate;
+  final IdiomReply _listIdiom;
+  final IdiomListProvider _listProvider;
 
-  IdiomInfoProvider(int idiomId) {
+  IdiomInfoProvider(this._listIdiom, this._listProvider) {
     _service = IdiomService();
     _actionService = ActionService();
     commentController = TextEditingController();
     isLoading = true;
-    _idiomId = idiomId;
+    _idiomId = _listIdiom.idiomId;
     commentSending = false;
     getIdiom();
     commentDisabled = true;
@@ -69,11 +72,16 @@ class IdiomInfoProvider with ChangeNotifier {
       final result = await _actionService.deleteFavorite(_idiomId);
       idiom.isFavorite = !result;
       idiom.favoritesCount -= 1;
+      _listIdiom.favoritesCount -= 1;
+      _listIdiom.isFavorite = !result;
     } else {
       final result = await _actionService.addFavorite(_idiomId);
       idiom..isFavorite = result;
       idiom.favoritesCount += 1;
+      _listIdiom.favoritesCount += 1;
+      _listIdiom.isFavorite = result;
     }
+    _listProvider.notifyListeners();
     notifyListeners();
   }
 
@@ -83,22 +91,24 @@ class IdiomInfoProvider with ChangeNotifier {
       idiom..isUserUpvoted = result;
       idiom..isUpvote = true;
       idiom.upvoteCount += 1;
-      notifyListeners();
+      _listIdiom.upvoteCount += 1;
     } else {
       if (!idiom.isUpvote) {
         final result = await _actionService.addUpvote(_idiomId, true);
         idiom..isUserUpvoted = result;
         idiom..isUpvote = true;
         idiom.upvoteCount += 2;
-        notifyListeners();
+        _listIdiom.upvoteCount += 2;
       } else {
         await _actionService.deleteUpvote(_idiomId);
         idiom..isUserUpvoted = false;
         idiom..isUpvote = false;
         idiom.upvoteCount -= 1;
-        notifyListeners();
+        _listIdiom.upvoteCount -= 1;
       }
     }
+    _listProvider.notifyListeners();
+    notifyListeners();
   }
 
   Future<void> addDevote() async {
@@ -107,22 +117,24 @@ class IdiomInfoProvider with ChangeNotifier {
       idiom..isUserUpvoted = result;
       idiom..isUpvote = false;
       idiom.upvoteCount -= 1;
-      notifyListeners();
+      _listIdiom.upvoteCount -= 1;
     } else {
       if (idiom.isUpvote) {
         final result = await _actionService.addUpvote(_idiomId, false);
         idiom..isUserUpvoted = result;
         idiom..isUpvote = false;
         idiom.upvoteCount -= 2;
-        notifyListeners();
+        _listIdiom.upvoteCount -= 2;
       } else {
         await _actionService.deleteUpvote(_idiomId);
         idiom..isUserUpvoted = false;
         idiom..isUpvote = false;
         idiom.upvoteCount += 1;
-        notifyListeners();
+        _listIdiom.upvoteCount += 1;
       }
     }
+    _listProvider.notifyListeners();
+    notifyListeners();
   }
 
   Future<void> addLike(CommentReply comment) async {
@@ -148,7 +160,7 @@ class IdiomInfoProvider with ChangeNotifier {
     notifyListeners();
   }
 
-    Future<void> addDisLike(CommentReply comment) async {
+  Future<void> addDisLike(CommentReply comment) async {
     if (comment.userCommentLikeAdded) {
       if (!comment.isUserLike) {
         await _actionService.deleteCommentLike(comment.commentId);

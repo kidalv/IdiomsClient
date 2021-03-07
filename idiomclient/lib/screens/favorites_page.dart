@@ -110,6 +110,7 @@ class FavoritesPage extends StatelessWidget {
                   padding: EdgeInsets.only(bottom: height * 0.05),
                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                     InkWell(
+                      onTap: provider.signInWithGoogle,
                         child: Container(
                       width: width * 0.40,
                       height: 50,

@@ -95,11 +95,10 @@ class ProfilePage extends StatelessWidget {
                             child: Wrap(
                               children: provider.profile.userLanguages
                                   .map((x) => Container(
-                                        width: 70,
-                                        padding: const EdgeInsets.all(8.0),
+                                        width: 60,
+                                        padding: const EdgeInsets.all(5.0),
                                         child: FlagRow(
                                           code: x.region,
-                                          length: 50,
                                           flagOnly: true,
                                         ),
                                       ))

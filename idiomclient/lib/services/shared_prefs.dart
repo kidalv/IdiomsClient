@@ -55,7 +55,7 @@ class SharedPrefs {
 
   bool get hideTooltips => _hideTooltips ??= _sharedPrefs.getBool(hideTooltipsKey) ?? false;
 
-  Sort get listSort => _mapIntToSort(_sharedPrefs.getInt(listSortKey)) ?? Sort.date;
+  Sort get listSort => _mapIntToSort(_sharedPrefs.getInt(listSortKey) ?? 0);
 
   set name(String value) {
     _sharedPrefs.setString(nameKey, value);

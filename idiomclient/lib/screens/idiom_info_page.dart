@@ -7,16 +7,15 @@ import 'package:idiomclient/components/loading_indicator.dart';
 import 'package:idiomclient/components/comment_tile.dart';
 import 'package:idiomclient/components/my_text_field.dart';
 import 'package:idiomclient/components/placeholder_container.dart';
+import 'package:idiomclient/protos/models.pb.dart';
 import 'package:idiomclient/providers/idiom_info_provider.dart';
 import 'package:idiomclient/components/my_app_bar.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:idiomclient/providers/providers.dart';
 
 class IdiomInfoPage extends StatelessWidget {
-  final int idiomId;
   final ChangeNotifierProvider<IdiomInfoProvider> idiomInfoProvider;
-  IdiomInfoPage({Key key, this.idiomId})
-      : idiomInfoProvider = ChangeNotifierProvider((ref) => IdiomInfoProvider(idiomId)),
-        super(key: key);
+  IdiomInfoPage({Key key, this.idiomInfoProvider}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +147,7 @@ class IdiomInfoPage extends StatelessWidget {
                                       ? provider.addUpvote
                                       : provider.addDevote,
                                   padding: EdgeInsets.zero,
-                                  splashRadius: 20,
+                                  splashRadius: 25,
                                   icon: Icon(
                                     provider.isLoading ||
                                             !provider.idiom.isUserUpvoted ||
@@ -183,7 +182,7 @@ class IdiomInfoPage extends StatelessWidget {
                                   padding: const EdgeInsets.only(right: 12.0),
                                   child: IconButton(
                                     padding: EdgeInsets.zero,
-                                    splashRadius: 20,
+                                    splashRadius: 25,
                                     onPressed: provider.addFavorite,
                                     icon: Icon(
                                       Icons.favorite_border,

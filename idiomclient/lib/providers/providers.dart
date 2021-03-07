@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiomclient/providers/add_idiom_provider.dart';
+import 'package:idiomclient/providers/idiom_list_provider.dart';
 import 'package:idiomclient/providers/profile_provider.dart';
 import 'package:idiomclient/providers/settings_provider.dart';
 import 'package:idiomclient/providers/registration_provider.dart';
@@ -17,3 +18,5 @@ final loginProvider = ChangeNotifierProvider<LoginProvider>((ref) => LoginProvid
 final profileProvider = ChangeNotifierProvider<ProfileProvider>((ref) => ProfileProvider()..getProfile());
 
 final addIdiomProvider = ChangeNotifierProvider<AddIdiomProvider>((ref) => AddIdiomProvider());
+
+final idiomListProvider = ChangeNotifierProvider((ref) => IdiomListProvider());

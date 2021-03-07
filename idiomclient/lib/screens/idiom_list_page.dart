@@ -5,11 +5,10 @@ import 'package:idiomclient/components/idiom_list_tile.dart';
 import 'package:idiomclient/components/list_tile_placeholder.dart';
 import 'package:idiomclient/components/my_button.dart';
 import 'package:idiomclient/providers/idiom_list_provider.dart';
+import 'package:idiomclient/providers/providers.dart';
 import 'package:idiomclient/services/shared_prefs.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:idiomclient/components/my_app_bar.dart';
-
-final idiomListProvider = ChangeNotifierProvider((ref) => IdiomListProvider()..getList());
 
 class IdiomListPage extends StatelessWidget {
   const IdiomListPage({Key key}) : super(key: key);

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiomclient/components/flag_row.dart';
 import 'package:idiomclient/protos/models.pb.dart';
+import 'package:idiomclient/providers/idiom_info_provider.dart';
+import 'package:idiomclient/providers/providers.dart';
 import 'package:idiomclient/screens/idiom_info_page.dart';
 
 class IdiomListTile extends StatelessWidget {
@@ -16,12 +19,14 @@ class IdiomListTile extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => IdiomInfoPage(idiomId: idiom.idiomId,)),
+          MaterialPageRoute(
+              builder: (context) => IdiomInfoPage(
+                  idiomInfoProvider: ChangeNotifierProvider(
+                      (ref) => IdiomInfoProvider(idiom, ref.read(idiomListProvider))))),
         );
       },
       child: Container(
-        decoration:
-            BoxDecoration(border: Border(bottom: BorderSide(color: theme.dividerColor))),
+        decoration: BoxDecoration(border: Border(bottom: BorderSide(color: theme.dividerColor))),
         margin: const EdgeInsets.only(left: 10, right: 10),
         height: height * 0.25,
         child: Row(

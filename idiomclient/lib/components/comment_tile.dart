@@ -61,6 +61,7 @@ class CommentTile extends StatelessWidget {
                       children: [
                         IconButton(
                             onPressed: onLike,
+                            splashRadius: 25,
                             icon: Icon(Icons.thumb_up_alt_outlined,
                                 color: comment.userCommentLikeAdded && comment.isUserLike ? theme.accentColor : theme.buttonColor, size: 24)),
                         Padding(
@@ -69,6 +70,7 @@ class CommentTile extends StatelessWidget {
                                 style: theme.textTheme.headline3)),
                         IconButton(
                           onPressed: onDislike,
+                          splashRadius: 25,
                             icon: Icon(Icons.thumb_down_alt_outlined,
                                 color: comment.userCommentLikeAdded && !comment.isUserLike ? theme.accentColor : theme.buttonColor, size: 24)),
                         Padding(

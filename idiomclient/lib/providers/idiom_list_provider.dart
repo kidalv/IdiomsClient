@@ -20,22 +20,13 @@ class IdiomListProvider with ChangeNotifier {
     currentSort = SharedPrefs().listSort;
     selectedLanguages = [];
     allLanguages = SharedPrefs().languages;
-
+    getList();
   }
 
   Future<void> getList() async {
     isLoading = true;
     notifyListeners();
     list = await _service.getIdiomsList();
-    // list.add(IdiomReply()
-    //   ..text = "shit"
-    //   ..dateAdded = Timestamp()
-    //   ..favoritesCount = 1
-    //   ..idiomId = 1
-    //   ..upvoteCount = 1
-    //   ..language = (LanguageReply()
-    //     ..locale = "lv"
-    //     ..region = "LV"));
     _applySort();
     isLoading = false;
     notifyListeners();
