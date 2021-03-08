@@ -37,6 +37,7 @@ class IdiomInfoProvider with ChangeNotifier {
     isLoading = true;
     notifyListeners();
     idiom = await _service.getIdiomsInfo(_idiomId);
+    idiom.translations.add(IdiomLinkReply()..idiomId = idiom.idiomId..language = idiom.language);
     sortComments();
     isLoading = false;
     notifyListeners();

@@ -11,6 +11,137 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'models.pb.dart' as $1;
 
+class GetLinkTypesRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetLinkTypesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  GetLinkTypesRequest._() : super();
+  factory GetLinkTypesRequest() => create();
+  factory GetLinkTypesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetLinkTypesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetLinkTypesRequest clone() => GetLinkTypesRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetLinkTypesRequest copyWith(void Function(GetLinkTypesRequest) updates) => super.copyWith((message) => updates(message as GetLinkTypesRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GetLinkTypesRequest create() => GetLinkTypesRequest._();
+  GetLinkTypesRequest createEmptyInstance() => create();
+  static $pb.PbList<GetLinkTypesRequest> createRepeated() => $pb.PbList<GetLinkTypesRequest>();
+  @$core.pragma('dart2js:noInline')
+  static GetLinkTypesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetLinkTypesRequest>(create);
+  static GetLinkTypesRequest _defaultInstance;
+}
+
+class GetLinkTypesReply extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetLinkTypesReply', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
+    ..pc<LinkReply>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'links', $pb.PbFieldType.PM, subBuilder: LinkReply.create)
+    ..hasRequiredFields = false
+  ;
+
+  GetLinkTypesReply._() : super();
+  factory GetLinkTypesReply({
+    $core.Iterable<LinkReply> links,
+  }) {
+    final _result = create();
+    if (links != null) {
+      _result.links.addAll(links);
+    }
+    return _result;
+  }
+  factory GetLinkTypesReply.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetLinkTypesReply.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetLinkTypesReply clone() => GetLinkTypesReply()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetLinkTypesReply copyWith(void Function(GetLinkTypesReply) updates) => super.copyWith((message) => updates(message as GetLinkTypesReply)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GetLinkTypesReply create() => GetLinkTypesReply._();
+  GetLinkTypesReply createEmptyInstance() => create();
+  static $pb.PbList<GetLinkTypesReply> createRepeated() => $pb.PbList<GetLinkTypesReply>();
+  @$core.pragma('dart2js:noInline')
+  static GetLinkTypesReply getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetLinkTypesReply>(create);
+  static GetLinkTypesReply _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<LinkReply> get links => $_getList(0);
+}
+
+class LinkReply extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LinkReply', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'linkTypeId', $pb.PbFieldType.O3)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'linkName')
+    ..hasRequiredFields = false
+  ;
+
+  LinkReply._() : super();
+  factory LinkReply({
+    $core.int linkTypeId,
+    $core.String linkName,
+  }) {
+    final _result = create();
+    if (linkTypeId != null) {
+      _result.linkTypeId = linkTypeId;
+    }
+    if (linkName != null) {
+      _result.linkName = linkName;
+    }
+    return _result;
+  }
+  factory LinkReply.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LinkReply.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  LinkReply clone() => LinkReply()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  LinkReply copyWith(void Function(LinkReply) updates) => super.copyWith((message) => updates(message as LinkReply)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static LinkReply create() => LinkReply._();
+  LinkReply createEmptyInstance() => create();
+  static $pb.PbList<LinkReply> createRepeated() => $pb.PbList<LinkReply>();
+  @$core.pragma('dart2js:noInline')
+  static LinkReply getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LinkReply>(create);
+  static LinkReply _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get linkTypeId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set linkTypeId($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasLinkTypeId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearLinkTypeId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get linkName => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set linkName($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasLinkName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearLinkName() => clearField(2);
+}
+
 class AddUpvoteRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddUpvoteRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'idiomId', $pb.PbFieldType.O3)

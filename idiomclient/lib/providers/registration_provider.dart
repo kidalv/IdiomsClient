@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:idiomclient/services/shared_prefs.dart';
-import 'package:idiomclient/services/user_service.dart';
+import 'package:idiomclient/services/unauthorized_user_service.dart';
 
 class RegistrationProvider with ChangeNotifier {
-  UserService _service;
+  UnauthorizedUserService _service;
   String _email;
   String _name;
   String _password;
@@ -22,7 +22,7 @@ class RegistrationProvider with ChangeNotifier {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   RegistrationProvider() {
-    _service = UserService.unAuthorized();
+    _service = UnauthorizedUserService();
     emailController = TextEditingController();
     nameController = TextEditingController();
     passwordController = TextEditingController();

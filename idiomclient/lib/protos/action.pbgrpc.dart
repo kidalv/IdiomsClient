@@ -79,6 +79,12 @@ class ActionClient extends $grpc.Client {
       ($0.DeleteCommentLikeRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) =>
           $0.DeleteCommentLikeResponse.fromBuffer(value));
+  static final _$getLinkTypes =
+      $grpc.ClientMethod<$0.GetLinkTypesRequest, $0.GetLinkTypesReply>(
+          '/idiom.Action/GetLinkTypes',
+          ($0.GetLinkTypesRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.GetLinkTypesReply.fromBuffer(value));
 
   ActionClient($grpc.ClientChannel channel,
       {$grpc.CallOptions options,
@@ -152,6 +158,12 @@ class ActionClient extends $grpc.Client {
       $0.DeleteCommentLikeRequest request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$deleteCommentLike, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.GetLinkTypesReply> getLinkTypes(
+      $0.GetLinkTypesRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$getLinkTypes, request, options: options);
   }
 }
 
@@ -256,6 +268,15 @@ abstract class ActionServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $0.DeleteCommentLikeRequest.fromBuffer(value),
         ($0.DeleteCommentLikeResponse value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$0.GetLinkTypesRequest, $0.GetLinkTypesReply>(
+            'GetLinkTypes',
+            getLinkTypes_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $0.GetLinkTypesRequest.fromBuffer(value),
+            ($0.GetLinkTypesReply value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.UpvoteReply> addUpvote_Pre($grpc.ServiceCall call,
@@ -322,6 +343,11 @@ abstract class ActionServiceBase extends $grpc.Service {
     return deleteCommentLike(call, await request);
   }
 
+  $async.Future<$0.GetLinkTypesReply> getLinkTypes_Pre($grpc.ServiceCall call,
+      $async.Future<$0.GetLinkTypesRequest> request) async {
+    return getLinkTypes(call, await request);
+  }
+
   $async.Future<$0.UpvoteReply> addUpvote(
       $grpc.ServiceCall call, $0.AddUpvoteRequest request);
   $async.Future<$0.DeleteReply> deleteUpvote(
@@ -346,4 +372,6 @@ abstract class ActionServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.AddCommentLikeRequest request);
   $async.Future<$0.DeleteCommentLikeResponse> deleteCommentLike(
       $grpc.ServiceCall call, $0.DeleteCommentLikeRequest request);
+  $async.Future<$0.GetLinkTypesReply> getLinkTypes(
+      $grpc.ServiceCall call, $0.GetLinkTypesRequest request);
 }

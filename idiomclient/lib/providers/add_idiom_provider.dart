@@ -47,8 +47,14 @@ class AddIdiomProvider with ChangeNotifier {
     notifyListeners();
     await _service.addIdiom(_idiom);
     saving = false;
-    notifyListeners();  
+    notifyListeners();
   }
 
-  bool buttonAvailable() => _idiom.text != null && _idiom.meaning != null && _idiom.languageId != 0 && _idiom.usage != null;
+  bool buttonAvailable() =>
+      textController.text != null &&
+      textController.text.isNotEmpty &&
+      usageController.text != null &&
+      usageController.text.isNotEmpty &&
+      meaningController.text != null &&
+      meaningController.text.isNotEmpty;
 }

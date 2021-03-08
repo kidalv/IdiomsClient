@@ -16,6 +16,9 @@ class GetIdiomListRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetIdiomListRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'count', $pb.PbFieldType.O3)
     ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'skip', $pb.PbFieldType.O3)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'search')
+    ..p<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'languageIds', $pb.PbFieldType.P3)
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sort')
     ..hasRequiredFields = false
   ;
 
@@ -23,6 +26,9 @@ class GetIdiomListRequest extends $pb.GeneratedMessage {
   factory GetIdiomListRequest({
     $core.int count,
     $core.int skip,
+    $core.String search,
+    $core.Iterable<$core.int> languageIds,
+    $core.String sort,
   }) {
     final _result = create();
     if (count != null) {
@@ -30,6 +36,15 @@ class GetIdiomListRequest extends $pb.GeneratedMessage {
     }
     if (skip != null) {
       _result.skip = skip;
+    }
+    if (search != null) {
+      _result.search = search;
+    }
+    if (languageIds != null) {
+      _result.languageIds.addAll(languageIds);
+    }
+    if (sort != null) {
+      _result.sort = sort;
     }
     return _result;
   }
@@ -71,6 +86,27 @@ class GetIdiomListRequest extends $pb.GeneratedMessage {
   $core.bool hasSkip() => $_has(1);
   @$pb.TagNumber(2)
   void clearSkip() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get search => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set search($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasSearch() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearSearch() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.List<$core.int> get languageIds => $_getList(3);
+
+  @$pb.TagNumber(5)
+  $core.String get sort => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set sort($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasSort() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearSort() => clearField(5);
 }
 
 class GetIdiomInfoRequest extends $pb.GeneratedMessage {
@@ -126,6 +162,7 @@ class AddIdiomRequest extends $pb.GeneratedMessage {
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'meaning')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'usage')
     ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'languageId', $pb.PbFieldType.O3)
+    ..pc<IdiomLinkRequest>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'links', $pb.PbFieldType.PM, subBuilder: IdiomLinkRequest.create)
     ..hasRequiredFields = false
   ;
 
@@ -135,6 +172,7 @@ class AddIdiomRequest extends $pb.GeneratedMessage {
     $core.String meaning,
     $core.String usage,
     $core.int languageId,
+    $core.Iterable<IdiomLinkRequest> links,
   }) {
     final _result = create();
     if (text != null) {
@@ -148,6 +186,9 @@ class AddIdiomRequest extends $pb.GeneratedMessage {
     }
     if (languageId != null) {
       _result.languageId = languageId;
+    }
+    if (links != null) {
+      _result.links.addAll(links);
     }
     return _result;
   }
@@ -207,6 +248,145 @@ class AddIdiomRequest extends $pb.GeneratedMessage {
   $core.bool hasLanguageId() => $_has(3);
   @$pb.TagNumber(4)
   void clearLanguageId() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.List<IdiomLinkRequest> get links => $_getList(4);
+}
+
+class IdiomLinkRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'IdiomLinkRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'idiomId', $pb.PbFieldType.O3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'linkTypeId', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  IdiomLinkRequest._() : super();
+  factory IdiomLinkRequest({
+    $core.int idiomId,
+    $core.int linkTypeId,
+  }) {
+    final _result = create();
+    if (idiomId != null) {
+      _result.idiomId = idiomId;
+    }
+    if (linkTypeId != null) {
+      _result.linkTypeId = linkTypeId;
+    }
+    return _result;
+  }
+  factory IdiomLinkRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory IdiomLinkRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  IdiomLinkRequest clone() => IdiomLinkRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  IdiomLinkRequest copyWith(void Function(IdiomLinkRequest) updates) => super.copyWith((message) => updates(message as IdiomLinkRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static IdiomLinkRequest create() => IdiomLinkRequest._();
+  IdiomLinkRequest createEmptyInstance() => create();
+  static $pb.PbList<IdiomLinkRequest> createRepeated() => $pb.PbList<IdiomLinkRequest>();
+  @$core.pragma('dart2js:noInline')
+  static IdiomLinkRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<IdiomLinkRequest>(create);
+  static IdiomLinkRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get idiomId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set idiomId($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasIdiomId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearIdiomId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get linkTypeId => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set linkTypeId($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasLinkTypeId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearLinkTypeId() => clearField(2);
+}
+
+class AddIdiomLinkRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddIdiomLinkRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'currentIdiomId', $pb.PbFieldType.O3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'linkIdiomId', $pb.PbFieldType.O3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'linkTypeId', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  AddIdiomLinkRequest._() : super();
+  factory AddIdiomLinkRequest({
+    $core.int currentIdiomId,
+    $core.int linkIdiomId,
+    $core.int linkTypeId,
+  }) {
+    final _result = create();
+    if (currentIdiomId != null) {
+      _result.currentIdiomId = currentIdiomId;
+    }
+    if (linkIdiomId != null) {
+      _result.linkIdiomId = linkIdiomId;
+    }
+    if (linkTypeId != null) {
+      _result.linkTypeId = linkTypeId;
+    }
+    return _result;
+  }
+  factory AddIdiomLinkRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddIdiomLinkRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddIdiomLinkRequest clone() => AddIdiomLinkRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddIdiomLinkRequest copyWith(void Function(AddIdiomLinkRequest) updates) => super.copyWith((message) => updates(message as AddIdiomLinkRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AddIdiomLinkRequest create() => AddIdiomLinkRequest._();
+  AddIdiomLinkRequest createEmptyInstance() => create();
+  static $pb.PbList<AddIdiomLinkRequest> createRepeated() => $pb.PbList<AddIdiomLinkRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AddIdiomLinkRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddIdiomLinkRequest>(create);
+  static AddIdiomLinkRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get currentIdiomId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set currentIdiomId($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasCurrentIdiomId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCurrentIdiomId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get linkIdiomId => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set linkIdiomId($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasLinkIdiomId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearLinkIdiomId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get linkTypeId => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set linkTypeId($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasLinkTypeId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearLinkTypeId() => clearField(3);
 }
 
 class ChangeIdiomRequest extends $pb.GeneratedMessage {
@@ -422,6 +602,8 @@ class GetIdiomInfoReply extends $pb.GeneratedMessage {
     ..aOB(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'isUserUpvoted')
     ..aOB(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'isUpvote')
     ..aOM<$1.Timestamp>(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dateModified', subBuilder: $1.Timestamp.create)
+    ..pc<IdiomLinkReply>(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'translations', $pb.PbFieldType.PM, subBuilder: IdiomLinkReply.create)
+    ..pc<IdiomLinkReply>(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'similar', $pb.PbFieldType.PM, subBuilder: IdiomLinkReply.create)
     ..hasRequiredFields = false
   ;
 
@@ -441,6 +623,8 @@ class GetIdiomInfoReply extends $pb.GeneratedMessage {
     $core.bool isUserUpvoted,
     $core.bool isUpvote,
     $1.Timestamp dateModified,
+    $core.Iterable<IdiomLinkReply> translations,
+    $core.Iterable<IdiomLinkReply> similar,
   }) {
     final _result = create();
     if (idiomId != null) {
@@ -484,6 +668,12 @@ class GetIdiomInfoReply extends $pb.GeneratedMessage {
     }
     if (dateModified != null) {
       _result.dateModified = dateModified;
+    }
+    if (translations != null) {
+      _result.translations.addAll(translations);
+    }
+    if (similar != null) {
+      _result.similar.addAll(similar);
     }
     return _result;
   }
@@ -635,6 +825,75 @@ class GetIdiomInfoReply extends $pb.GeneratedMessage {
   void clearDateModified() => clearField(15);
   @$pb.TagNumber(15)
   $1.Timestamp ensureDateModified() => $_ensure(13);
+
+  @$pb.TagNumber(16)
+  $core.List<IdiomLinkReply> get translations => $_getList(14);
+
+  @$pb.TagNumber(17)
+  $core.List<IdiomLinkReply> get similar => $_getList(15);
+}
+
+class IdiomLinkReply extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'IdiomLinkReply', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'idiomId', $pb.PbFieldType.O3)
+    ..aOM<$2.LanguageReply>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'language', subBuilder: $2.LanguageReply.create)
+    ..hasRequiredFields = false
+  ;
+
+  IdiomLinkReply._() : super();
+  factory IdiomLinkReply({
+    $core.int idiomId,
+    $2.LanguageReply language,
+  }) {
+    final _result = create();
+    if (idiomId != null) {
+      _result.idiomId = idiomId;
+    }
+    if (language != null) {
+      _result.language = language;
+    }
+    return _result;
+  }
+  factory IdiomLinkReply.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory IdiomLinkReply.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  IdiomLinkReply clone() => IdiomLinkReply()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  IdiomLinkReply copyWith(void Function(IdiomLinkReply) updates) => super.copyWith((message) => updates(message as IdiomLinkReply)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static IdiomLinkReply create() => IdiomLinkReply._();
+  IdiomLinkReply createEmptyInstance() => create();
+  static $pb.PbList<IdiomLinkReply> createRepeated() => $pb.PbList<IdiomLinkReply>();
+  @$core.pragma('dart2js:noInline')
+  static IdiomLinkReply getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<IdiomLinkReply>(create);
+  static IdiomLinkReply _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get idiomId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set idiomId($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasIdiomId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearIdiomId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $2.LanguageReply get language => $_getN(1);
+  @$pb.TagNumber(2)
+  set language($2.LanguageReply v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasLanguage() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearLanguage() => clearField(2);
+  @$pb.TagNumber(2)
+  $2.LanguageReply ensureLanguage() => $_ensure(1);
 }
 
 class GetIdiomListReply extends $pb.GeneratedMessage {

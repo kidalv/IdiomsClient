@@ -7,7 +7,7 @@ import 'package:idiomclient/components/loading_indicator.dart';
 import 'package:idiomclient/components/comment_tile.dart';
 import 'package:idiomclient/components/my_text_field.dart';
 import 'package:idiomclient/components/placeholder_container.dart';
-import 'package:idiomclient/protos/models.pb.dart';
+import 'package:idiomclient/protos/idiom.pb.dart';
 import 'package:idiomclient/providers/idiom_info_provider.dart';
 import 'package:idiomclient/components/my_app_bar.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -236,28 +236,18 @@ class IdiomInfoPage extends StatelessWidget {
                       fontSize: 24),
                 ),
               )),
-          const Center(
+          Center(
             child: Padding(
-              padding: EdgeInsets.only(top: 30.0, bottom: 40),
-              child: TranslationSwitch(
-                languages: [
-                  "LV",
-                  "RU",
-                  "GB",
-                  "LT",
-                  "DK",
-                  "US",
-                  "FR",
-                  "ET",
-                  "FI",
-                  "CH",
-                  "SV",
-                  "UA",
-                  "PL",
-                  "DE",
-                ],
-                selectedIndex: 1,
-              ),
+              padding: const EdgeInsets.only(top: 30.0, bottom: 40),
+              child: Consumer(builder: (_, watch, __) {
+                final provider = watch(idiomInfoProvider);
+                return provider.isLoading
+                    ? const TranslationPlaceholder()
+                    : TranslationSwitch(
+                        links: provider.idiom.translations,
+                        selectedIndex: 0,
+                      );
+              }),
             ),
           ),
           Align(
@@ -370,8 +360,12 @@ class IdiomInfoPage extends StatelessWidget {
                         children: provider.idiom.comments
                             .map((x) => CommentTile(
                                   comment: x,
-                                  onLike: () {provider.addLike(x);},
-                                  onDislike: () {provider.addDisLike(x);},
+                                  onLike: () {
+                                    provider.addLike(x);
+                                  },
+                                  onDislike: () {
+                                    provider.addDisLike(x);
+                                  },
                                 ))
                             .toList()),
                   )
@@ -386,31 +380,63 @@ class IdiomInfoPage extends StatelessWidget {
 }
 
 class TranslationSwitch extends StatelessWidget {
-  final List<String> languages;
+  final List<IdiomLinkReply> links;
   final int selectedIndex;
-  const TranslationSwitch({Key key, this.languages, this.selectedIndex}) : super(key: key);
+  const TranslationSwitch({Key key, this.links, this.selectedIndex}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 54.0 + languages.length * 50,
+      width: 54.0 + links.length * 55,
       child: Column(
         children: [
           SizedBox(
-            width: 54.0 + languages.take(6).length * 55,
+            width: 54.0 + links.take(6).length * 55,
             child: Row(
               children: [
                 Icon(Icons.arrow_back_ios, size: 25, color: Colors.grey[400]),
                 SizedBox(
-                  width: languages.take(6).length * 55.0,
+                  width: links.take(6).length * 55.0,
                   child: Wrap(
                     alignment: WrapAlignment.center,
-                    children: languages
-                        .map((x) =>
-                            FlagCircle(flag: x, selected: languages.indexOf(x) == selectedIndex))
+                    children: links
+                        .map((x) => FlagCircle(
+                            flag: x.language.region, selected: links.indexOf(x) == selectedIndex))
                         .toList(),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 4.0),
+                  child: Icon(Icons.arrow_forward_ios, size: 25, color: Colors.grey[400]),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class TranslationPlaceholder extends StatelessWidget {
+  const TranslationPlaceholder({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 54.0 + 55,
+      child: Column(
+        children: [
+          SizedBox(
+            width: 54.0 + 55,
+            child: Row(
+              children: [
+                Icon(Icons.arrow_back_ios, size: 25, color: Colors.grey[400]),
+                SizedBox(
+                    width: 55,
+                    child: const Center(
+                      child: PlaceholderContainer(width: 55, height: 55, borderRadius: 30),
+                    )),
                 Padding(
                   padding: const EdgeInsets.only(left: 4.0),
                   child: Icon(Icons.arrow_forward_ios, size: 25, color: Colors.grey[400]),
@@ -449,10 +475,7 @@ class FlagCircle extends StatelessWidget {
           width: 40,
           height: 40,
         ),
-      )
-          // child: Image.network("https://flagpedia.net/data/flags/w80/${flag.toLowerCase()}.jpg",
-          //     width: 40, height: 40, fit: BoxFit.fill),
-          ),
+      )),
     );
   }
 }

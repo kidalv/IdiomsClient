@@ -44,6 +44,11 @@ class IdiomClient extends $grpc.Client {
           ($0.DeleteIdiomRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.DeleteIdiomReply.fromBuffer(value));
+  static final _$addlink =
+      $grpc.ClientMethod<$0.AddIdiomLinkRequest, $0.IdiomLinkReply>(
+          '/idiom.Idiom/Addlink',
+          ($0.AddIdiomLinkRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.IdiomLinkReply.fromBuffer(value));
 
   IdiomClient($grpc.ClientChannel channel,
       {$grpc.CallOptions options,
@@ -78,6 +83,12 @@ class IdiomClient extends $grpc.Client {
       $0.DeleteIdiomRequest request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$deleteIdiom, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.IdiomLinkReply> addlink(
+      $0.AddIdiomLinkRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$addlink, request, options: options);
   }
 }
 
@@ -126,6 +137,14 @@ abstract class IdiomServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $0.DeleteIdiomRequest.fromBuffer(value),
         ($0.DeleteIdiomReply value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.AddIdiomLinkRequest, $0.IdiomLinkReply>(
+        'Addlink',
+        addlink_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.AddIdiomLinkRequest.fromBuffer(value),
+        ($0.IdiomLinkReply value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.GetIdiomListReply> getIdiomList_Pre($grpc.ServiceCall call,
@@ -153,6 +172,11 @@ abstract class IdiomServiceBase extends $grpc.Service {
     return deleteIdiom(call, await request);
   }
 
+  $async.Future<$0.IdiomLinkReply> addlink_Pre($grpc.ServiceCall call,
+      $async.Future<$0.AddIdiomLinkRequest> request) async {
+    return addlink(call, await request);
+  }
+
   $async.Future<$0.GetIdiomListReply> getIdiomList(
       $grpc.ServiceCall call, $0.GetIdiomListRequest request);
   $async.Future<$0.GetIdiomInfoReply> getIdiomInfo(
@@ -163,4 +187,6 @@ abstract class IdiomServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.ChangeIdiomRequest request);
   $async.Future<$0.DeleteIdiomReply> deleteIdiom(
       $grpc.ServiceCall call, $0.DeleteIdiomRequest request);
+  $async.Future<$0.IdiomLinkReply> addlink(
+      $grpc.ServiceCall call, $0.AddIdiomLinkRequest request);
 }

@@ -19,27 +19,8 @@ class UserService {
     }
   }
 
-  UserService.unAuthorized() {
-    _client = UserClient(
-      GrpcClientSingleton().client,
-    );
-  }
-
   Future<UserProfileReply> getUsersInfo() async {
     return await _client.getUserProfile(GetUserProfileRequest());
-  }
-
-  Future<UserCredentialsReply> register(String email, String name, String password) async {
-    return await _client.register(RegisterRequest()
-      ..email = email
-      ..name = name
-      ..password = password);
-  }
-
-  Future<UserCredentialsReply> login(String email, String password) async {
-    return await _client.login(LoginRequest()
-      ..email = email
-      ..password = password);
   }
 
   Future<UserProfileReply> changeUser(String email, String name, String password) async {
@@ -55,9 +36,5 @@ class UserService {
 
   Future<UserProfileReply> deleteUserLanguage(int languageId) async {
     return await _client.deleteUserLanguage(DeleteUserLanguageRequest()..languageId = languageId);
-  }
-
-  Future<UserCredentialsReply> googleSignIn(String jwtToken) async {
-    return await _client.googleSignIn(GoogleSignInRequest()..jwtToken = jwtToken);
   }
 }

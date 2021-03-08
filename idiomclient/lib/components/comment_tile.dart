@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:idiomclient/components/user_image.dart';
 import 'package:idiomclient/protos/models.pb.dart';
-import 'package:intl/intl.dart';
 
 class CommentTile extends StatelessWidget {
   final CommentReply comment;

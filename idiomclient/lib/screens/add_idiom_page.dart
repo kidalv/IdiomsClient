@@ -52,13 +52,16 @@ class AddIdiomPage extends StatelessWidget {
                   ),
                   Consumer(builder: (_, watch, __) {
                     final provider = watch(addIdiomProvider);
-                    return provider.language != null ?
-                      Padding(
-                          padding:
-                              const EdgeInsets.only(bottom: 10.0, left: 40.0, top: 20.0, right: 20),
-                          child: UserLanguageLine(
-                            language: provider.language,
-                          )) : Container(height: 70,);
+                    return provider.language != null
+                        ? Padding(
+                            padding: const EdgeInsets.only(
+                                bottom: 10.0, left: 40.0, top: 20.0, right: 20),
+                            child: UserLanguageLine(
+                              language: provider.language,
+                            ))
+                        : Container(
+                            height: 70,
+                          );
                   }),
                   Align(
                     alignment: Alignment.centerLeft,
@@ -85,30 +88,36 @@ class AddIdiomPage extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
-                      padding: const EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.only(top: 30.0, left: 10, bottom: 10),
                       child: Text(
                         "Links",
                         style: theme.textTheme.headline5,
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+                    child: MyButton(
+                      width: width - 50,
+                      height: 50,
+                      text: "Link Idiom",
+                    ),
+                  ),
                   Align(
                       alignment: Alignment.centerRight,
                       child: Padding(
                         padding: const EdgeInsets.only(top: 30.0, right: 5.0),
-                        child: Consumer(
-                          builder: (_, watch, __) {
-                            final provider = watch(addIdiomProvider);
-                            return MyButton(
-                              width: width * 0.3,
-                              height: 50,
-                              text: "Add Idiom",
-                              disabled: !provider.buttonAvailable(),
-                              isLoading: provider.saving,
-                              onPress: provider.saveIdiom,
-                            );
-                          }
-                        ),
+                        child: Consumer(builder: (_, watch, __) {
+                          final provider = watch(addIdiomProvider);
+                          return MyButton(
+                            width: width * 0.3,
+                            height: 50,
+                            text: "Add Idiom",
+                            disabled: !provider.buttonAvailable(),
+                            isLoading: provider.saving,
+                            onPress: provider.saveIdiom,
+                          );
+                        }),
                       ))
                 ],
               ),
@@ -158,7 +167,7 @@ class UserLanguageLine extends StatelessWidget {
           ],
         ),
         IconButton(
-          splashRadius: 20,
+            splashRadius: 20,
             icon: const Icon(Icons.cancel_rounded, size: 35),
             onPressed: () {
               context.read(addIdiomProvider).removeLanguage();

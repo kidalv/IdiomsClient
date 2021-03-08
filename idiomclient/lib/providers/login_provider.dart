@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:idiomclient/services/unauthorized_user_service.dart';
 
 import '../services/shared_prefs.dart';
 import '../services/user_service.dart';
@@ -10,13 +11,13 @@ class LoginProvider with ChangeNotifier {
   String _password;
   String emailError;
   String passwordError;
-  UserService _service;
+  UnauthorizedUserService _service;
   bool loginLoading = false;
 
   LoginProvider() {
     emailController = TextEditingController();
     passwordController = TextEditingController();
-    _service = UserService.unAuthorized();
+    _service = UnauthorizedUserService();
 
     emailController.addListener(notifyListeners);
     passwordController.addListener(notifyListeners);
