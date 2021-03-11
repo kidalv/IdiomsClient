@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiomclient/components/dropdown_search.dart';
 import 'package:idiomclient/components/flag_row.dart';
+import 'package:idiomclient/components/idiom_search_dialog.dart';
 import 'package:idiomclient/components/my_button.dart';
 import 'package:idiomclient/components/my_text_field.dart';
 import 'package:idiomclient/components/my_app_bar.dart';
@@ -15,7 +16,19 @@ class AddIdiomPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     final theme = Theme.of(context);
+
+    _showDialog() {
+      showDialog(
+          context: context,
+          builder: (_) => Dialog(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                backgroundColor: theme.scaffoldBackgroundColor,
+                child: IdiomSearchDialog()
+              ));
+    }
+
     return Scaffold(
       appBar: MyAppBar(
         text: "New Idiom",
@@ -39,7 +52,7 @@ class AddIdiomPage extends StatelessWidget {
                           style: theme.textTheme.headline5,
                         )),
                   ),
-                  MyTextField(text: "Idiom Text"),
+                  MyTextField(text: "Idiom Text", controller: context.read(addIdiomProvider).textController),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -73,7 +86,7 @@ class AddIdiomPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  MyTextField(text: "Meaning"),
+                  MyTextField(text: "Meaning", controller: context.read(addIdiomProvider).meaningController),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -84,7 +97,7 @@ class AddIdiomPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  MyTextField(text: "Example"),
+                  MyTextField(text: "Example", controller: context.read(addIdiomProvider).usageController),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -101,6 +114,7 @@ class AddIdiomPage extends StatelessWidget {
                       width: width - 50,
                       height: 50,
                       text: "Link Idiom",
+                      onPress: _showDialog,
                     ),
                   ),
                   Align(

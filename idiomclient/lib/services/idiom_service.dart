@@ -43,4 +43,8 @@ class IdiomService {
     final result = await _client.deleteIdiom(DeleteIdiomRequest()..idiomId = idiomId);
     return result != null;
   }
+
+  Future<List<IdiomReply>> fastSearch(String name) async {
+    return (await _client.fastSearch(FastSearchRequest()..idiomName = name)).idioms;
+  }
 }

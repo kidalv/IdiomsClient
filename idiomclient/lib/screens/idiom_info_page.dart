@@ -386,34 +386,50 @@ class TranslationSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 54.0 + links.length * 55,
+    return Padding(
+      padding: const EdgeInsets.only(left: 20.0, right: 20),
       child: Column(
         children: [
-          SizedBox(
-            width: 54.0 + links.take(6).length * 55,
-            child: Row(
-              children: [
-                Icon(Icons.arrow_back_ios, size: 25, color: Colors.grey[400]),
-                SizedBox(
-                  width: links.take(6).length * 55.0,
-                  child: Wrap(
+          Row(
+            children: [
+              Icon(Icons.arrow_back_ios, size: 25, color: Colors.grey[400]),
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 94,
+                child: Wrap(
                     alignment: WrapAlignment.center,
-                    children: links
-                        .map((x) => FlagCircle(
-                            flag: x.language.region, selected: links.indexOf(x) == selectedIndex))
-                        .toList(),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 4.0),
-                  child: Icon(Icons.arrow_forward_ios, size: 25, color: Colors.grey[400]),
-                ),
-              ],
-            ),
+                    children: []
+                      ..addAll(links
+                          .map((x) => FlagCircle(
+                              flag: x.language.region, selected: links.indexOf(x) == selectedIndex))
+                          .toList())
+                      ..add(
+                        CircleButton(),
+                      )),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 4.0),
+                child: Icon(Icons.arrow_forward_ios, size: 25, color: Colors.grey[400]),
+              ),
+            ],
           ),
         ],
       ),
+    );
+  }
+}
+
+class CircleButton extends StatelessWidget {
+  const CircleButton({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Container(
+      margin: const EdgeInsets.all(3.0),
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), color: theme.buttonColor),
+      child:
+          IconButton(icon: Icon(Icons.add), color: theme.scaffoldBackgroundColor, onPressed: () {}, splashRadius: 30,),
     );
   }
 }

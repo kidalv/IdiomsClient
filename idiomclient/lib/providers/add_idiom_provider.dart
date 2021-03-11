@@ -47,6 +47,11 @@ class AddIdiomProvider with ChangeNotifier {
     notifyListeners();
     await _service.addIdiom(_idiom);
     saving = false;
+    _idiom = AddIdiomRequest();
+    textController.clear();
+    usageController.clear();
+    meaningController.clear();
+    _selectedLanguage = null;
     notifyListeners();
   }
 
