@@ -344,21 +344,16 @@ class FastSearchReply extends $pb.GeneratedMessage {
 class IdiomLinkRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'IdiomLinkRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'idiomId', $pb.PbFieldType.O3)
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'linkTypeId', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
   IdiomLinkRequest._() : super();
   factory IdiomLinkRequest({
     $core.int idiomId,
-    $core.int linkTypeId,
   }) {
     final _result = create();
     if (idiomId != null) {
       _result.idiomId = idiomId;
-    }
-    if (linkTypeId != null) {
-      _result.linkTypeId = linkTypeId;
     }
     return _result;
   }
@@ -391,22 +386,12 @@ class IdiomLinkRequest extends $pb.GeneratedMessage {
   $core.bool hasIdiomId() => $_has(0);
   @$pb.TagNumber(1)
   void clearIdiomId() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.int get linkTypeId => $_getIZ(1);
-  @$pb.TagNumber(2)
-  set linkTypeId($core.int v) { $_setSignedInt32(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasLinkTypeId() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearLinkTypeId() => clearField(2);
 }
 
 class AddIdiomLinkRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddIdiomLinkRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'currentIdiomId', $pb.PbFieldType.O3)
     ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'linkIdiomId', $pb.PbFieldType.O3)
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'linkTypeId', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -414,7 +399,6 @@ class AddIdiomLinkRequest extends $pb.GeneratedMessage {
   factory AddIdiomLinkRequest({
     $core.int currentIdiomId,
     $core.int linkIdiomId,
-    $core.int linkTypeId,
   }) {
     final _result = create();
     if (currentIdiomId != null) {
@@ -422,9 +406,6 @@ class AddIdiomLinkRequest extends $pb.GeneratedMessage {
     }
     if (linkIdiomId != null) {
       _result.linkIdiomId = linkIdiomId;
-    }
-    if (linkTypeId != null) {
-      _result.linkTypeId = linkTypeId;
     }
     return _result;
   }
@@ -466,15 +447,6 @@ class AddIdiomLinkRequest extends $pb.GeneratedMessage {
   $core.bool hasLinkIdiomId() => $_has(1);
   @$pb.TagNumber(2)
   void clearLinkIdiomId() => clearField(2);
-
-  @$pb.TagNumber(3)
-  $core.int get linkTypeId => $_getIZ(2);
-  @$pb.TagNumber(3)
-  set linkTypeId($core.int v) { $_setSignedInt32(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasLinkTypeId() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearLinkTypeId() => clearField(3);
 }
 
 class ChangeIdiomRequest extends $pb.GeneratedMessage {

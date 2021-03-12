@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:idiomclient/models/idiom_link.dart';
 import 'package:idiomclient/protos/idiom.pb.dart';
 import 'package:idiomclient/protos/models.pb.dart';
 import 'package:idiomclient/protos/timestamp.pb.dart';
@@ -18,6 +19,7 @@ class IdiomInfoProvider with ChangeNotifier {
   TextEditingController commentController;
   bool commentSending;
   bool sortByDate;
+  List<IdiomLink> links;
   final IdiomReply _listIdiom;
   final IdiomListProvider _listProvider;
 
@@ -38,6 +40,7 @@ class IdiomInfoProvider with ChangeNotifier {
     notifyListeners();
     idiom = await _service.getIdiomsInfo(_idiomId);
     idiom.translations.add(IdiomLinkReply()..idiomId = idiom.idiomId..language = idiom.language);
+    links = _mapLinks(idiom.translations);
     sortComments();
     isLoading = false;
     notifyListeners();
@@ -182,6 +185,10 @@ class IdiomInfoProvider with ChangeNotifier {
       comment.dislikesCount += 1;
     }
     notifyListeners();
+  }
+
+  List<IdiomLink> _mapLinks(List<IdiomLinkReply> linkReplyes) {
+    return linkReplyes.map((x) => IdiomLink()..idiomId = x.idiomId..language = x.language).toList();
   }
 
   Future<void> addReport(String text) async {

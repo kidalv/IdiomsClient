@@ -47,4 +47,8 @@ class IdiomService {
   Future<List<IdiomReply>> fastSearch(String name) async {
     return (await _client.fastSearch(FastSearchRequest()..idiomName = name)).idioms;
   }
+
+  Future<IdiomLinkReply> addIdiomLink(int currentIdiom, int linkedIdiom) async {
+    return await _client.addlink(AddIdiomLinkRequest()..currentIdiomId = currentIdiom..linkIdiomId = linkedIdiom);
+  }
 }

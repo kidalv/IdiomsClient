@@ -5,11 +5,11 @@ import 'package:idiomclient/components/flag_row.dart';
 import 'package:idiomclient/components/my_button.dart';
 import 'package:idiomclient/protos/models.pb.dart';
 import 'package:idiomclient/providers/idiom_link_provider.dart';
-
-final idiomLinkProvider = ChangeNotifierProvider((ref) => IdiomLinkProvider());
+import 'package:idiomclient/providers/providers.dart';
 
 class IdiomSearchDialog extends ConsumerWidget {
-  const IdiomSearchDialog({Key key}) : super(key: key);
+  final ChangeNotifierProvider<IdiomLinkProvider> idiomLinkProvider;
+  const IdiomSearchDialog(this.idiomLinkProvider, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
@@ -97,6 +97,7 @@ class IdiomSearchDialog extends ConsumerWidget {
                             children: provider.idioms
                                 .map((x) => IdiomRow(
                                       idiom: x,
+                                      onPress: () {provider.addIdiom(x);},
                                     ))
                                 .toList(),
                           ),
@@ -113,7 +114,7 @@ class IdiomSearchDialog extends ConsumerWidget {
               child: MyButton(
                 width: width * 0.2,
                 height: 50,
-                text: "Cancel",
+                text: "Close",
                 onPress: () {
                   Navigator.pop(context);
                 },
@@ -128,12 +129,13 @@ class IdiomSearchDialog extends ConsumerWidget {
 
 class IdiomRow extends StatelessWidget {
   final IdiomReply idiom;
-  const IdiomRow({Key key, this.idiom}) : super(key: key);
+  final Function() onPress;
+  const IdiomRow({Key key, this.idiom, this.onPress}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: onPress,
       child: Container(
         margin: const EdgeInsets.all(8.0),
         child: Row(

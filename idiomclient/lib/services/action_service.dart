@@ -51,6 +51,10 @@ class ActionService {
       ..text = text);
   }
 
+  Future<List<LinkReply>> getLinkTypes() async {
+    return (await _client.getLinkTypes(GetLinkTypesRequest())).links;
+  }
+
   Future<bool> deleteUpvote(int idiomId) async {
     final result = await _client.deleteUpvote(DeleteUpvoteRequest()..idiomId = idiomId);
     return result != null;

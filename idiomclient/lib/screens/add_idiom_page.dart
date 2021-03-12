@@ -6,8 +6,10 @@ import 'package:idiomclient/components/idiom_search_dialog.dart';
 import 'package:idiomclient/components/my_button.dart';
 import 'package:idiomclient/components/my_text_field.dart';
 import 'package:idiomclient/components/my_app_bar.dart';
+import 'package:idiomclient/models/idiom_link.dart';
 import 'package:idiomclient/protos/models.pb.dart';
 import 'package:idiomclient/providers/providers.dart';
+import 'package:idiomclient/providers/idiom_link_provider.dart';
 import 'package:idiomclient/services/shared_prefs.dart';
 
 class AddIdiomPage extends StatelessWidget {
@@ -19,14 +21,18 @@ class AddIdiomPage extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
     final theme = Theme.of(context);
 
-    _showDialog() {
+    void _showDialog() {
+      final idiomLinkProvider = ChangeNotifierProvider((ref) {
+        final provider = ref.read(addIdiomProvider);
+        return IdiomLinkProvider(provider, provider.links);
+      });
       showDialog(
-          context: context,
-          builder: (_) => Dialog(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                backgroundColor: theme.scaffoldBackgroundColor,
-                child: IdiomSearchDialog()
-              ));
+              context: context,
+              builder: (_) => Dialog(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  backgroundColor: theme.scaffoldBackgroundColor,
+                  child: IdiomSearchDialog(idiomLinkProvider)))
+          .then((value) => context.read(idiomLinkProvider).clear());
     }
 
     return Scaffold(
@@ -52,7 +58,9 @@ class AddIdiomPage extends StatelessWidget {
                           style: theme.textTheme.headline5,
                         )),
                   ),
-                  MyTextField(text: "Idiom Text", controller: context.read(addIdiomProvider).textController),
+                  MyTextField(
+                      text: "Idiom Text",
+                      controller: context.read(addIdiomProvider).textController),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -86,7 +94,9 @@ class AddIdiomPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  MyTextField(text: "Meaning", controller: context.read(addIdiomProvider).meaningController),
+                  MyTextField(
+                      text: "Meaning",
+                      controller: context.read(addIdiomProvider).meaningController),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -97,7 +107,8 @@ class AddIdiomPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  MyTextField(text: "Example", controller: context.read(addIdiomProvider).usageController),
+                  MyTextField(
+                      text: "Example", controller: context.read(addIdiomProvider).usageController),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -117,6 +128,14 @@ class AddIdiomPage extends StatelessWidget {
                       onPress: _showDialog,
                     ),
                   ),
+                  Consumer(builder: (_, watch, __) {
+                    final provider = watch(addIdiomProvider);
+                    if (provider.links.isNotEmpty) {
+                      return Column(
+                          children: provider.links.map((x) => IdiomRow(idiom: x)).toList());
+                    }
+                    return Container();
+                  }),
                   Align(
                       alignment: Alignment.centerRight,
                       child: Padding(
@@ -188,6 +207,40 @@ class UserLanguageLine extends StatelessWidget {
             },
             color: theme.buttonColor)
       ],
+    );
+  }
+}
+
+class IdiomRow extends ConsumerWidget {
+  final IdiomLink idiom;
+  const IdiomRow({Key key, this.idiom}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, ScopedReader watch) {
+    final provider = watch(addIdiomProvider);
+    return Container(
+      margin: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Flexible(flex: 4, fit: FlexFit.tight, child: Text(idiom.text)),
+          Flexible(child: FlagRow(code: idiom.language.region)),
+          Flexible(
+              child: Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: IconButton(
+              padding: EdgeInsets.zero,
+              icon: Icon(
+                Icons.cancel_rounded,
+                size: 35,
+                color: Theme.of(context).buttonColor,
+              ),
+              onPressed: () {
+                provider.removeIdiomLink(idiom);
+              },
+            ),
+          ))
+        ],
+      ),
     );
   }
 }

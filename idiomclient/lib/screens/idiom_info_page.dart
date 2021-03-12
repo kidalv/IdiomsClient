@@ -2,16 +2,19 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiomclient/components/flag_row.dart';
+import 'package:idiomclient/components/idiom_search_dialog.dart';
 import 'package:idiomclient/components/my_button.dart';
 import 'package:idiomclient/components/loading_indicator.dart';
 import 'package:idiomclient/components/comment_tile.dart';
 import 'package:idiomclient/components/my_text_field.dart';
 import 'package:idiomclient/components/placeholder_container.dart';
+import 'package:idiomclient/models/idiom_link.dart';
 import 'package:idiomclient/protos/idiom.pb.dart';
 import 'package:idiomclient/providers/idiom_info_provider.dart';
 import 'package:idiomclient/components/my_app_bar.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:idiomclient/providers/providers.dart';
+import 'package:idiomclient/providers/idiom_link_provider.dart';
 
 class IdiomInfoPage extends StatelessWidget {
   final ChangeNotifierProvider<IdiomInfoProvider> idiomInfoProvider;
@@ -22,6 +25,22 @@ class IdiomInfoPage extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final theme = Theme.of(context);
+
+    void _showDialog() {
+      final idiomLinkProvider = ChangeNotifierProvider((ref) {
+        final provider = ref.read(idiomInfoProvider);
+        return IdiomLinkProvider(provider, provider.links,
+            doSaveLinks: true, currentIdiomId: provider.idiom.idiomId);
+      });
+      showDialog(
+              context: context,
+              builder: (_) => Dialog(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  backgroundColor: theme.scaffoldBackgroundColor,
+                  child: IdiomSearchDialog(idiomLinkProvider)))
+          .then((value) => context.read(idiomLinkProvider).clear());
+    }
+
     return Scaffold(
       floatingActionButton: SpeedDial(
         marginRight: 18,
@@ -244,8 +263,9 @@ class IdiomInfoPage extends StatelessWidget {
                 return provider.isLoading
                     ? const TranslationPlaceholder()
                     : TranslationSwitch(
-                        links: provider.idiom.translations,
+                        links: provider.links,
                         selectedIndex: 0,
+                        onPress: _showDialog,
                       );
               }),
             ),
@@ -380,35 +400,47 @@ class IdiomInfoPage extends StatelessWidget {
 }
 
 class TranslationSwitch extends StatelessWidget {
-  final List<IdiomLinkReply> links;
+  final List<IdiomLink> links;
   final int selectedIndex;
-  const TranslationSwitch({Key key, this.links, this.selectedIndex}) : super(key: key);
+  final Function() onPress;
+  const TranslationSwitch({Key key, this.links, this.selectedIndex, this.onPress})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20.0, right: 20),
+      padding: const EdgeInsets.only(left: 10.0, right: 10),
       child: Column(
         children: [
           Row(
             children: [
-              Icon(Icons.arrow_back_ios, size: 25, color: Colors.grey[400]),
+              IconButton(
+                icon: Icon(Icons.arrow_back_ios, size: 25, color: Colors.grey[400]),
+                padding: EdgeInsets.zero,
+                onPressed: () {},
+                splashRadius: 25,
+              ),
               SizedBox(
-                width: MediaQuery.of(context).size.width - 94,
+                width: MediaQuery.of(context).size.width - 104,
                 child: Wrap(
                     alignment: WrapAlignment.center,
-                    children: []
-                      ..addAll(links
+                    children: [
+                      ...links
                           .map((x) => FlagCircle(
                               flag: x.language.region, selected: links.indexOf(x) == selectedIndex))
-                          .toList())
-                      ..add(
-                        CircleButton(),
+                          .toList()
+                    ]..add(
+                        CircleButton(onPress: onPress),
                       )),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 4.0),
-                child: Icon(Icons.arrow_forward_ios, size: 25, color: Colors.grey[400]),
+                child: IconButton(
+                  icon: Icon(Icons.arrow_forward_ios, size: 25, color: Colors.grey[400]),
+                  padding: EdgeInsets.zero,
+                  onPressed: () {},
+                  splashRadius: 25,
+                ),
               ),
             ],
           ),
@@ -419,7 +451,8 @@ class TranslationSwitch extends StatelessWidget {
 }
 
 class CircleButton extends StatelessWidget {
-  const CircleButton({Key key}) : super(key: key);
+  final Function() onPress;
+  const CircleButton({Key key, this.onPress}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -428,8 +461,12 @@ class CircleButton extends StatelessWidget {
       margin: const EdgeInsets.all(3.0),
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), color: theme.buttonColor),
-      child:
-          IconButton(icon: Icon(Icons.add), color: theme.scaffoldBackgroundColor, onPressed: () {}, splashRadius: 30,),
+      child: IconButton(
+        icon: Icon(Icons.add),
+        color: theme.scaffoldBackgroundColor,
+        onPressed: onPress,
+        splashRadius: 30,
+      ),
     );
   }
 }
