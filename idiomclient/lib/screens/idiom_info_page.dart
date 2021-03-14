@@ -18,7 +18,7 @@ import 'package:idiomclient/providers/idiom_link_provider.dart';
 
 class IdiomInfoPage extends StatelessWidget {
   final ChangeNotifierProvider<IdiomInfoProvider> idiomInfoProvider;
-  IdiomInfoPage({Key key, this.idiomInfoProvider}) : super(key: key);
+  const IdiomInfoPage({Key key, this.idiomInfoProvider}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -260,12 +260,13 @@ class IdiomInfoPage extends StatelessWidget {
               padding: const EdgeInsets.only(top: 30.0, bottom: 40),
               child: Consumer(builder: (_, watch, __) {
                 final provider = watch(idiomInfoProvider);
-                return provider.isLoading
+                return provider.isLoading && (provider.links == null || provider.links.isEmpty)
                     ? const TranslationPlaceholder()
                     : TranslationSwitch(
                         links: provider.links,
-                        selectedIndex: 0,
+                        selectedId: provider.idiomId,
                         onPress: _showDialog,
+                        idiomInfoProvider: idiomInfoProvider,
                       );
               }),
             ),
@@ -401,9 +402,11 @@ class IdiomInfoPage extends StatelessWidget {
 
 class TranslationSwitch extends StatelessWidget {
   final List<IdiomLink> links;
-  final int selectedIndex;
+  final int selectedId;
   final Function() onPress;
-  const TranslationSwitch({Key key, this.links, this.selectedIndex, this.onPress})
+  final ChangeNotifierProvider<IdiomInfoProvider> idiomInfoProvider;
+  const TranslationSwitch(
+      {Key key, this.links, this.selectedId, this.onPress, this.idiomInfoProvider})
       : super(key: key);
 
   @override
@@ -417,7 +420,17 @@ class TranslationSwitch extends StatelessWidget {
               IconButton(
                 icon: Icon(Icons.arrow_back_ios, size: 25, color: Colors.grey[400]),
                 padding: EdgeInsets.zero,
-                onPressed: () {},
+                onPressed: () {
+                  var backId = 0;
+                  final index = links.indexOf(links.firstWhere((x) => x.idiomId == selectedId));
+                  if (index == 0) {
+                    backId = links.last.idiomId;
+                  } else {
+                    backId = links[index - 1].idiomId;
+                  }
+                  context.read(idiomInfoProvider).getOtherIdiomWithLinks(
+                      context.read(idiomListProvider).list.firstWhere((x) => x.idiomId == backId));
+                },
                 splashRadius: 25,
               ),
               SizedBox(
@@ -427,7 +440,14 @@ class TranslationSwitch extends StatelessWidget {
                     children: [
                       ...links
                           .map((x) => FlagCircle(
-                              flag: x.language.region, selected: links.indexOf(x) == selectedIndex))
+                              flag: x.language.region,
+                              selected: x.idiomId == selectedId,
+                              onPressed: () {
+                                context.read(idiomInfoProvider).getOtherIdiomWithLinks(context
+                                    .read(idiomListProvider)
+                                    .list
+                                    .firstWhere((y) => y.idiomId == x.idiomId));
+                              }))
                           .toList()
                     ]..add(
                         CircleButton(onPress: onPress),
@@ -438,7 +458,19 @@ class TranslationSwitch extends StatelessWidget {
                 child: IconButton(
                   icon: Icon(Icons.arrow_forward_ios, size: 25, color: Colors.grey[400]),
                   padding: EdgeInsets.zero,
-                  onPressed: () {},
+                  onPressed: () {
+                    var backId = 0;
+                    final index = links.indexOf(links.firstWhere((x) => x.idiomId == selectedId));
+                    if (index == links.length - 1) {
+                      backId = links[0].idiomId;
+                    } else {
+                      backId = links[index + 1].idiomId;
+                    }
+                    context.read(idiomInfoProvider).getOtherIdiomWithLinks(context
+                        .read(idiomListProvider)
+                        .list
+                        .firstWhere((x) => x.idiomId == backId));
+                  },
                   splashRadius: 25,
                 ),
               ),
@@ -476,29 +508,22 @@ class TranslationPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 54.0 + 55,
-      child: Column(
-        children: [
-          SizedBox(
-            width: 54.0 + 55,
-            child: Row(
-              children: [
-                Icon(Icons.arrow_back_ios, size: 25, color: Colors.grey[400]),
-                SizedBox(
-                    width: 55,
-                    child: const Center(
-                      child: PlaceholderContainer(width: 55, height: 55, borderRadius: 30),
-                    )),
-                Padding(
-                  padding: const EdgeInsets.only(left: 4.0),
-                  child: Icon(Icons.arrow_forward_ios, size: 25, color: Colors.grey[400]),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return Row(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(left: 20.0),
+          child: Icon(Icons.arrow_back_ios, size: 25, color: Colors.grey[400]),
+        ),
+        SizedBox(
+            width: MediaQuery.of(context).size.width - 90,
+            child: const Center(
+              child: PlaceholderContainer(width: 55, height: 55, borderRadius: 30),
+            )),
+        Container(
+          margin: const EdgeInsets.only(right: 20.0),
+          child: Icon(Icons.arrow_forward_ios, size: 25, color: Colors.grey[400]),
+        ),
+      ],
     );
   }
 }
@@ -506,29 +531,33 @@ class TranslationPlaceholder extends StatelessWidget {
 class FlagCircle extends StatelessWidget {
   final bool selected;
   final String flag;
-  const FlagCircle({Key key, this.selected, this.flag}) : super(key: key);
+  final Function() onPressed;
+  const FlagCircle({Key key, this.selected, this.flag, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(3.0),
-      padding: const EdgeInsets.all(4),
-      decoration: selected
-          ? BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              border: Border.all(width: 1.5, color: Theme.of(context).accentColor))
-          : const BoxDecoration(),
-      child: ClipOval(
-          child: CachedNetworkImage(
-        imageUrl: "https://flagpedia.net/data/flags/w80/${flag.toLowerCase()}.jpg",
-        width: 40,
-        height: 40,
-        fit: BoxFit.fill,
-        placeholder: (context, url) => const PlaceholderContainer(
+    return InkWell(
+      onTap: onPressed,
+      child: Container(
+        margin: EdgeInsets.all(selected ? 3.0 : 4.5),
+        padding: const EdgeInsets.all(4),
+        decoration: selected
+            ? BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                border: Border.all(width: 1.5, color: Theme.of(context).accentColor))
+            : const BoxDecoration(),
+        child: ClipOval(
+            child: CachedNetworkImage(
+          imageUrl: "https://flagpedia.net/data/flags/w80/${flag.toLowerCase()}.jpg",
           width: 40,
           height: 40,
-        ),
-      )),
+          fit: BoxFit.fitHeight,
+          placeholder: (context, url) => const PlaceholderContainer(
+            width: 40,
+            height: 40,
+          ),
+        )),
+      ),
     );
   }
 }

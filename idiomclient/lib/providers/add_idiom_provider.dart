@@ -77,5 +77,6 @@ class AddIdiomProvider with ChangeNotifier {
       usageController.text != null &&
       usageController.text.isNotEmpty &&
       meaningController.text != null &&
-      meaningController.text.isNotEmpty;
+      meaningController.text.isNotEmpty &&
+      _idiom != null && _idiom.languageId != 0;
 }

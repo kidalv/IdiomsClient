@@ -219,6 +219,7 @@ class UserLanguageLine extends StatelessWidget {
           ],
         ),
         IconButton(
+            padding: EdgeInsets.zero,
             icon: const Icon(Icons.cancel_rounded, size: 35),
             onPressed: () {
               context.read(settingsProvider).removeLanguage(language);

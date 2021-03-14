@@ -12,7 +12,7 @@ class IdiomInfoProvider with ChangeNotifier {
   IdiomService _service;
   ActionService _actionService;
   bool isLoading;
-  int _idiomId;
+  int idiomId;
   GetIdiomInfoReply idiom;
   String _comment;
   bool commentDisabled;
@@ -20,7 +20,7 @@ class IdiomInfoProvider with ChangeNotifier {
   bool commentSending;
   bool sortByDate;
   List<IdiomLink> links;
-  final IdiomReply _listIdiom;
+  IdiomReply _listIdiom;
   final IdiomListProvider _listProvider;
 
   IdiomInfoProvider(this._listIdiom, this._listProvider) {
@@ -28,9 +28,19 @@ class IdiomInfoProvider with ChangeNotifier {
     _actionService = ActionService();
     commentController = TextEditingController();
     isLoading = true;
-    _idiomId = _listIdiom.idiomId;
+    idiomId = _listIdiom.idiomId;
     commentSending = false;
     getIdiom();
+    commentDisabled = true;
+    sortByDate = true;
+  }
+
+  void getOtherIdiomWithLinks(IdiomReply listIdiom) {
+    isLoading = true;
+    idiomId = listIdiom.idiomId;
+    _listIdiom = listIdiom;
+    commentSending = false;
+    getIdiomWithLinks();
     commentDisabled = true;
     sortByDate = true;
   }
@@ -38,9 +48,24 @@ class IdiomInfoProvider with ChangeNotifier {
   Future<void> getIdiom() async {
     isLoading = true;
     notifyListeners();
-    idiom = await _service.getIdiomsInfo(_idiomId);
-    idiom.translations.add(IdiomLinkReply()..idiomId = idiom.idiomId..language = idiom.language);
+    idiom = await _service.getIdiomsInfo(idiomId);
+    idiom.translations.add(IdiomLinkReply()
+      ..idiomId = idiom.idiomId
+      ..language = idiom.language);
     links = _mapLinks(idiom.translations);
+    _setFirstLink();
+    sortComments();
+    isLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> getIdiomWithLinks() async {
+    isLoading = true;
+    notifyListeners();
+    idiom = await _service.getIdiomsInfo(idiomId);
+    idiom.translations.add(IdiomLinkReply()
+      ..idiomId = idiom.idiomId
+      ..language = idiom.language);
     sortComments();
     isLoading = false;
     notifyListeners();
@@ -62,7 +87,7 @@ class IdiomInfoProvider with ChangeNotifier {
     commentDisabled = true;
     commentController.clear();
     notifyListeners();
-    final result = await _actionService.addComment(_idiomId, _comment);
+    final result = await _actionService.addComment(idiomId, _comment);
     idiom.comments.add(result);
     _comment = null;
     sortComments();
@@ -73,13 +98,13 @@ class IdiomInfoProvider with ChangeNotifier {
 
   Future<void> addFavorite() async {
     if (idiom.isFavorite) {
-      final result = await _actionService.deleteFavorite(_idiomId);
+      final result = await _actionService.deleteFavorite(idiomId);
       idiom.isFavorite = !result;
       idiom.favoritesCount -= 1;
       _listIdiom.favoritesCount -= 1;
       _listIdiom.isFavorite = !result;
     } else {
-      final result = await _actionService.addFavorite(_idiomId);
+      final result = await _actionService.addFavorite(idiomId);
       idiom..isFavorite = result;
       idiom.favoritesCount += 1;
       _listIdiom.favoritesCount += 1;
@@ -91,20 +116,20 @@ class IdiomInfoProvider with ChangeNotifier {
 
   Future<void> addUpvote() async {
     if (!idiom.isUserUpvoted) {
-      final result = await _actionService.addUpvote(_idiomId, true);
+      final result = await _actionService.addUpvote(idiomId, true);
       idiom..isUserUpvoted = result;
       idiom..isUpvote = true;
       idiom.upvoteCount += 1;
       _listIdiom.upvoteCount += 1;
     } else {
       if (!idiom.isUpvote) {
-        final result = await _actionService.addUpvote(_idiomId, true);
+        final result = await _actionService.addUpvote(idiomId, true);
         idiom..isUserUpvoted = result;
         idiom..isUpvote = true;
         idiom.upvoteCount += 2;
         _listIdiom.upvoteCount += 2;
       } else {
-        await _actionService.deleteUpvote(_idiomId);
+        await _actionService.deleteUpvote(idiomId);
         idiom..isUserUpvoted = false;
         idiom..isUpvote = false;
         idiom.upvoteCount -= 1;
@@ -117,20 +142,20 @@ class IdiomInfoProvider with ChangeNotifier {
 
   Future<void> addDevote() async {
     if (!idiom.isUserUpvoted) {
-      final result = await _actionService.addUpvote(_idiomId, false);
+      final result = await _actionService.addUpvote(idiomId, false);
       idiom..isUserUpvoted = result;
       idiom..isUpvote = false;
       idiom.upvoteCount -= 1;
       _listIdiom.upvoteCount -= 1;
     } else {
       if (idiom.isUpvote) {
-        final result = await _actionService.addUpvote(_idiomId, false);
+        final result = await _actionService.addUpvote(idiomId, false);
         idiom..isUserUpvoted = result;
         idiom..isUpvote = false;
         idiom.upvoteCount -= 2;
         _listIdiom.upvoteCount -= 2;
       } else {
-        await _actionService.deleteUpvote(_idiomId);
+        await _actionService.deleteUpvote(idiomId);
         idiom..isUserUpvoted = false;
         idiom..isUpvote = false;
         idiom.upvoteCount += 1;
@@ -188,11 +213,21 @@ class IdiomInfoProvider with ChangeNotifier {
   }
 
   List<IdiomLink> _mapLinks(List<IdiomLinkReply> linkReplyes) {
-    return linkReplyes.map((x) => IdiomLink()..idiomId = x.idiomId..language = x.language).toList();
+    return linkReplyes
+        .map((x) => IdiomLink()
+          ..idiomId = x.idiomId
+          ..language = x.language)
+        .toList();
+  }
+
+  void _setFirstLink() {
+    final link = links.where((x) => x.idiomId == idiom.idiomId).first;
+    links.removeWhere((x) => x.idiomId == idiom.idiomId);
+    links.insert(0, link);
   }
 
   Future<void> addReport(String text) async {
-    final result = await _actionService.addReport(_idiomId, text);
+    final result = await _actionService.addReport(idiomId, text);
     // TODO Something
   }
 
