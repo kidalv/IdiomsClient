@@ -1,6 +1,7 @@
 import 'package:idiomclient/protos/action.pb.dart';
 import 'package:idiomclient/protos/models.pb.dart';
 import 'package:idiomclient/services/action_service.dart';
+import 'package:idiomclient/services/unauthorized_user_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:idiomclient/providers/idiom_list_provider.dart';
 
@@ -29,6 +30,7 @@ class SharedPrefs {
 
   Future<void> init() async {
     _sharedPrefs ??= await SharedPreferences.getInstance();
+    _sharedPrefs.clear();
     _actionService = ActionService();
     languages = await _actionService.getAllLAnguages();
     //linkTypes = await _actionService.getLinkTypes();

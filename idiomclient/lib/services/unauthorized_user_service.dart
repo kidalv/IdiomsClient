@@ -26,4 +26,8 @@ class UnauthorizedUserService {
   Future<UserCredentialsReply> googleSignIn(String jwtToken) async {
     return await _client.googleSignIn(GoogleSignInRequest()..jwtToken = jwtToken);
   }
+
+  Future<UserCredentialsReply> refreshToken(String refreshToken) async {
+    return await _client.refreshToken(RefreshTokenRequest()..token = refreshToken);
+  }
 }

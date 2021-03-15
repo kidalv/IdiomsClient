@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiomclient/components/my_app_bar.dart';
 import 'package:idiomclient/components/my_button.dart';
 import 'package:idiomclient/components/my_text_field.dart';
+import 'package:idiomclient/main.dart';
 import 'package:idiomclient/providers/providers.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -65,7 +66,13 @@ class LoginPage extends StatelessWidget {
                     text: "Login",
                     disabled: !provider.loginAvailable(),
                     isLoading: provider.loginLoading,
-                    onPress: () {provider.login();},
+                    onPress: () async {
+                      await provider.login();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const MyHomePage()),
+                      );
+                    },
                   ),
                 ),
               ]);

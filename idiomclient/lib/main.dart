@@ -2,10 +2,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:idiomclient/protos/user.pb.dart';
+import 'package:idiomclient/providers/providers.dart';
 import 'package:idiomclient/screens/add_idiom_page.dart';
 import 'package:idiomclient/screens/favorites_page.dart';
 import 'package:idiomclient/screens/profile_page.dart';
 import 'package:idiomclient/screens/idiom_list_page.dart';
+import 'package:idiomclient/screens/registration_page.dart';
 import 'package:idiomclient/services/shared_prefs.dart';
 import 'package:idiomclient/services/user_service.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -40,17 +42,36 @@ class MyApp extends StatelessWidget {
         // Define the default TextTheme. Use this to specify the default
         // text styling for headlines, titles, bodies of text, and more.
         textTheme: TextTheme(
-          headline1: const TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold),
-          headline4: const TextStyle(fontSize: 28.0, fontFamily: 'Open Sans'),
-          subtitle1: TextStyle(fontSize: 16, color: Colors.red[500], height: 1.0),
-          headline6: TextStyle(fontSize: 24.0, fontFamily: 'Open Sans', color: Colors.grey[400]),
-          headline3: TextStyle(fontSize: 20.0, fontFamily: 'Open Sans', color: Colors.grey[400]),
-          bodyText2: TextStyle(fontSize: 18.0, fontFamily: 'Hind', color: Colors.grey[400]),
-          button:  TextStyle(fontSize: 18.0, fontFamily: 'Hind', color: Colors.grey[800], fontWeight: FontWeight.w500),
-          headline5: TextStyle(fontFamily: "Nexa", color: Colors.grey[700], fontWeight: FontWeight.bold, fontSize: 24)
-        ),
+            headline1: const TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold),
+            headline4: const TextStyle(fontSize: 28.0, fontFamily: 'Open Sans'),
+            subtitle1: TextStyle(fontSize: 16, color: Colors.red[500], height: 1.0),
+            headline6: TextStyle(fontSize: 24.0, fontFamily: 'Open Sans', color: Colors.grey[400]),
+            headline3: TextStyle(fontSize: 20.0, fontFamily: 'Open Sans', color: Colors.grey[400]),
+            bodyText2: TextStyle(fontSize: 18.0, fontFamily: 'Hind', color: Colors.grey[400]),
+            button: TextStyle(
+                fontSize: 18.0,
+                fontFamily: 'Hind',
+                color: Colors.grey[800],
+                fontWeight: FontWeight.w500),
+            headline5: TextStyle(
+                fontFamily: "Nexa",
+                color: Colors.grey[700],
+                fontWeight: FontWeight.bold,
+                fontSize: 24)),
       ),
-      home: const MyHomePage(),
+      home:  Consumer(
+        builder: (_, watch, __) {
+          final provider = watch(authorizationProvider);
+          if (provider.isLoading) {
+            return const CircularProgressIndicator();
+          }else {
+            if (provider.isAuthorized) {
+              return const MyHomePage();
+            }
+            return const RegistrationPage();
+          }
+        }
+      ),
     );
   }
 }

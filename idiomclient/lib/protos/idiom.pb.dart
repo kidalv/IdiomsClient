@@ -19,6 +19,8 @@ class GetIdiomListRequest extends $pb.GeneratedMessage {
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'search')
     ..p<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'languageIds', $pb.PbFieldType.P3)
     ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sort')
+    ..aOB(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'favorites')
+    ..aOB(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'translatedInAllLanguages')
     ..hasRequiredFields = false
   ;
 
@@ -29,6 +31,8 @@ class GetIdiomListRequest extends $pb.GeneratedMessage {
     $core.String search,
     $core.Iterable<$core.int> languageIds,
     $core.String sort,
+    $core.bool favorites,
+    $core.bool translatedInAllLanguages,
   }) {
     final _result = create();
     if (count != null) {
@@ -45,6 +49,12 @@ class GetIdiomListRequest extends $pb.GeneratedMessage {
     }
     if (sort != null) {
       _result.sort = sort;
+    }
+    if (favorites != null) {
+      _result.favorites = favorites;
+    }
+    if (translatedInAllLanguages != null) {
+      _result.translatedInAllLanguages = translatedInAllLanguages;
     }
     return _result;
   }
@@ -107,6 +117,24 @@ class GetIdiomListRequest extends $pb.GeneratedMessage {
   $core.bool hasSort() => $_has(4);
   @$pb.TagNumber(5)
   void clearSort() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.bool get favorites => $_getBF(5);
+  @$pb.TagNumber(6)
+  set favorites($core.bool v) { $_setBool(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasFavorites() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearFavorites() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.bool get translatedInAllLanguages => $_getBF(6);
+  @$pb.TagNumber(7)
+  set translatedInAllLanguages($core.bool v) { $_setBool(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasTranslatedInAllLanguages() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearTranslatedInAllLanguages() => clearField(7);
 }
 
 class GetIdiomInfoRequest extends $pb.GeneratedMessage {

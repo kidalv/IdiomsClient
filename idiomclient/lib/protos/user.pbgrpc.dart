@@ -56,6 +56,12 @@ class UserClient extends $grpc.Client {
           ($0.GoogleSignInRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.UserCredentialsReply.fromBuffer(value));
+  static final _$refreshToken =
+      $grpc.ClientMethod<$0.RefreshTokenRequest, $0.UserCredentialsReply>(
+          '/idiom.User/RefreshToken',
+          ($0.RefreshTokenRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.UserCredentialsReply.fromBuffer(value));
 
   UserClient($grpc.ClientChannel channel,
       {$grpc.CallOptions options,
@@ -101,6 +107,12 @@ class UserClient extends $grpc.Client {
       $0.GoogleSignInRequest request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$googleSignIn, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.UserCredentialsReply> refreshToken(
+      $0.RefreshTokenRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$refreshToken, request, options: options);
   }
 }
 
@@ -165,6 +177,15 @@ abstract class UserServiceBase extends $grpc.Service {
             ($core.List<$core.int> value) =>
                 $0.GoogleSignInRequest.fromBuffer(value),
             ($0.UserCredentialsReply value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$0.RefreshTokenRequest, $0.UserCredentialsReply>(
+            'RefreshToken',
+            refreshToken_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $0.RefreshTokenRequest.fromBuffer(value),
+            ($0.UserCredentialsReply value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.UserProfileReply> getUserProfile_Pre($grpc.ServiceCall call,
@@ -205,6 +226,12 @@ abstract class UserServiceBase extends $grpc.Service {
     return googleSignIn(call, await request);
   }
 
+  $async.Future<$0.UserCredentialsReply> refreshToken_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.RefreshTokenRequest> request) async {
+    return refreshToken(call, await request);
+  }
+
   $async.Future<$0.UserProfileReply> getUserProfile(
       $grpc.ServiceCall call, $0.GetUserProfileRequest request);
   $async.Future<$0.UserCredentialsReply> register(
@@ -219,4 +246,6 @@ abstract class UserServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.DeleteUserLanguageRequest request);
   $async.Future<$0.UserCredentialsReply> googleSignIn(
       $grpc.ServiceCall call, $0.GoogleSignInRequest request);
+  $async.Future<$0.UserCredentialsReply> refreshToken(
+      $grpc.ServiceCall call, $0.RefreshTokenRequest request);
 }

@@ -17,8 +17,21 @@ class IdiomService {
     }
   }
 
-  Future<List<IdiomReply>> getIdiomsList() async {
-    return (await _client.getIdiomList(GetIdiomListRequest()..count = 50)).idioms;
+  Future<List<IdiomReply>> getIdiomsList({
+    String sort = "",
+    String search = "",
+    List<int> languages = const [],
+    bool isFavorite = false,
+    bool allTranslations = false,
+  }) async {
+    return (await _client.getIdiomList(GetIdiomListRequest()
+          ..count = 50
+          ..favorites = isFavorite
+          ..languageIds.addAll(languages)
+          ..search = search
+          ..sort = sort
+          ..translatedInAllLanguages = allTranslations))
+        .idioms;
   }
 
   Future<GetIdiomInfoReply> getIdiomsInfo(int idiomId) async {
@@ -49,6 +62,8 @@ class IdiomService {
   }
 
   Future<IdiomLinkReply> addIdiomLink(int currentIdiom, int linkedIdiom) async {
-    return await _client.addlink(AddIdiomLinkRequest()..currentIdiomId = currentIdiom..linkIdiomId = linkedIdiom);
+    return await _client.addlink(AddIdiomLinkRequest()
+      ..currentIdiomId = currentIdiom
+      ..linkIdiomId = linkedIdiom);
   }
 }
