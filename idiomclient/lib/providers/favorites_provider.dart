@@ -14,9 +14,13 @@ class FavoritesProvider with ChangeNotifier {
 
 
  FavoritesProvider(){
-   _service = IdiomService();
-   isLoading = true;
-   list = [];
+    _service = IdiomService();
+    isLoading = true;
+    list = [];
+    currentSort = SharedPrefs().listSort;
+    selectedLanguages = [];
+    allLanguages = SharedPrefs().languages;
+    getList();
  }
 
 

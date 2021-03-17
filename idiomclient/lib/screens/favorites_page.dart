@@ -101,7 +101,7 @@ class FavoritesPage extends StatelessWidget {
         ),
       ),
       appBar: MyAppBar(
-        text: "Idioms",
+        text: "Favorites",
         iconButton: Builder(
           builder: (context) => IconButton(
               icon: Icon(

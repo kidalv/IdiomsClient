@@ -536,27 +536,30 @@ class FlagCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      child: Container(
-        margin: EdgeInsets.all(selected ? 3.0 : 4.5),
-        padding: const EdgeInsets.all(4),
-        decoration: selected
-            ? BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                border: Border.all(width: 1.5, color: Theme.of(context).accentColor))
-            : const BoxDecoration(),
-        child: ClipOval(
+    return Container(
+      margin: EdgeInsets.all(selected ? 3.0 : 4.5),
+      padding: const EdgeInsets.all(4),
+      decoration: selected
+          ? BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              border: Border.all(width: 1.5, color: Theme.of(context).accentColor))
+          : const BoxDecoration(),
+      child: ClipOval(
+        child: Material(
+          child: InkWell(
+            onTap: onPressed,
             child: CachedNetworkImage(
-          imageUrl: "https://flagpedia.net/data/flags/w80/${flag.toLowerCase()}.jpg",
-          width: 40,
-          height: 40,
-          fit: BoxFit.fitHeight,
-          placeholder: (context, url) => const PlaceholderContainer(
-            width: 40,
-            height: 40,
+              imageUrl: "https://flagpedia.net/data/flags/w80/${flag.toLowerCase()}.jpg",
+              width: 40,
+              height: 40,
+              fit: BoxFit.fitHeight,
+              placeholder: (context, url) => const PlaceholderContainer(
+                width: 40,
+                height: 40,
+              ),
+            ),
           ),
-        )),
+        ),
       ),
     );
   }

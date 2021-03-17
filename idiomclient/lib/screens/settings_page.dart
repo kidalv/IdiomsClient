@@ -9,6 +9,7 @@ import 'package:idiomclient/components/placeholder_container.dart';
 import 'package:idiomclient/protos/models.pb.dart';
 import 'package:idiomclient/providers/settings_provider.dart';
 import 'package:idiomclient/providers/providers.dart';
+import 'package:idiomclient/screens/registration_page.dart';
 import 'package:idiomclient/services/shared_prefs.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -24,7 +25,9 @@ class SettingsPage extends StatelessWidget {
         text: "Settings",
         disableIcon: true,
         backArrow: true,
-        onBack: () {context.read(profileProvider).getProfile();},
+        onBack: () {
+          context.read(profileProvider).getProfile();
+        },
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -167,7 +170,14 @@ class SettingsPage extends StatelessWidget {
                       text: "Logout",
                       width: width * 0.5,
                       height: 50,
-                      onPress: () {},
+                      onPress: () {
+                        SharedPrefs().logout();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const RegistrationPage()),
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -176,18 +186,16 @@ class SettingsPage extends StatelessWidget {
             Positioned(
               top: 70,
               left: width * 0.26,
-              child: Consumer(
-                builder: (_, watch, __) {
-                  final provider = watch(settingsProvider);
-                  return DropdownSearch(
-                    list: SharedPrefs().languages,
-                    selectedList: provider.userLanguages,
-                    onSelect: (value) {
-                      context.read(settingsProvider).addLanguage(value);
-                    },
-                  );
-                }
-              ),
+              child: Consumer(builder: (_, watch, __) {
+                final provider = watch(settingsProvider);
+                return DropdownSearch(
+                  list: SharedPrefs().languages,
+                  selectedList: provider.userLanguages,
+                  onSelect: (value) {
+                    context.read(settingsProvider).addLanguage(value);
+                  },
+                );
+              }),
             ),
           ],
         ),

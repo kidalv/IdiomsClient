@@ -59,19 +59,17 @@ class MyApp extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 fontSize: 24)),
       ),
-      home:  Consumer(
-        builder: (_, watch, __) {
-          final provider = watch(authorizationProvider);
-          if (provider.isLoading) {
-            return const CircularProgressIndicator();
-          }else {
-            if (provider.isAuthorized) {
-              return const MyHomePage();
-            }
-            return const RegistrationPage();
+      home: Consumer(builder: (_, watch, __) {
+        final provider = watch(authorizationProvider);
+        if (provider.isLoading) {
+          return const CircularProgressIndicator();
+        } else {
+          if (provider.isAuthorized) {
+            return const MyHomePage();
           }
+          return const RegistrationPage();
         }
-      ),
+      }),
     );
   }
 }
@@ -83,53 +81,65 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 4,
-      child: Scaffold(
-        bottomNavigationBar: SizedBox(
-          height: 57,
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                color: Colors.grey.withOpacity(0.1),
-                height: 1,
-              ),
-              TabBar(
-                indicatorColor: Colors.transparent,
-                labelPadding: const EdgeInsets.only(top: 5, bottom: 5),
-                indicatorWeight: 0,
-                tabs: const <Widget>[
-                  Tab(
-                    icon: Icon(
-                      Icons.search,
-                      size: 35,
+      child: Builder(builder: (context) {
+        final TabController tabController = DefaultTabController.of(context);
+        tabController.addListener(() {
+          if (tabController.indexIsChanging &&
+              tabController.index == 3 &&
+              tabController.offset == -1) {
+            context.read(profileProvider).getProfile();
+          }
+        });
+        return Scaffold(
+          bottomNavigationBar: SizedBox(
+            height: 57,
+            child: Column(
+              children: [
+                Container(
+                  width: double.infinity,
+                  color: Colors.grey.withOpacity(0.1),
+                  height: 1,
+                ),
+                TabBar(
+                  indicatorColor: Colors.transparent,
+                  labelPadding: const EdgeInsets.only(top: 5, bottom: 5),
+                  indicatorWeight: 0,
+                  tabs: const <Widget>[
+                    Tab(
+                      icon: Icon(
+                        Icons.search,
+                        size: 35,
+                      ),
                     ),
-                  ),
-                  Tab(
-                    icon: Icon(OMIcons.add, size: 40),
-                  ),
-                  Tab(
-                    icon: Icon(OMIcons.favoriteBorder, size: 35),
-                  ),
-                  Tab(
-                    icon: Icon(OMIcons.person, size: 40),
-                  ),
-                ],
-                labelColor: Colors.lightBlue[300],
-                indicator: const UnderlineTabIndicator(borderSide: BorderSide(width: 0)),
-                unselectedLabelColor: Colors.grey[400],
-              ),
+                    Tab(
+                      icon: Icon(OMIcons.add, size: 40),
+                    ),
+                    Tab(
+                      icon: Icon(OMIcons.favoriteBorder, size: 35),
+                    ),
+                    Tab(
+                      icon: Icon(OMIcons.person, size: 40),
+                    ),
+                  ],
+                  labelColor: Colors.lightBlue[300],
+                  indicator: const UnderlineTabIndicator(borderSide: BorderSide(width: 0)),
+                  unselectedLabelColor: Colors.grey[400],
+                ),
+              ],
+            ),
+          ),
+          body: TabBarView(
+            physics: const BouncingScrollPhysics(),
+            controller: tabController,
+            children: const <Widget>[
+              IdiomListPage(),
+              AddIdiomPage(),
+              FavoritesPage(),
+              ProfilePage(),
             ],
           ),
-        ),
-        body: const TabBarView(
-          children: <Widget>[
-            IdiomListPage(),
-            AddIdiomPage(),
-            FavoritesPage(),
-            ProfilePage(),
-          ],
-        ),
-      ),
+        );
+      }),
     );
   }
 }
