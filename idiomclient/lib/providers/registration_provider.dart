@@ -115,6 +115,7 @@ class RegistrationProvider with ChangeNotifier {
       prefs.name = result.name;
       prefs.token = result.token;
       prefs.refreshToken = result.refreshToken;
+      prefs.userLanguages = result.userLanguages;
     } else {
       error = "something wrong";
     }

@@ -10,6 +10,7 @@ import 'package:idiomclient/components/my_text_field.dart';
 import 'package:idiomclient/components/placeholder_container.dart';
 import 'package:idiomclient/models/idiom_link.dart';
 import 'package:idiomclient/protos/idiom.pb.dart';
+import 'package:idiomclient/protos/models.pb.dart';
 import 'package:idiomclient/providers/idiom_info_provider.dart';
 import 'package:idiomclient/components/my_app_bar.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -428,8 +429,11 @@ class TranslationSwitch extends StatelessWidget {
                   } else {
                     backId = links[index - 1].idiomId;
                   }
-                  context.read(idiomInfoProvider).getOtherIdiomWithLinks(
-                      context.read(idiomListProvider).list.firstWhere((x) => x.idiomId == backId));
+                  context.read(idiomInfoProvider).getOtherIdiomWithLinks(context
+                      .read(idiomListProvider)
+                      .list
+                      .firstWhere((x) => x.idiomId == backId,
+                          orElse: () => IdiomReply()..idiomId = backId));
                 },
                 splashRadius: 25,
               ),
@@ -446,7 +450,8 @@ class TranslationSwitch extends StatelessWidget {
                                 context.read(idiomInfoProvider).getOtherIdiomWithLinks(context
                                     .read(idiomListProvider)
                                     .list
-                                    .firstWhere((y) => y.idiomId == x.idiomId));
+                                    .firstWhere((y) => y.idiomId == x.idiomId,
+                                        orElse: () => IdiomReply()..idiomId = x.idiomId));
                               }))
                           .toList()
                     ]..add(
@@ -469,7 +474,8 @@ class TranslationSwitch extends StatelessWidget {
                     context.read(idiomInfoProvider).getOtherIdiomWithLinks(context
                         .read(idiomListProvider)
                         .list
-                        .firstWhere((x) => x.idiomId == backId));
+                        .firstWhere((x) => x.idiomId == backId,
+                            orElse: () => IdiomReply()..idiomId = backId));
                   },
                   splashRadius: 25,
                 ),

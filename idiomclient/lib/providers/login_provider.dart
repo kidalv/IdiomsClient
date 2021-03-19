@@ -40,6 +40,7 @@ class LoginProvider with ChangeNotifier {
     prefs.name = result.name;
     prefs.token = result.token;
     prefs.refreshToken = result.refreshToken;
+    prefs.userLanguages = result.userLanguages;
     loginLoading = false;
     notifyListeners();
   }

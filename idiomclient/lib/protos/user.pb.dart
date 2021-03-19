@@ -205,6 +205,7 @@ class UserCredentialsReply extends $pb.GeneratedMessage {
     ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'refreshToken')
     ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId', $pb.PbFieldType.O3)
     ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'imageUrl')
+    ..pc<$1.LanguageReply>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userLanguages', $pb.PbFieldType.PM, subBuilder: $1.LanguageReply.create)
     ..hasRequiredFields = false
   ;
 
@@ -218,6 +219,7 @@ class UserCredentialsReply extends $pb.GeneratedMessage {
     $core.String refreshToken,
     $core.int roleId,
     $core.String imageUrl,
+    $core.Iterable<$1.LanguageReply> userLanguages,
   }) {
     final _result = create();
     if (userId != null) {
@@ -243,6 +245,9 @@ class UserCredentialsReply extends $pb.GeneratedMessage {
     }
     if (imageUrl != null) {
       _result.imageUrl = imageUrl;
+    }
+    if (userLanguages != null) {
+      _result.userLanguages.addAll(userLanguages);
     }
     return _result;
   }
@@ -338,6 +343,9 @@ class UserCredentialsReply extends $pb.GeneratedMessage {
   $core.bool hasImageUrl() => $_has(7);
   @$pb.TagNumber(8)
   void clearImageUrl() => clearField(8);
+
+  @$pb.TagNumber(9)
+  $core.List<$1.LanguageReply> get userLanguages => $_getList(8);
 }
 
 class GoogleSignInRequest extends $pb.GeneratedMessage {

@@ -93,10 +93,70 @@ class IdiomListPage extends StatelessWidget {
                 );
               }),
             ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20.0, left: 5.0, top: 20.0, right: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Consumer(builder: (_, watch, __) {
+                    final provider = watch(idiomListProvider);
+                    return Switch(
+                        value: provider.translationInAll,
+                        activeTrackColor: Colors.grey[700],
+                        inactiveTrackColor: Colors.grey[700],
+                        activeColor: theme.accentColor,
+                        onChanged: (x) {
+                          provider.translationInAll = x;
+                        });
+                  }),
+                  Container(
+                      margin: const EdgeInsets.only(left: 5),
+                      width: 304.0 - 75,
+                      child: const Text(
+                        "Translated in all selected languages",
+                      ))
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20.0, left: 5.0, top: 20.0, right: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Consumer(builder: (_, watch, __) {
+                    final provider = watch(idiomListProvider);
+                    return Switch(
+                        value: provider.myLanguages,
+                        activeTrackColor: Colors.grey[700],
+                        inactiveTrackColor: Colors.grey[700],
+                        activeColor: theme.accentColor,
+                        onChanged: (x) {
+                          provider.myLanguages = x;
+                        });
+                  }),
+                  Container(
+                      margin: const EdgeInsets.only(left: 5),
+                      width: 304.0 - 75,
+                      child: const Text(
+                        "My languages",
+                      ))
+                ],
+              ),
+            ),
             const Text("Languages: "),
             Container(
                 margin: const EdgeInsets.all(10),
-                child: DropdownSearchDrawer(list: SharedPrefs().languages))
+                child: Consumer(
+                  builder: (_, watch, __) {
+                    final provider = watch(idiomListProvider);
+                    return DropdownSearchDrawer(
+                      list: SharedPrefs().languages,
+                      width: 304,
+                      search: provider.getList,
+                      selectedList: provider.selectedLanguages,
+                    );
+                  }
+                ))
           ],
         ),
       ),
@@ -118,12 +178,14 @@ class IdiomListPage extends StatelessWidget {
         if (provider.isLoading) {
           return RefreshIndicator(
             onRefresh: provider.getList,
-            child: ListView(physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()), children: const [
-              ListTilePlaceholder(),
-              ListTilePlaceholder(),
-              ListTilePlaceholder(),
-              ListTilePlaceholder(),
-            ]),
+            child: ListView(
+                physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                children: const [
+                  ListTilePlaceholder(),
+                  ListTilePlaceholder(),
+                  ListTilePlaceholder(),
+                  ListTilePlaceholder(),
+                ]),
           );
         } else {
           if (provider.list.isEmpty) {

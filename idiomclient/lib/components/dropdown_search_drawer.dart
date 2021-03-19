@@ -4,10 +4,13 @@ import 'package:idiomclient/protos/models.pb.dart';
 
 class DropdownSearchDrawer extends StatefulWidget {
   final List<LanguageReply> list;
-  const DropdownSearchDrawer({Key key, this.list}) : super(key: key);
+  final Function() search;
+  final List<LanguageReply> selectedList;
+  final double width;
+  const DropdownSearchDrawer({Key key, this.list, this.selectedList, this.search, this.width = 0}) : super(key: key);
 
   @override
-  _DropdownSearchDrawerState createState() => _DropdownSearchDrawerState(list);
+  _DropdownSearchDrawerState createState() => _DropdownSearchDrawerState(list, selectedList);
 }
 
 class _DropdownSearchDrawerState extends State<DropdownSearchDrawer> {
@@ -15,9 +18,8 @@ class _DropdownSearchDrawerState extends State<DropdownSearchDrawer> {
   List<LanguageReply> allItems;
   List<LanguageReply> selectedLanguages;
   bool collapsed = true;
-  _DropdownSearchDrawerState(this.allItems) {
+  _DropdownSearchDrawerState(this.allItems, this.selectedLanguages) {
     tempList = allItems;
-    selectedLanguages = [];
   }
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,7 @@ class _DropdownSearchDrawerState extends State<DropdownSearchDrawer> {
                         child: Icon(Icons.search, color: Colors.grey[400]),
                       ),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.45,
+                        width: widget.width == 0 ? MediaQuery.of(context).size.width * 0.40 : widget.width - 105,
                         child: TextField(
                           decoration: const InputDecoration(
                               border: InputBorder.none,
@@ -101,6 +103,7 @@ class _DropdownSearchDrawerState extends State<DropdownSearchDrawer> {
                                   allItems.remove(x);
                                   tempList = tempList.where((y) => y.name != x.name).toList();
                                 });
+                                widget.search();
                               },
                             ))
                         .toList(),
@@ -131,6 +134,7 @@ class _DropdownSearchDrawerState extends State<DropdownSearchDrawer> {
                               allItems.add(x);
                               tempList = allItems;
                             });
+                            widget.search();
                           },
                           child: Container(
                             padding: const EdgeInsets.all(5.0),

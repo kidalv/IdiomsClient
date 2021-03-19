@@ -12,10 +12,13 @@ class SettingsProvider with ChangeNotifier {
 
  SettingsProvider(){
    isLoading = true;
+   notifyListeners();
    _prefs = SharedPrefs();
    _service = UserService();
    systemLanguage = _prefs.systemLanguage;
    userLanguages = _prefs.userLanguages;
+   isLoading = false;
+   notifyListeners();
  }
  
  bool get showFlags => _prefs.showFlags;

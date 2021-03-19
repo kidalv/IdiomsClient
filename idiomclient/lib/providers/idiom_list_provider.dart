@@ -12,6 +12,8 @@ class IdiomListProvider with ChangeNotifier {
   Sort currentSort;
   List<LanguageReply> selectedLanguages;
   List<LanguageReply> allLanguages;
+  bool _myLanguages;
+  bool _translationInAll;
 
   IdiomListProvider() {
     _service = IdiomService();
@@ -20,22 +22,56 @@ class IdiomListProvider with ChangeNotifier {
     currentSort = SharedPrefs().listSort;
     selectedLanguages = [];
     allLanguages = SharedPrefs().languages;
+    _myLanguages = false;
+    _translationInAll = false;
     getList();
   }
 
   Future<void> getList() async {
     isLoading = true;
+    final myLanguages = SharedPrefs().userLanguages;
+    if (myLanguages.any((x) => !selectedLanguages.any((y) => y.languageId == x.languageId))) {
+      _myLanguages = false;
+    }
     notifyListeners();
-    list = await _service.getIdiomsList();
+    list = await _service.getIdiomsList(
+        languages: selectedLanguages.map((x) => x.languageId).toList(),
+        sort: currentSort.toText(),
+        allTranslations: _translationInAll);
     _applySort();
     isLoading = false;
     notifyListeners();
   }
 
+  set translationInAll(bool value) {
+    _translationInAll = value;
+    getList();
+  }
+
+  set myLanguages(bool value) {
+    _myLanguages = value;
+    final myLanguages = SharedPrefs().userLanguages;
+    if (value) {
+      myLanguages.removeWhere((x) => selectedLanguages.any((y) => y.languageId == x.languageId));
+      selectedLanguages.addAll(myLanguages);
+    } else {
+      selectedLanguages.removeWhere((x) => myLanguages.any((y) => y.languageId == x.languageId));
+    }
+    getList();
+  }
+
+  bool get translationInAll => _translationInAll;
+
+  bool get myLanguages => _myLanguages;
+
   void changeSort(Sort sort) {
     currentSort = sort;
     SharedPrefs().listSort = sort;
-    _applySort();
+    if (list.length < 50) {
+      _applySort();
+    } else {
+      getList();
+    }
     notifyListeners();
   }
 
@@ -60,3 +96,7 @@ class IdiomListProvider with ChangeNotifier {
 }
 
 enum Sort { date, upvotes, favorites, languages, comments }
+
+extension MyEnumEx on Sort {
+  String toText() => toString().split('.')[1];
+}

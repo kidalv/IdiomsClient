@@ -11,28 +11,46 @@ class FavoritesProvider with ChangeNotifier {
   Sort currentSort;
   List<LanguageReply> selectedLanguages;
   List<LanguageReply> allLanguages;
+  bool _myLanguages;
 
-
- FavoritesProvider(){
+  FavoritesProvider() {
     _service = IdiomService();
     isLoading = true;
+    _myLanguages = false;
     list = [];
     currentSort = SharedPrefs().listSort;
     selectedLanguages = [];
     allLanguages = SharedPrefs().languages;
     getList();
- }
+  }
 
+  Future<void> getList() async {
+    isLoading = true;
+    notifyListeners();
+    list = await _service.getIdiomsList(
+      isFavorite: true,
+      languages: selectedLanguages.map((x) => x.languageId).toList(),
+      sort: currentSort.toText(),
+    );
+    isLoading = false;
+    notifyListeners();
+  }
 
- Future<void> getList() async {
-   isLoading = true;
-   notifyListeners();
-   list = await _service.getIdiomsList(isFavorite: true);
-   isLoading = false;
-   notifyListeners();
- }
+  set myLanguages(bool value) {
+    _myLanguages = value;
+    final myLanguages = SharedPrefs().userLanguages;
+    if (value) {
+      myLanguages.removeWhere((x) => selectedLanguages.any((y) => y.languageId == x.languageId));
+      selectedLanguages.addAll(myLanguages);
+    } else {
+      selectedLanguages.removeWhere((x) => myLanguages.any((y) => y.languageId == x.languageId));
+    }
+    getList();
+  }
 
-   void changeSort(Sort sort) {
+  bool get myLanguages => _myLanguages;
+
+  void changeSort(Sort sort) {
     currentSort = sort;
     SharedPrefs().listSort = sort;
     _applySort();
