@@ -42,6 +42,50 @@ class IdiomInfoPage extends StatelessWidget {
           .then((value) => context.read(idiomLinkProvider).clear());
     }
 
+    void _showDeleteAlert() {
+      final width = MediaQuery.of(context).size.width;
+      showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                backgroundColor: theme.scaffoldBackgroundColor,
+                title: const Text("Are you sure?"),
+                content: const Text(
+                    "This action cant be undone, are you sure you want to remove this idiom?"),
+                actions: [
+                  Container(
+                    margin: const EdgeInsets.all(5.0),
+                    child: Consumer(
+                      builder: (_, watch, __) {
+                        final provider = watch(idiomInfoProvider);
+                        return MyButton(
+                          text: "Delete",
+                          height: 50,
+                          width: width * 0.25,
+                          isLoading: provider.isDeleting,
+                          onPress: () async {
+                            await provider.deleteIdiom();
+                            Navigator.of(context)..pop()..pop();
+                          },
+                        );
+                      }
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.all(5.0),
+                    child: MyButton(
+                      text: "Cancel",
+                      height: 50,
+                      width: width * 0.25,
+                      onPress: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  )
+                ],
+              ));
+    }
+
     return Scaffold(
       floatingActionButton: SpeedDial(
         marginRight: 18,
@@ -97,11 +141,47 @@ class IdiomInfoPage extends StatelessWidget {
               ),
         ],
       ),
-      appBar: MyAppBar(
-        backArrow: true,
-        text: "",
-        onPressed: () {},
-        icon: Icons.edit_outlined,
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            size: 35,
+            color: Colors.grey[400],
+          ),
+          splashRadius: 25,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        actions: [
+          Container(
+            margin: const EdgeInsets.only(right: 25),
+            child: IconButton(
+                padding: const EdgeInsets.only(bottom: 2.0),
+                splashRadius: 25,
+                icon: Icon(
+                  Icons.delete_outline,
+                  size: 35,
+                  color: Colors.grey[400],
+                ),
+                onPressed: _showDeleteAlert),
+          ),
+          Container(
+            margin: const EdgeInsets.only(right: 12),
+            child: IconButton(
+                padding: const EdgeInsets.only(bottom: 2.0),
+                splashRadius: 25,
+                icon: Icon(
+                  Icons.edit_outlined,
+                  size: 35,
+                  color: Colors.grey[400],
+                ),
+                onPressed: () {}),
+          ),
+        ],
       ),
       body: ListView(
         physics: const BouncingScrollPhysics(),

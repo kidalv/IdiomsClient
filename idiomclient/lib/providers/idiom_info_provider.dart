@@ -12,6 +12,7 @@ class IdiomInfoProvider with ChangeNotifier {
   IdiomService _service;
   ActionService _actionService;
   bool isLoading;
+  bool isDeleting;
   int idiomId;
   GetIdiomInfoReply idiom;
   String _comment;
@@ -28,6 +29,7 @@ class IdiomInfoProvider with ChangeNotifier {
     _actionService = ActionService();
     commentController = TextEditingController();
     isLoading = true;
+    isDeleting = false;
     idiomId = _listIdiom.idiomId;
     commentSending = false;
     getIdiom();
@@ -56,6 +58,16 @@ class IdiomInfoProvider with ChangeNotifier {
     _setFirstLink();
     sortComments();
     isLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> deleteIdiom() async {
+    isDeleting = true;
+    notifyListeners();
+    await _service.deleteIdiom(idiomId);
+    _listProvider.list.removeWhere((x) => x.idiomId == idiomId);
+    _listProvider.notifyListeners();
+    isDeleting = false;
     notifyListeners();
   }
 
