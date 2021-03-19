@@ -13,6 +13,8 @@ class IdiomInfoProvider with ChangeNotifier {
   ActionService _actionService;
   bool isLoading;
   bool isDeleting;
+  bool isEditMode;
+  bool isUpdateAvailable;
   int idiomId;
   GetIdiomInfoReply idiom;
   String _comment;
@@ -22,6 +24,9 @@ class IdiomInfoProvider with ChangeNotifier {
   bool sortByDate;
   List<IdiomLink> links;
   IdiomReply _listIdiom;
+  TextEditingController idiomController;
+  TextEditingController meaningController;
+  TextEditingController usageController;
   final IdiomListProvider _listProvider;
 
   IdiomInfoProvider(this._listIdiom, this._listProvider) {
@@ -30,6 +35,7 @@ class IdiomInfoProvider with ChangeNotifier {
     commentController = TextEditingController();
     isLoading = true;
     isDeleting = false;
+    isEditMode = false;
     idiomId = _listIdiom.idiomId;
     commentSending = false;
     getIdiom();
@@ -45,6 +51,53 @@ class IdiomInfoProvider with ChangeNotifier {
     getIdiomWithLinks();
     commentDisabled = true;
     sortByDate = true;
+  }
+
+  void cancelEditing() {
+    isEditMode = false;
+    notifyListeners();
+  }
+
+  Future<void> updateIdiom() async {
+    isEditMode = false;
+    idiom.text = idiomController.text;
+    idiom.meaning = meaningController.text;
+    idiom.usage = usageController.text;
+    _listIdiom.text = idiomController.text;
+    _listProvider.notifyListeners();
+    cancelEditing();
+    await _service.changeIdiom(
+        idiomId, idiom.language.languageId, idiom.text, idiom.meaning, idiom.usage);
+  }
+
+  void listenUpdateButtonAvailable() {
+    if (isUpdateAvailable) {
+      if ((idiomController.text == null || idiomController.text == "") ||
+          (meaningController.text == null || meaningController.text == "") ||
+          (usageController.text == null || usageController.text == "")) {
+        isUpdateAvailable = false;
+        notifyListeners();
+      }
+    } else {
+      if ((idiomController.text != null && idiomController.text != "") &&
+          (meaningController.text != null && meaningController.text != "") &&
+          (usageController.text != null && usageController.text != "")) {
+        isUpdateAvailable = true;
+        notifyListeners();
+      }
+    }
+  }
+
+  void switchToEditMode() {
+    isEditMode = true;
+    isUpdateAvailable = true;
+    idiomController = TextEditingController();
+    meaningController = TextEditingController();
+    usageController = TextEditingController();
+    idiomController.text = idiom.text;
+    meaningController.text = idiom.meaning;
+    usageController.text = idiom.usage;
+    notifyListeners();
   }
 
   Future<void> getIdiom() async {

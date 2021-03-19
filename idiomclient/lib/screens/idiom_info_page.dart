@@ -55,21 +55,19 @@ class IdiomInfoPage extends StatelessWidget {
                 actions: [
                   Container(
                     margin: const EdgeInsets.all(5.0),
-                    child: Consumer(
-                      builder: (_, watch, __) {
-                        final provider = watch(idiomInfoProvider);
-                        return MyButton(
-                          text: "Delete",
-                          height: 50,
-                          width: width * 0.25,
-                          isLoading: provider.isDeleting,
-                          onPress: () async {
-                            await provider.deleteIdiom();
-                            Navigator.of(context)..pop()..pop();
-                          },
-                        );
-                      }
-                    ),
+                    child: Consumer(builder: (_, watch, __) {
+                      final provider = watch(idiomInfoProvider);
+                      return MyButton(
+                        text: "Delete",
+                        height: 50,
+                        width: width * 0.25,
+                        isLoading: provider.isDeleting,
+                        onPress: () async {
+                          await provider.deleteIdiom();
+                          Navigator.of(context)..pop()..pop();
+                        },
+                      );
+                    }),
                   ),
                   Container(
                     margin: const EdgeInsets.all(5.0),
@@ -145,42 +143,83 @@ class IdiomInfoPage extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            size: 35,
-            color: Colors.grey[400],
-          ),
-          splashRadius: 25,
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        leading: Consumer(builder: (_, watch, __) {
+          final provider = watch(idiomInfoProvider);
+          return provider.isEditMode
+              ? IconButton(
+                  icon: Icon(
+                    Icons.close,
+                    size: 35,
+                    color: Colors.grey[400],
+                  ),
+                  splashRadius: 25,
+                  onPressed: provider.cancelEditing,
+                )
+              : IconButton(
+                  icon: Icon(
+                    Icons.arrow_back,
+                    size: 35,
+                    color: Colors.grey[400],
+                  ),
+                  splashRadius: 25,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                );
+        }),
         actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 25),
-            child: IconButton(
-                padding: const EdgeInsets.only(bottom: 2.0),
-                splashRadius: 25,
-                icon: Icon(
-                  Icons.delete_outline,
-                  size: 35,
-                  color: Colors.grey[400],
-                ),
-                onPressed: _showDeleteAlert),
-          ),
-          Container(
-            margin: const EdgeInsets.only(right: 12),
-            child: IconButton(
-                padding: const EdgeInsets.only(bottom: 2.0),
-                splashRadius: 25,
-                icon: Icon(
-                  Icons.edit_outlined,
-                  size: 35,
-                  color: Colors.grey[400],
-                ),
-                onPressed: () {}),
-          ),
+          Consumer(builder: (_, watch, __) {
+            final provider = watch(idiomInfoProvider);
+            return provider.isEditMode
+                ? Container()
+                : Container(
+                    margin: const EdgeInsets.only(right: 25),
+                    child: IconButton(
+                        padding: const EdgeInsets.only(bottom: 2.0),
+                        splashRadius: 25,
+                        icon: Icon(
+                          Icons.delete_outline,
+                          size: 35,
+                          color: Colors.grey[400],
+                        ),
+                        onPressed: _showDeleteAlert),
+                  );
+          }),
+          Consumer(builder: (_, watch, __) {
+            final provider = watch(idiomInfoProvider);
+            return provider.isEditMode
+                ? Container(
+                    margin: const EdgeInsets.only(right: 12),
+                    child: IconButton(
+                      padding: const EdgeInsets.only(bottom: 2.0),
+                      splashRadius: 25,
+                      disabledColor: theme.dividerColor,
+                      icon: Icon(
+                        Icons.done,
+                        size: 35,
+                        color: provider.isUpdateAvailable ? Colors.grey[400] : theme.primaryColor,
+                      ),
+                      onPressed: provider.isUpdateAvailable
+                          ? () {
+                              provider.updateIdiom();
+                            }
+                          : null,
+                    ),
+                  )
+                : Container(
+                    margin: const EdgeInsets.only(right: 12),
+                    child: IconButton(
+                      padding: const EdgeInsets.only(bottom: 2.0),
+                      splashRadius: 25,
+                      icon: Icon(
+                        Icons.edit_outlined,
+                        size: 35,
+                        color: Colors.grey[400],
+                      ),
+                      onPressed: provider.switchToEditMode,
+                    ),
+                  );
+          }),
         ],
       ),
       body: ListView(
@@ -210,10 +249,20 @@ class IdiomInfoPage extends StatelessWidget {
                                       width: width * 0.6,
                                       height: 24,
                                     )
-                                  : Text(
-                                      provider.idiom.text,
-                                      style: Theme.of(context).textTheme.headline4,
-                                    );
+                                  : provider.isEditMode
+                                      ? SizedBox(
+                                          height: height * 0.15,
+                                          child: MyTextField(
+                                            controller: provider.idiomController,
+                                            onChange: (x) {
+                                              provider.listenUpdateButtonAvailable();
+                                            },
+                                          ),
+                                        )
+                                      : Text(
+                                          provider.idiom.text,
+                                          style: Theme.of(context).textTheme.headline4,
+                                        );
                             }),
                           ),
                         ),
@@ -376,10 +425,20 @@ class IdiomInfoPage extends StatelessWidget {
                         width: width * 0.5,
                         height: 24,
                       )
-                    : Text(
-                        provider.idiom.meaning,
-                        style: Theme.of(context).textTheme.headline4,
-                      );
+                    : provider.isEditMode
+                        ? SizedBox(
+                            height: height * 0.15,
+                            child: MyTextField(
+                              controller: provider.meaningController,
+                              onChange: (x) {
+                                provider.listenUpdateButtonAvailable();
+                              },
+                            ),
+                          )
+                        : Text(
+                            provider.idiom.meaning,
+                            style: Theme.of(context).textTheme.headline4,
+                          );
               }),
             ),
           ),
@@ -404,10 +463,20 @@ class IdiomInfoPage extends StatelessWidget {
                 final provider = watch(idiomInfoProvider);
                 return provider.isLoading
                     ? PlaceholderContainer(width: width * 0.5, height: 24)
-                    : Text(
-                        provider.idiom.usage,
-                        style: Theme.of(context).textTheme.headline4,
-                      );
+                    : provider.isEditMode
+                        ? SizedBox(
+                            height: height * 0.15,
+                            child: MyTextField(
+                              controller: provider.usageController,
+                              onChange: (x) {
+                                provider.listenUpdateButtonAvailable();
+                              },
+                            ),
+                          )
+                        : Text(
+                            provider.idiom.usage,
+                            style: Theme.of(context).textTheme.headline4,
+                          );
               }),
             ),
           ),
