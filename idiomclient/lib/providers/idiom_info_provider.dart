@@ -15,6 +15,8 @@ class IdiomInfoProvider with ChangeNotifier {
   bool isDeleting;
   bool isEditMode;
   bool isUpdateAvailable;
+  bool isReportAvailable;
+  bool isReporting;
   int idiomId;
   GetIdiomInfoReply idiom;
   String _comment;
@@ -27,15 +29,32 @@ class IdiomInfoProvider with ChangeNotifier {
   TextEditingController idiomController;
   TextEditingController meaningController;
   TextEditingController usageController;
+  TextEditingController reportController;
   final IdiomListProvider _listProvider;
 
   IdiomInfoProvider(this._listIdiom, this._listProvider) {
     _service = IdiomService();
     _actionService = ActionService();
     commentController = TextEditingController();
+    reportController = TextEditingController();
+    isReportAvailable = false;
     isLoading = true;
     isDeleting = false;
     isEditMode = false;
+    isReporting = false;
+    reportController.addListener(() {
+      if (reportController.text != null && reportController.text != "") {
+        if (!isReportAvailable) {
+          isReportAvailable = true;
+          notifyListeners();
+        }
+      } else {
+        if (isReportAvailable) {
+          isReportAvailable = false;
+          notifyListeners();
+        }
+      }
+    });
     idiomId = _listIdiom.idiomId;
     commentSending = false;
     getIdiom();
@@ -60,14 +79,18 @@ class IdiomInfoProvider with ChangeNotifier {
 
   Future<void> updateIdiom() async {
     isEditMode = false;
-    idiom.text = idiomController.text;
-    idiom.meaning = meaningController.text;
-    idiom.usage = usageController.text;
-    _listIdiom.text = idiomController.text;
-    _listProvider.notifyListeners();
     cancelEditing();
-    await _service.changeIdiom(
-        idiomId, idiom.language.languageId, idiom.text, idiom.meaning, idiom.usage);
+    if (idiom.text != idiomController.text ||
+        idiom.meaning != meaningController.text ||
+        idiom.usage != usageController.text) {
+      idiom.text = idiomController.text;
+      idiom.meaning = meaningController.text;
+      idiom.usage = usageController.text;
+      _listIdiom.text = idiomController.text;
+      _listProvider.notifyListeners();
+      await _service.changeIdiom(
+          idiomId, idiom.language.languageId, idiom.text, idiom.meaning, idiom.usage);
+    }
   }
 
   void listenUpdateButtonAvailable() {
@@ -291,9 +314,13 @@ class IdiomInfoProvider with ChangeNotifier {
     links.insert(0, link);
   }
 
-  Future<void> addReport(String text) async {
-    final result = await _actionService.addReport(idiomId, text);
-    // TODO Something
+  Future<void> addReport() async {
+    isReporting = true;
+    notifyListeners();
+    await _actionService.addReport(idiomId, reportController.text);
+    idiom.isUserReported = true;
+    isReporting = false;
+    notifyListeners();
   }
 
   void sortComments() {

@@ -692,6 +692,7 @@ class GetIdiomInfoReply extends $pb.GeneratedMessage {
     ..aOM<$2.Timestamp>(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dateModified', subBuilder: $2.Timestamp.create)
     ..pc<IdiomLinkReply>(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'translations', $pb.PbFieldType.PM, subBuilder: IdiomLinkReply.create)
     ..pc<IdiomLinkReply>(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'similar', $pb.PbFieldType.PM, subBuilder: IdiomLinkReply.create)
+    ..aOB(18, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'isUserReported')
     ..hasRequiredFields = false
   ;
 
@@ -713,6 +714,7 @@ class GetIdiomInfoReply extends $pb.GeneratedMessage {
     $2.Timestamp dateModified,
     $core.Iterable<IdiomLinkReply> translations,
     $core.Iterable<IdiomLinkReply> similar,
+    $core.bool isUserReported,
   }) {
     final _result = create();
     if (idiomId != null) {
@@ -762,6 +764,9 @@ class GetIdiomInfoReply extends $pb.GeneratedMessage {
     }
     if (similar != null) {
       _result.similar.addAll(similar);
+    }
+    if (isUserReported != null) {
+      _result.isUserReported = isUserReported;
     }
     return _result;
   }
@@ -919,6 +924,15 @@ class GetIdiomInfoReply extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(17)
   $core.List<IdiomLinkReply> get similar => $_getList(15);
+
+  @$pb.TagNumber(18)
+  $core.bool get isUserReported => $_getBF(16);
+  @$pb.TagNumber(18)
+  set isUserReported($core.bool v) { $_setBool(16, v); }
+  @$pb.TagNumber(18)
+  $core.bool hasIsUserReported() => $_has(16);
+  @$pb.TagNumber(18)
+  void clearIsUserReported() => clearField(18);
 }
 
 class IdiomLinkReply extends $pb.GeneratedMessage {

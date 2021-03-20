@@ -86,7 +86,7 @@ class MyHomePage extends StatelessWidget {
         tabController.addListener(() {
           if (tabController.indexIsChanging &&
               tabController.index == 3 &&
-              tabController.offset == -1) {
+              tabController.offset <= -1) {
             context.read(profileProvider).getProfile();
           }
         });

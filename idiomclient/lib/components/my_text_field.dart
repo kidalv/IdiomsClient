@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class MyTextField extends StatelessWidget {
@@ -10,6 +9,7 @@ class MyTextField extends StatelessWidget {
   final TextEditingController controller;
   final bool isPassword;
   final bool isEmail;
+  final bool noErrors;
   const MyTextField(
       {Key key,
       this.text,
@@ -19,7 +19,8 @@ class MyTextField extends StatelessWidget {
       this.maxLength = 300,
       this.errorText,
       this.isPassword = false,
-      this.isEmail = false})
+      this.isEmail = false,
+      this.noErrors = false})
       : super(key: key);
 
   @override
@@ -54,6 +55,7 @@ class MyTextField extends StatelessWidget {
                 hintText: text),
           ),
         ),
+        if(!noErrors)
         errorText != null
             ? Align(
                 alignment: Alignment.centerLeft,

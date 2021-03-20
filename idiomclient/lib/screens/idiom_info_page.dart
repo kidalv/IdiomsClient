@@ -84,61 +84,118 @@ class IdiomInfoPage extends StatelessWidget {
               ));
     }
 
+    void _showReportDialog() {
+      final width = MediaQuery.of(context).size.width;
+      showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                backgroundColor: theme.scaffoldBackgroundColor,
+                title: const Text("Report"),
+                content: SizedBox(
+                  height: 50,
+                  width: width * 0.7,
+                  child: MyTextField(
+                    controller: context.read(idiomInfoProvider).reportController,
+                    text: "Report reason",
+                    noErrors: true,
+                  ),
+                ),
+                actions: [
+                  Container(
+                    margin: const EdgeInsets.all(5.0),
+                    child: Consumer(builder: (_, watch, __) {
+                      final provider = watch(idiomInfoProvider);
+                      return MyButton(
+                        text: "Report",
+                        height: 50,
+                        width: width * 0.25,
+                        isLoading: provider.isReporting,
+                        onPress: () async {
+                          await provider.addReport();
+                          Navigator.of(context).pop();
+                        },
+                      );
+                    }),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.all(5.0),
+                    child: MyButton(
+                      text: "Cancel",
+                      height: 50,
+                      width: width * 0.25,
+                      onPress: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  )
+                ],
+              ));
+    }
+
     return Scaffold(
-      floatingActionButton: SpeedDial(
-        marginRight: 18,
-        marginBottom: 20,
-        animatedIcon: AnimatedIcons.menu_close,
-        animatedIconTheme: const IconThemeData(size: 24.0),
-        curve: Curves.bounceIn,
-        overlayColor: Colors.black,
-        overlayOpacity: 0.6,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 8.0,
-        children: [
-          SpeedDialChild(
-              child: const Icon(Icons.favorite_border_outlined, size: 35),
-              backgroundColor: Colors.pink,
-              foregroundColor: Colors.white,
-              labelWidget: const SpeedDialLabel(
-                text: "Favorite",
-                color: Colors.pink,
-              ),
-              onTap: () => context.read(idiomInfoProvider).addFavorite()),
-          SpeedDialChild(
-              child: const Icon(Icons.arrow_drop_down_rounded, size: 40),
-              backgroundColor: Colors.blue[400],
-              foregroundColor: Colors.white,
-              labelWidget: SpeedDialLabel(
-                text: "Devote",
-                color: Colors.blue[400],
-              ),
-              onTap: () => context.read(idiomInfoProvider).addDevote()),
-          SpeedDialChild(
-              child: const Icon(
-                Icons.arrow_drop_up_rounded,
-                size: 40,
-              ),
-              backgroundColor: Colors.green,
-              foregroundColor: Colors.white,
-              labelWidget: const SpeedDialLabel(
-                text: "Upvote",
-                color: Colors.green,
-              ),
-              onTap: () => context.read(idiomInfoProvider).addUpvote()),
-          SpeedDialChild(
-              child: const Icon(Icons.error_outline, size: 35),
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
-              labelWidget: const SpeedDialLabel(
-                text: "Report",
-                color: Colors.red,
-              ),
-              onTap: () {} // TODO open dialog then send report
-              ),
-        ],
-      ),
+      floatingActionButton: Consumer(builder: (_, watch, __) {
+        final provider = watch(idiomInfoProvider);
+        return provider.isLoading
+            ? const PlaceholderContainer(
+              height: 60,
+              width: 60,
+              borderRadius: 30,
+            )
+            : SpeedDial(
+                marginRight: 18,
+                marginBottom: 20,
+                animatedIcon: AnimatedIcons.menu_close,
+                animatedIconTheme: const IconThemeData(size: 24.0),
+                curve: Curves.bounceIn,
+                overlayColor: Colors.black,
+                overlayOpacity: 0.6,
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                elevation: 8.0,
+                children: [
+                  SpeedDialChild(
+                      child: const Icon(Icons.favorite_border_outlined, size: 35),
+                      backgroundColor: Colors.pink,
+                      foregroundColor: Colors.white,
+                      labelWidget: const SpeedDialLabel(
+                        text: "Favorite",
+                        color: Colors.pink,
+                      ),
+                      onTap: () => context.read(idiomInfoProvider).addFavorite()),
+                  SpeedDialChild(
+                      child: const Icon(Icons.arrow_drop_down_rounded, size: 40),
+                      backgroundColor: Colors.blue[400],
+                      foregroundColor: Colors.white,
+                      labelWidget: SpeedDialLabel(
+                        text: "Devote",
+                        color: Colors.blue[400],
+                      ),
+                      onTap: () => context.read(idiomInfoProvider).addDevote()),
+                  SpeedDialChild(
+                      child: const Icon(
+                        Icons.arrow_drop_up_rounded,
+                        size: 40,
+                      ),
+                      backgroundColor: Colors.green,
+                      foregroundColor: Colors.white,
+                      labelWidget: const SpeedDialLabel(
+                        text: "Upvote",
+                        color: Colors.green,
+                      ),
+                      onTap: () => context.read(idiomInfoProvider).addUpvote()),
+                  SpeedDialChild(
+                      child: const Icon(Icons.error_outline, size: 35),
+                      backgroundColor: provider.idiom.isUserReported ? theme.dividerColor : Colors.red,
+                      foregroundColor: Colors.white,
+                      labelWidget: SpeedDialLabel(
+                        text: "Report",
+                        color: provider.idiom.isUserReported ? theme.dividerColor : Colors.red,
+                      ),
+                      onTap: provider.idiom.isUserReported ? null : _showReportDialog),
+                ],
+              );
+      }),
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
@@ -251,12 +308,13 @@ class IdiomInfoPage extends StatelessWidget {
                                     )
                                   : provider.isEditMode
                                       ? SizedBox(
-                                          height: height * 0.15,
+                                          height: 50,
                                           child: MyTextField(
                                             controller: provider.idiomController,
                                             onChange: (x) {
                                               provider.listenUpdateButtonAvailable();
                                             },
+                                            noErrors: true,
                                           ),
                                         )
                                       : Text(
@@ -427,13 +485,13 @@ class IdiomInfoPage extends StatelessWidget {
                       )
                     : provider.isEditMode
                         ? SizedBox(
-                            height: height * 0.15,
+                            height: 50,
                             child: MyTextField(
-                              controller: provider.meaningController,
-                              onChange: (x) {
-                                provider.listenUpdateButtonAvailable();
-                              },
-                            ),
+                                controller: provider.meaningController,
+                                onChange: (x) {
+                                  provider.listenUpdateButtonAvailable();
+                                },
+                                noErrors: true),
                           )
                         : Text(
                             provider.idiom.meaning,
@@ -465,12 +523,13 @@ class IdiomInfoPage extends StatelessWidget {
                     ? PlaceholderContainer(width: width * 0.5, height: 24)
                     : provider.isEditMode
                         ? SizedBox(
-                            height: height * 0.15,
+                            height: 50,
                             child: MyTextField(
                               controller: provider.usageController,
                               onChange: (x) {
                                 provider.listenUpdateButtonAvailable();
                               },
+                              noErrors: true,
                             ),
                           )
                         : Text(
