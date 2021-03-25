@@ -146,17 +146,15 @@ class IdiomListPage extends StatelessWidget {
             const Text("Languages: "),
             Container(
                 margin: const EdgeInsets.all(10),
-                child: Consumer(
-                  builder: (_, watch, __) {
-                    final provider = watch(idiomListProvider);
-                    return DropdownSearchDrawer(
-                      list: SharedPrefs().languages,
-                      width: 304,
-                      search: provider.getList,
-                      selectedList: provider.selectedLanguages,
-                    );
-                  }
-                ))
+                child: Consumer(builder: (_, watch, __) {
+                  final provider = watch(idiomListProvider);
+                  return DropdownSearchDrawer(
+                    list: SharedPrefs().languages,
+                    width: 304,
+                    search: provider.getList,
+                    selectedList: provider.selectedLanguages,
+                  );
+                }))
           ],
         ),
       ),
@@ -191,6 +189,8 @@ class IdiomListPage extends StatelessWidget {
           if (provider.list.isEmpty) {
             return Center(
               child: MyButton(
+                width: width * 0.5,
+                height: 50,
                 text: "Refresh",
                 onPress: () => context.read(idiomListProvider).getList(),
               ),
@@ -199,6 +199,7 @@ class IdiomListPage extends StatelessWidget {
             return RefreshIndicator(
               onRefresh: provider.getList,
               child: ListView(
+                controller: provider.scrollController,
                   physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                   children: provider.list.map((x) => IdiomListTile(idiom: x)).toList()),
             );

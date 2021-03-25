@@ -822,3 +822,235 @@ class UserProfileReply extends $pb.GeneratedMessage {
   void clearDislikes() => clearField(12);
 }
 
+class GetUserCommentsRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetUserCommentsRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userId', $pb.PbFieldType.O3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'skip', $pb.PbFieldType.O3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'take', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  GetUserCommentsRequest._() : super();
+  factory GetUserCommentsRequest({
+    $core.int userId,
+    $core.int skip,
+    $core.int take,
+  }) {
+    final _result = create();
+    if (userId != null) {
+      _result.userId = userId;
+    }
+    if (skip != null) {
+      _result.skip = skip;
+    }
+    if (take != null) {
+      _result.take = take;
+    }
+    return _result;
+  }
+  factory GetUserCommentsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetUserCommentsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetUserCommentsRequest clone() => GetUserCommentsRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetUserCommentsRequest copyWith(void Function(GetUserCommentsRequest) updates) => super.copyWith((message) => updates(message as GetUserCommentsRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GetUserCommentsRequest create() => GetUserCommentsRequest._();
+  GetUserCommentsRequest createEmptyInstance() => create();
+  static $pb.PbList<GetUserCommentsRequest> createRepeated() => $pb.PbList<GetUserCommentsRequest>();
+  @$core.pragma('dart2js:noInline')
+  static GetUserCommentsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetUserCommentsRequest>(create);
+  static GetUserCommentsRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get userId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set userId($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUserId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUserId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get skip => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set skip($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSkip() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSkip() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get take => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set take($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasTake() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearTake() => clearField(3);
+}
+
+class GetUserCommentsReply extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetUserCommentsReply', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
+    ..pc<$1.CommentReply>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'comments', $pb.PbFieldType.PM, subBuilder: $1.CommentReply.create)
+    ..hasRequiredFields = false
+  ;
+
+  GetUserCommentsReply._() : super();
+  factory GetUserCommentsReply({
+    $core.Iterable<$1.CommentReply> comments,
+  }) {
+    final _result = create();
+    if (comments != null) {
+      _result.comments.addAll(comments);
+    }
+    return _result;
+  }
+  factory GetUserCommentsReply.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetUserCommentsReply.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetUserCommentsReply clone() => GetUserCommentsReply()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetUserCommentsReply copyWith(void Function(GetUserCommentsReply) updates) => super.copyWith((message) => updates(message as GetUserCommentsReply)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GetUserCommentsReply create() => GetUserCommentsReply._();
+  GetUserCommentsReply createEmptyInstance() => create();
+  static $pb.PbList<GetUserCommentsReply> createRepeated() => $pb.PbList<GetUserCommentsReply>();
+  @$core.pragma('dart2js:noInline')
+  static GetUserCommentsReply getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetUserCommentsReply>(create);
+  static GetUserCommentsReply _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$1.CommentReply> get comments => $_getList(0);
+}
+
+class GetUserLatestIdiomsRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetUserLatestIdiomsRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userId', $pb.PbFieldType.O3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'skip', $pb.PbFieldType.O3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'take', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  GetUserLatestIdiomsRequest._() : super();
+  factory GetUserLatestIdiomsRequest({
+    $core.int userId,
+    $core.int skip,
+    $core.int take,
+  }) {
+    final _result = create();
+    if (userId != null) {
+      _result.userId = userId;
+    }
+    if (skip != null) {
+      _result.skip = skip;
+    }
+    if (take != null) {
+      _result.take = take;
+    }
+    return _result;
+  }
+  factory GetUserLatestIdiomsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetUserLatestIdiomsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetUserLatestIdiomsRequest clone() => GetUserLatestIdiomsRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetUserLatestIdiomsRequest copyWith(void Function(GetUserLatestIdiomsRequest) updates) => super.copyWith((message) => updates(message as GetUserLatestIdiomsRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GetUserLatestIdiomsRequest create() => GetUserLatestIdiomsRequest._();
+  GetUserLatestIdiomsRequest createEmptyInstance() => create();
+  static $pb.PbList<GetUserLatestIdiomsRequest> createRepeated() => $pb.PbList<GetUserLatestIdiomsRequest>();
+  @$core.pragma('dart2js:noInline')
+  static GetUserLatestIdiomsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetUserLatestIdiomsRequest>(create);
+  static GetUserLatestIdiomsRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get userId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set userId($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUserId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUserId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get skip => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set skip($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSkip() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSkip() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get take => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set take($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasTake() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearTake() => clearField(3);
+}
+
+class GetUserLatestIdiomsReply extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetUserLatestIdiomsReply', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'idiom'), createEmptyInstance: create)
+    ..pc<$1.IdiomReply>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'idioms', $pb.PbFieldType.PM, subBuilder: $1.IdiomReply.create)
+    ..hasRequiredFields = false
+  ;
+
+  GetUserLatestIdiomsReply._() : super();
+  factory GetUserLatestIdiomsReply({
+    $core.Iterable<$1.IdiomReply> idioms,
+  }) {
+    final _result = create();
+    if (idioms != null) {
+      _result.idioms.addAll(idioms);
+    }
+    return _result;
+  }
+  factory GetUserLatestIdiomsReply.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetUserLatestIdiomsReply.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetUserLatestIdiomsReply clone() => GetUserLatestIdiomsReply()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetUserLatestIdiomsReply copyWith(void Function(GetUserLatestIdiomsReply) updates) => super.copyWith((message) => updates(message as GetUserLatestIdiomsReply)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GetUserLatestIdiomsReply create() => GetUserLatestIdiomsReply._();
+  GetUserLatestIdiomsReply createEmptyInstance() => create();
+  static $pb.PbList<GetUserLatestIdiomsReply> createRepeated() => $pb.PbList<GetUserLatestIdiomsReply>();
+  @$core.pragma('dart2js:noInline')
+  static GetUserLatestIdiomsReply getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetUserLatestIdiomsReply>(create);
+  static GetUserLatestIdiomsReply _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$1.IdiomReply> get idioms => $_getList(0);
+}
+

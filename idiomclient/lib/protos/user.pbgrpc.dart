@@ -62,6 +62,18 @@ class UserClient extends $grpc.Client {
           ($0.RefreshTokenRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.UserCredentialsReply.fromBuffer(value));
+  static final _$getUserComments =
+      $grpc.ClientMethod<$0.GetUserCommentsRequest, $0.GetUserCommentsReply>(
+          '/idiom.User/GetUserComments',
+          ($0.GetUserCommentsRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.GetUserCommentsReply.fromBuffer(value));
+  static final _$getUserLatestIdioms = $grpc.ClientMethod<
+          $0.GetUserLatestIdiomsRequest, $0.GetUserLatestIdiomsReply>(
+      '/idiom.User/GetUserLatestIdioms',
+      ($0.GetUserLatestIdiomsRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) =>
+          $0.GetUserLatestIdiomsReply.fromBuffer(value));
 
   UserClient($grpc.ClientChannel channel,
       {$grpc.CallOptions options,
@@ -113,6 +125,18 @@ class UserClient extends $grpc.Client {
       $0.RefreshTokenRequest request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$refreshToken, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.GetUserCommentsReply> getUserComments(
+      $0.GetUserCommentsRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$getUserComments, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.GetUserLatestIdiomsReply> getUserLatestIdioms(
+      $0.GetUserLatestIdiomsRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$getUserLatestIdioms, request, options: options);
   }
 }
 
@@ -186,6 +210,24 @@ abstract class UserServiceBase extends $grpc.Service {
             ($core.List<$core.int> value) =>
                 $0.RefreshTokenRequest.fromBuffer(value),
             ($0.UserCredentialsReply value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$0.GetUserCommentsRequest, $0.GetUserCommentsReply>(
+            'GetUserComments',
+            getUserComments_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $0.GetUserCommentsRequest.fromBuffer(value),
+            ($0.GetUserCommentsReply value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.GetUserLatestIdiomsRequest,
+            $0.GetUserLatestIdiomsReply>(
+        'GetUserLatestIdioms',
+        getUserLatestIdioms_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.GetUserLatestIdiomsRequest.fromBuffer(value),
+        ($0.GetUserLatestIdiomsReply value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.UserProfileReply> getUserProfile_Pre($grpc.ServiceCall call,
@@ -232,6 +274,18 @@ abstract class UserServiceBase extends $grpc.Service {
     return refreshToken(call, await request);
   }
 
+  $async.Future<$0.GetUserCommentsReply> getUserComments_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.GetUserCommentsRequest> request) async {
+    return getUserComments(call, await request);
+  }
+
+  $async.Future<$0.GetUserLatestIdiomsReply> getUserLatestIdioms_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.GetUserLatestIdiomsRequest> request) async {
+    return getUserLatestIdioms(call, await request);
+  }
+
   $async.Future<$0.UserProfileReply> getUserProfile(
       $grpc.ServiceCall call, $0.GetUserProfileRequest request);
   $async.Future<$0.UserCredentialsReply> register(
@@ -248,4 +302,8 @@ abstract class UserServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.GoogleSignInRequest request);
   $async.Future<$0.UserCredentialsReply> refreshToken(
       $grpc.ServiceCall call, $0.RefreshTokenRequest request);
+  $async.Future<$0.GetUserCommentsReply> getUserComments(
+      $grpc.ServiceCall call, $0.GetUserCommentsRequest request);
+  $async.Future<$0.GetUserLatestIdiomsReply> getUserLatestIdioms(
+      $grpc.ServiceCall call, $0.GetUserLatestIdiomsRequest request);
 }

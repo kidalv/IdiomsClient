@@ -164,6 +164,8 @@ class FavoritesPage extends StatelessWidget {
           if (provider.list.isEmpty) {
             return Center(
               child: MyButton(
+                width: width * 0.5,
+                height: 50,
                 text: "Refresh",
                 onPress: () => context.read(favoritesProvider).getList(),
               ),

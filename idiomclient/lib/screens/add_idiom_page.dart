@@ -6,6 +6,7 @@ import 'package:idiomclient/components/idiom_search_dialog.dart';
 import 'package:idiomclient/components/my_button.dart';
 import 'package:idiomclient/components/my_text_field.dart';
 import 'package:idiomclient/components/my_app_bar.dart';
+import 'package:idiomclient/components/placeholder_container.dart';
 import 'package:idiomclient/models/idiom_link.dart';
 import 'package:idiomclient/protos/models.pb.dart';
 import 'package:idiomclient/providers/providers.dart';
@@ -59,8 +60,10 @@ class AddIdiomPage extends StatelessWidget {
                         )),
                   ),
                   MyTextField(
-                      text: "Idiom Text",
-                      controller: context.read(addIdiomProvider).textController),
+                    text: "Idiom Text",
+                    controller: context.read(addIdiomProvider).textController,
+                    maxLinesAddition: 2,
+                  ),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -95,8 +98,10 @@ class AddIdiomPage extends StatelessWidget {
                     ),
                   ),
                   MyTextField(
-                      text: "Meaning",
-                      controller: context.read(addIdiomProvider).meaningController),
+                    text: "Meaning",
+                    controller: context.read(addIdiomProvider).meaningController,
+                    maxLinesAddition: 3,
+                  ),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -108,7 +113,10 @@ class AddIdiomPage extends StatelessWidget {
                     ),
                   ),
                   MyTextField(
-                      text: "Example", controller: context.read(addIdiomProvider).usageController),
+                    text: "Example",
+                    controller: context.read(addIdiomProvider).usageController,
+                    maxLinesAddition: 3,
+                  ),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -139,7 +147,7 @@ class AddIdiomPage extends StatelessWidget {
                   Align(
                       alignment: Alignment.centerRight,
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 30.0, right: 5.0),
+                        padding: const EdgeInsets.only(top: 30.0, right: 5.0, bottom: 50),
                         child: Consumer(builder: (_, watch, __) {
                           final provider = watch(addIdiomProvider);
                           return MyButton(
@@ -148,7 +156,18 @@ class AddIdiomPage extends StatelessWidget {
                             text: "Add Idiom",
                             disabled: !provider.buttonAvailable(),
                             isLoading: provider.saving,
-                            onPress: provider.saveIdiom,
+                            onPress: () async {
+                              await provider.saveIdiom();
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                behavior: SnackBarBehavior.floating,
+                                margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                                shape:
+                                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                content: Text('Idiom added!', style: theme.textTheme.headline2),
+                                backgroundColor: Colors.green[800],
+                                duration: const Duration(seconds: 3),
+                              ));
+                            },
                           );
                         }),
                       ))
@@ -156,18 +175,23 @@ class AddIdiomPage extends StatelessWidget {
               ),
               Consumer(builder: (_, watch, __) {
                 final provider = watch(addIdiomProvider);
-                return Positioned(
-                  top: 150,
-                  left: width * 0.35,
-                  child: DropdownSearch(
-                    list: SharedPrefs().languages,
-                    selectedList: provider.language != null ? [provider.language] : [],
-                    width: width * 0.75,
-                    onSelect: (x) {
-                      provider.language = x;
-                    },
-                  ),
-                );
+                return provider.saving
+                    ? PlaceholderContainer(
+                      height: 30,
+                      width: width * 0.75,
+                    )
+                    : Positioned(
+                        top: 150,
+                        left: width * 0.35,
+                        child: DropdownSearch(
+                          list: SharedPrefs().languages,
+                          selectedList: provider.language != null ? [provider.language] : [],
+                          width: width * 0.75,
+                          onSelect: (x) {
+                            provider.language = x;
+                          },
+                        ),
+                      );
               })
             ],
           ),

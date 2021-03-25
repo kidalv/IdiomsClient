@@ -14,7 +14,7 @@ class PlaceholderContainer extends StatefulWidget {
 }
 
 class _PlaceholderContainerState extends State<PlaceholderContainer> {
-  Color color = Colors.grey[600];
+  Color color = Colors.grey[800];
   bool change = true;
   Timer firstTimer;
   Timer secondTimer;
@@ -23,11 +23,11 @@ class _PlaceholderContainerState extends State<PlaceholderContainer> {
   void initState() {
     firstTimer = Timer(const Duration(milliseconds: 1), () {
       setState(() {
-        color = change ? Colors.grey[800] : Colors.grey[600];
+        color = change ? Colors.grey[700] : Colors.grey[800];
         change = !change;
         secondTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
           setState(() {
-            color = change ? Colors.grey[800] : Colors.grey[600];
+            color = change ? Colors.grey[700] : Colors.grey[800];
             change = !change;
           });
         });

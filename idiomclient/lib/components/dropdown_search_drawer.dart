@@ -43,6 +43,7 @@ class _DropdownSearchDrawerState extends State<DropdownSearchDrawer> {
                       SizedBox(
                         width: widget.width == 0 ? MediaQuery.of(context).size.width * 0.40 : widget.width - 105,
                         child: TextField(
+                          style: Theme.of(context).textTheme.bodyText2,
                           decoration: const InputDecoration(
                               border: InputBorder.none,
                               focusedBorder: InputBorder.none,
@@ -95,8 +96,7 @@ class _DropdownSearchDrawerState extends State<DropdownSearchDrawer> {
                     physics: const BouncingScrollPhysics(),
                     children: tempList
                         .map((x) => LanguageRow(
-                              language: x.name,
-                              code: x.region,
+                              language: x,
                               onPress: () {
                                 setState(() {
                                   selectedLanguages.add(x);
@@ -156,10 +156,9 @@ class _DropdownSearchDrawerState extends State<DropdownSearchDrawer> {
 }
 
 class LanguageRow extends StatelessWidget {
-  final String language;
-  final String code;
+  final LanguageReply language;
   final void Function() onPress;
-  const LanguageRow({Key key, this.language, this.code, this.onPress}) : super(key: key);
+  const LanguageRow({Key key, this.language, this.onPress}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -171,11 +170,11 @@ class LanguageRow extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              language,
+              language.name,
               style: TextStyle(color: Colors.grey[400]),
             ),
             FlagRow(
-              code: code,
+              language: language,
               length: 30,
             )
           ],

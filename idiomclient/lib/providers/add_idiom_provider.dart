@@ -64,6 +64,7 @@ class AddIdiomProvider with ChangeNotifier {
     usageController.clear();
     meaningController.clear();
     _selectedLanguage = null;
+    links = [];
     notifyListeners();
   }
 

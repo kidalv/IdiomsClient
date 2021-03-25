@@ -94,14 +94,14 @@ class IdiomListTile extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: 15.0),
-                          child: Text("2",
+                          child: Text(idiom.translationsCount.toString(),
                               style: TextStyle(
                                   color: theme.buttonColor,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500)),
                         ),
                         FlagRow(
-                          code: idiom.language.region,
+                          language: idiom.language
                         )
                       ],
                     ),

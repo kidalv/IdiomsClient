@@ -405,7 +405,7 @@ class IdiomInfoPage extends StatelessWidget {
                                 final provider = watch(idiomInfoProvider);
                                 return provider.isLoading
                                     ? const PlaceholderContainer(width: 80, height: 30)
-                                    : FlagRow(code: provider.idiom.language.region);
+                                    : FlagRow(language: provider.idiom.language);
                               }),
                             ],
                           ),

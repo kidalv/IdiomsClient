@@ -90,11 +90,13 @@ class RegistrationPage extends StatelessWidget {
                     height: 50,
                     text: "Register",
                     onPress: () async {
-                      await provider.register();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const MyHomePage()),
-                      );
+                      final result = await provider.register();
+                      if (result) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const MyHomePage()),
+                        );
+                      }
                     },
                     isLoading: provider.registerLoading,
                     disabled: !provider.registerAvailable(),

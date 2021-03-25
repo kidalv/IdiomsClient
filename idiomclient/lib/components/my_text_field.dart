@@ -4,6 +4,7 @@ class MyTextField extends StatelessWidget {
   final String text;
   final Function(String value) onChange;
   final int minLines;
+  final int maxLinesAddition;
   final int maxLength;
   final String errorText;
   final TextEditingController controller;
@@ -20,7 +21,8 @@ class MyTextField extends StatelessWidget {
       this.errorText,
       this.isPassword = false,
       this.isEmail = false,
-      this.noErrors = false})
+      this.noErrors = false,
+      this.maxLinesAddition = 1})
       : super(key: key);
 
   @override
@@ -42,7 +44,7 @@ class MyTextField extends StatelessWidget {
             enableSuggestions: !isPassword,
             autocorrect: !isPassword,
             obscureText: isPassword,
-            maxLines: isPassword ? 1 : minLines + 1,
+            maxLines: isPassword ? 1 : minLines + maxLinesAddition,
             style: Theme.of(context).textTheme.bodyText2,
             decoration: InputDecoration(
                 border: InputBorder.none,

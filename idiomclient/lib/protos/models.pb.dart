@@ -348,6 +348,7 @@ class IdiomReply extends $pb.GeneratedMessage {
     ..a<$core.int>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'upvoteCount', $pb.PbFieldType.O3)
     ..a<$core.int>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'favoritesCount', $pb.PbFieldType.O3)
     ..aOB(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'isFavorite')
+    ..a<$core.int>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'translationsCount', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -361,6 +362,7 @@ class IdiomReply extends $pb.GeneratedMessage {
     $core.int upvoteCount,
     $core.int favoritesCount,
     $core.bool isFavorite,
+    $core.int translationsCount,
   }) {
     final _result = create();
     if (idiomId != null) {
@@ -386,6 +388,9 @@ class IdiomReply extends $pb.GeneratedMessage {
     }
     if (isFavorite != null) {
       _result.isFavorite = isFavorite;
+    }
+    if (translationsCount != null) {
+      _result.translationsCount = translationsCount;
     }
     return _result;
   }
@@ -487,5 +492,14 @@ class IdiomReply extends $pb.GeneratedMessage {
   $core.bool hasIsFavorite() => $_has(7);
   @$pb.TagNumber(11)
   void clearIsFavorite() => clearField(11);
+
+  @$pb.TagNumber(12)
+  $core.int get translationsCount => $_getIZ(8);
+  @$pb.TagNumber(12)
+  set translationsCount($core.int v) { $_setSignedInt32(8, v); }
+  @$pb.TagNumber(12)
+  $core.bool hasTranslationsCount() => $_has(8);
+  @$pb.TagNumber(12)
+  void clearTranslationsCount() => clearField(12);
 }
 

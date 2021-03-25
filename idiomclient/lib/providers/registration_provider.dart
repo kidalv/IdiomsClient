@@ -34,7 +34,7 @@ class RegistrationProvider with ChangeNotifier {
     repeatPasswordController.addListener(notifyListeners);
   }
 
-  Future<void> register() async {
+  Future<bool> register() async {
     _email = emailController.text;
     _password = passwordController.text;
     _repeatPassword = repeatPasswordController.text;
@@ -54,7 +54,10 @@ class RegistrationProvider with ChangeNotifier {
       }
       registerLoading = false;
       notifyListeners();
+      return true;
     }
+    registerLoading = false;
+    return false;
   }
 
   bool registerAvailable() =>

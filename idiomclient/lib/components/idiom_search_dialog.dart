@@ -55,6 +55,7 @@ class IdiomSearchDialog extends ConsumerWidget {
                     Container(
                       width: width * 0.85 - 40 - 16 - 30 - 16 - 40,
                       child: TextField(
+                        style: theme.textTheme.bodyText2,
                         decoration: const InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,

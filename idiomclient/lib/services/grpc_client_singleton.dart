@@ -8,10 +8,20 @@ class GrpcClientSingleton {
   factory GrpcClientSingleton() => _singleton;
 
   GrpcClientSingleton._internal() {
-    client = ClientChannel("localhost",
-        port: 5000,
+    client = ClientChannel("ec2-54-170-163-245.eu-west-1.compute.amazonaws.com",
+        port: 8080,
         options: ChannelOptions(
           credentials: ChannelCredentials.insecure(),
         ),);
   }
+
+
+  // //local
+  // GrpcClientSingleton._internal() {
+  //   client = ClientChannel("localhost",
+  //       port: 8080,
+  //       options: ChannelOptions(
+  //         credentials: ChannelCredentials.insecure(),
+  //       ),);
+  // }
 }
