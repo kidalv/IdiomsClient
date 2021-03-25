@@ -9,6 +9,8 @@ class IdiomListProvider with ChangeNotifier {
   IdiomService _service;
   List<IdiomReply> list;
   bool isLoading;
+  bool isAdditionalLoading;
+  bool noMoreElements;
   Sort currentSort;
   List<LanguageReply> selectedLanguages;
   List<LanguageReply> allLanguages;
@@ -19,6 +21,8 @@ class IdiomListProvider with ChangeNotifier {
   IdiomListProvider() {
     _service = IdiomService();
     isLoading = true;
+    isAdditionalLoading = false;
+    noMoreElements = false;
     list = [];
     currentSort = SharedPrefs().listSort;
     selectedLanguages = [];
@@ -29,12 +33,16 @@ class IdiomListProvider with ChangeNotifier {
     scrollController.addListener(() {
       final tileHeight = (scrollController.position.viewportDimension - 100) * 0.25;
       final currentPosition = scrollController.offset / tileHeight;
+      if (list.length - currentPosition < 5 && !isAdditionalLoading && !noMoreElements) {
+        appendList();
+      }
     });
     getList();
   }
 
   Future<void> getList() async {
     isLoading = true;
+    noMoreElements = false;
     final myLanguages = SharedPrefs().userLanguages;
     if (myLanguages.any((x) => !selectedLanguages.any((y) => y.languageId == x.languageId))) {
       _myLanguages = false;
@@ -46,6 +54,23 @@ class IdiomListProvider with ChangeNotifier {
         allTranslations: _translationInAll);
     _applySort();
     isLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> appendList() async {
+    isAdditionalLoading = true;
+    notifyListeners();
+    final additionalIdioms = await _service.getIdiomsList(
+        languages: selectedLanguages.map((x) => x.languageId).toList(),
+        sort: currentSort.toText(),
+        allTranslations: _translationInAll,
+        skip: list.length);
+    if (additionalIdioms.length < 10) {
+      noMoreElements = true;
+    }
+    list.addAll(additionalIdioms);
+    _applySort();
+    isAdditionalLoading = false;    
     notifyListeners();
   }
 

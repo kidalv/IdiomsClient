@@ -23,9 +23,11 @@ class IdiomService {
     List<int> languages = const [],
     bool isFavorite = false,
     bool allTranslations = false,
+    int skip = 0,
   }) async {
     return (await _client.getIdiomList(GetIdiomListRequest()
-          ..count = 50
+          ..skip = skip
+          ..count = 10
           ..favorites = isFavorite
           ..languageIds.addAll(languages)
           ..search = search

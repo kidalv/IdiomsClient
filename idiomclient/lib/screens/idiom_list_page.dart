@@ -199,13 +199,26 @@ class IdiomListPage extends StatelessWidget {
             return RefreshIndicator(
               onRefresh: provider.getList,
               child: ListView(
-                controller: provider.scrollController,
+                  controller: provider.scrollController,
                   physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-                  children: provider.list.map((x) => IdiomListTile(idiom: x)).toList()),
+                  children: [
+                    ...provider.list.map((x) => IdiomListTile(idiom: x)).toList(),
+                    if (provider.isAdditionalLoading)
+                    ..._getPlaceholders()
+                  ]),
             );
           }
         }
       }),
     );
   }
+}
+
+List<Widget> _getPlaceholders() {
+  return const [
+    ListTilePlaceholder(),
+    ListTilePlaceholder(),
+    ListTilePlaceholder(),
+    ListTilePlaceholder()
+  ];
 }
