@@ -14,6 +14,7 @@ class IdiomListProvider with ChangeNotifier {
   List<LanguageReply> allLanguages;
   bool _myLanguages;
   bool _translationInAll;
+  ScrollController scrollController;
 
   IdiomListProvider() {
     _service = IdiomService();
@@ -24,6 +25,11 @@ class IdiomListProvider with ChangeNotifier {
     allLanguages = SharedPrefs().languages;
     _myLanguages = false;
     _translationInAll = false;
+    scrollController = ScrollController();
+    scrollController.addListener(() {
+      final tileHeight = (scrollController.position.viewportDimension - 100) * 0.25;
+      final currentPosition = scrollController.offset / tileHeight;
+    });
     getList();
   }
 
