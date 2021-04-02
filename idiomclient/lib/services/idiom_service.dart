@@ -27,7 +27,7 @@ class IdiomService {
   }) async {
     return (await _client.getIdiomList(GetIdiomListRequest()
           ..skip = skip
-          ..count = 10
+          ..count = 50
           ..favorites = isFavorite
           ..languageIds.addAll(languages)
           ..search = search

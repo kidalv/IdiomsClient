@@ -4,7 +4,6 @@ import 'package:idiomclient/components/flag_row.dart';
 import 'package:idiomclient/components/placeholder_container.dart';
 import 'package:idiomclient/components/user_image.dart';
 import 'package:idiomclient/protos/models.pb.dart';
-import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:idiomclient/components/my_app_bar.dart';
 import 'package:idiomclient/screens/settings_page.dart';
 import 'package:idiomclient/providers/providers.dart';
@@ -20,7 +19,7 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
         appBar: MyAppBar(
           text: "Profile",
-          icon: OMIcons.settings,
+          icon: Icons.settings_outlined,
           onPressed: () {
             Navigator.push(
               context,

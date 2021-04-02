@@ -65,12 +65,12 @@ class IdiomListProvider with ChangeNotifier {
         sort: currentSort.toText(),
         allTranslations: _translationInAll,
         skip: list.length);
-    if (additionalIdioms.length < 10) {
+    if (additionalIdioms.length < 50) {
       noMoreElements = true;
     }
     list.addAll(additionalIdioms);
     _applySort();
-    isAdditionalLoading = false;    
+    isAdditionalLoading = false;
     notifyListeners();
   }
 
@@ -98,11 +98,7 @@ class IdiomListProvider with ChangeNotifier {
   void changeSort(Sort sort) {
     currentSort = sort;
     SharedPrefs().listSort = sort;
-    if (list.length < 50) {
-      _applySort();
-    } else {
-      getList();
-    }
+    getList();
     notifyListeners();
   }
 

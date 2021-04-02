@@ -11,7 +11,7 @@ import 'package:idiomclient/screens/registration_page.dart';
 import 'package:idiomclient/services/shared_prefs.dart';
 import 'package:idiomclient/services/user_service.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:outline_material_icons/outline_material_icons.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'providers/idiom_list_provider.dart';
@@ -44,7 +44,11 @@ class MyApp extends StatelessWidget {
         textTheme: TextTheme(
             headline1: const TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold),
             headline4: const TextStyle(fontSize: 28.0, fontFamily: 'Open Sans'),
-            headline2: const TextStyle(fontSize: 20.0, fontFamily: 'Open Sans', color: Colors.white, fontWeight: FontWeight.w600),
+            headline2: const TextStyle(
+                fontSize: 20.0,
+                fontFamily: 'Open Sans',
+                color: Colors.white,
+                fontWeight: FontWeight.w600),
             subtitle1: TextStyle(fontSize: 16, color: Colors.red[500], height: 1.0),
             headline6: TextStyle(fontSize: 24.0, fontFamily: 'Open Sans', color: Colors.grey[400]),
             headline3: TextStyle(fontSize: 20.0, fontFamily: 'Open Sans', color: Colors.grey[400]),
@@ -63,7 +67,7 @@ class MyApp extends StatelessWidget {
       home: Consumer(builder: (_, watch, __) {
         final provider = watch(authorizationProvider);
         if (provider.isLoading) {
-          return const CircularProgressIndicator();
+          return Center(child: Text(provider.currentMessage));
         } else {
           if (provider.isAuthorized) {
             return const MyHomePage();
@@ -113,13 +117,13 @@ class MyHomePage extends StatelessWidget {
                       ),
                     ),
                     Tab(
-                      icon: Icon(OMIcons.add, size: 40),
+                      icon: Icon(Icons.add, size: 40),
                     ),
                     Tab(
-                      icon: Icon(OMIcons.favoriteBorder, size: 35),
+                      icon: Icon(Icons.favorite_border, size: 35),
                     ),
                     Tab(
-                      icon: Icon(OMIcons.person, size: 40),
+                      icon: Icon(Icons.person_outline, size: 40),
                     ),
                   ],
                   labelColor: Colors.lightBlue[300],

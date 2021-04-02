@@ -68,10 +68,12 @@ class LoginPage extends StatelessWidget {
                     isLoading: provider.loginLoading,
                     onPress: () async {
                       await provider.login();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const MyHomePage()),
-                      );
+                      if (provider.isAuthorized) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const MyHomePage()),
+                        );
+                      }
                     },
                   ),
                 ),

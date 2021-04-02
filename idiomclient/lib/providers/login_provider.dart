@@ -13,6 +13,7 @@ class LoginProvider with ChangeNotifier {
   String passwordError;
   UnauthorizedUserService _service;
   bool loginLoading = false;
+  bool isAuthorized;
 
   LoginProvider() {
     emailController = TextEditingController();
@@ -21,6 +22,8 @@ class LoginProvider with ChangeNotifier {
 
     emailController.addListener(notifyListeners);
     passwordController.addListener(notifyListeners);
+
+    isAuthorized = false;
   }
 
   bool loginAvailable() =>
@@ -30,17 +33,24 @@ class LoginProvider with ChangeNotifier {
       passwordController.text.isNotEmpty;
 
   Future<void> login() async {
+    emailError = "";
     loginLoading = true;
     notifyListeners();
     _email = emailController.text;
     _password = passwordController.text;
     final result = await _service.login(_email, _password);
-    final prefs = SharedPrefs();
-    prefs.email = result.email;
-    prefs.name = result.name;
-    prefs.token = result.token;
-    prefs.refreshToken = result.refreshToken;
-    prefs.userLanguages = result.userLanguages;
+    if (result != null) {
+      final prefs = SharedPrefs();
+      prefs.email = result.email;
+      prefs.name = result.name;
+      prefs.token = result.token;
+      prefs.refreshToken = result.refreshToken;
+      prefs.userLanguages = result.userLanguages;
+      isAuthorized = true;
+    } else {
+      isAuthorized = false;
+      emailError = "credentials doesn't match";
+    }
     loginLoading = false;
     notifyListeners();
   }

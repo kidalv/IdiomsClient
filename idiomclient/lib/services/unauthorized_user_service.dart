@@ -11,23 +11,39 @@ class UnauthorizedUserService {
   }
 
   Future<UserCredentialsReply> register(String email, String name, String password) async {
-    return await _client.register(RegisterRequest()
-      ..email = email
-      ..name = name
-      ..password = password);
+    try {
+      return await _client.register(RegisterRequest()
+        ..email = email
+        ..name = name
+        ..password = password);
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<UserCredentialsReply> login(String email, String password) async {
-    return await _client.login(LoginRequest()
-      ..email = email
-      ..password = password);
+    try {
+      return await _client.login(LoginRequest()
+        ..email = email
+        ..password = password);
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<UserCredentialsReply> googleSignIn(String jwtToken) async {
-    return await _client.googleSignIn(GoogleSignInRequest()..jwtToken = jwtToken);
+    try {
+      return await _client.googleSignIn(GoogleSignInRequest()..jwtToken = jwtToken);
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<UserCredentialsReply> refreshToken(String refreshToken) async {
-    return await _client.refreshToken(RefreshTokenRequest()..token = refreshToken);
+    try {
+      return await _client.refreshToken(RefreshTokenRequest()..token = refreshToken);
+    } catch (e) {
+      return null;
+    }
   }
 }
