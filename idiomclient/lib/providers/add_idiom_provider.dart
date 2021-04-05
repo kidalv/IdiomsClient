@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiomclient/models/idiom_link.dart';
 import 'package:idiomclient/protos/idiom.pbgrpc.dart';
 import 'package:idiomclient/protos/models.pb.dart';
+import 'package:idiomclient/providers/dropdown_provider.dart';
 import 'package:idiomclient/services/idiom_service.dart';
-import 'package:idiomclient/services/shared_prefs.dart';
 
 class AddIdiomProvider with ChangeNotifier {
   AddIdiomRequest _idiom;
@@ -14,8 +15,10 @@ class AddIdiomProvider with ChangeNotifier {
   TextEditingController textController;
   TextEditingController meaningController;
   TextEditingController usageController;
+  final DropdownProvider provider;
+  final ChangeNotifierProvider<DropdownProvider> changeNotifier;
 
-  AddIdiomProvider() {
+  AddIdiomProvider(this.provider, this.changeNotifier) {
     _idiom = AddIdiomRequest();
     _service = IdiomService();
     textController = TextEditingController();
@@ -23,6 +26,20 @@ class AddIdiomProvider with ChangeNotifier {
     usageController = TextEditingController();
     saving = false;
     links = [];
+    provider.addListener(() {
+      if (provider.selectedList != null && provider.selectedList.isNotEmpty) {
+        if(language != null) {
+          if(provider.selectedList.length > 1) {
+            provider.selectedList.removeWhere((x) => x.languageId == language.languageId);
+            language = provider.selectedList.first;
+            provider.notifyListeners();
+          }
+        } else {
+          language = provider.selectedList.first;
+        }
+      }
+      notifyListeners();
+    });
 
     textController.addListener(notifyListeners);
     meaningController.addListener(notifyListeners);
@@ -38,9 +55,11 @@ class AddIdiomProvider with ChangeNotifier {
   }
 
   void removeLanguage() {
+    provider.selectedList.removeWhere((x) => x.languageId == language.languageId);
     _selectedLanguage = null;
     _idiom..languageId = 0;
     notifyListeners();
+    provider.notifyListeners();
   }
 
   void removeIdiomLink(IdiomLink idiom) {
@@ -79,5 +98,6 @@ class AddIdiomProvider with ChangeNotifier {
       usageController.text.isNotEmpty &&
       meaningController.text != null &&
       meaningController.text.isNotEmpty &&
-      _idiom != null && _idiom.languageId != 0;
+      _idiom != null &&
+      _idiom.languageId != 0;
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiomclient/components/dropdown_search.dart';
+import 'package:idiomclient/components/dropdown_search_new.dart';
 import 'package:idiomclient/components/flag_row.dart';
 import 'package:idiomclient/components/idiom_search_dialog.dart';
 import 'package:idiomclient/components/my_button.dart';
@@ -177,20 +178,24 @@ class AddIdiomPage extends StatelessWidget {
                 final provider = watch(addIdiomProvider);
                 return provider.saving
                     ? PlaceholderContainer(
-                      height: 30,
-                      width: width * 0.75,
-                    )
+                        height: 30,
+                        width: width * 0.75,
+                      )
                     : Positioned(
                         top: 150,
                         left: width * 0.35,
-                        child: DropdownSearch(
-                          list: SharedPrefs().languages,
-                          selectedList: provider.language != null ? [provider.language] : [],
-                          width: width * 0.75,
-                          onSelect: (x) {
-                            provider.language = x;
-                          },
+                        child: DropdownSearchNew(
+                          width: width * 0.6,
+                          provider: provider.changeNotifier
                         ),
+                        // child: DropdownSearch(
+                        //   list: SharedPrefs().languages,
+                        //   selectedList: provider.language != null ? [provider.language] : [],
+                        //   width: width * 0.75,
+                        //   onSelect: (x) {
+                        //     provider.language = x;
+                        //   },
+                        // ),
                       );
               })
             ],
