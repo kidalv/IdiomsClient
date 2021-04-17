@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiomclient/components/dropdown_search_drawer.dart';
+import 'package:idiomclient/components/dropdown_search_new.dart';
 import 'package:idiomclient/components/idiom_list_tile.dart';
+import 'package:idiomclient/components/idiom_search.dart';
 import 'package:idiomclient/components/list_tile_placeholder.dart';
 import 'package:idiomclient/components/my_button.dart';
+import 'package:idiomclient/components/my_text_field.dart';
+import 'package:idiomclient/providers/dropdown_provider.dart';
 import 'package:idiomclient/providers/idiom_list_provider.dart';
+import 'package:idiomclient/providers/idiom_search_provider.dart';
 import 'package:idiomclient/providers/providers.dart';
 import 'package:idiomclient/services/shared_prefs.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -158,18 +163,37 @@ class IdiomListPage extends StatelessWidget {
           ],
         ),
       ),
-      appBar: MyAppBar(
-        text: "Idioms",
-        iconButton: Builder(
-          builder: (context) => IconButton(
-              icon: Icon(
-                MdiIcons.filterOutline,
-                size: 35,
-                color: Colors.grey[400],
-              ),
-              splashRadius: 25,
-              onPressed: () => Scaffold.of(context).openEndDrawer()),
-        ),
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        // title: Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     Icon(Icons.search, color: theme.buttonColor,),
+        //     Container(
+        //       padding: const EdgeInsets.only(left: 10.0, bottom: 10.0, top: 10.0),
+        //       width: width * 0.6,
+        //       child: const MyTextField(
+        //         text: "Search",
+        //         noErrors: true,
+        //       ))
+        //   ],
+        // ),
+        title: SizedBox(
+            width: width * 0.6, child: IdiomSearch(width: width * 0.6)),
+        actions: [
+          Builder(
+            builder: (context) => IconButton(
+                icon: Icon(
+                  MdiIcons.filterOutline,
+                  size: 35,
+                  color: Colors.grey[400],
+                ),
+                splashRadius: 25,
+                onPressed: () => Scaffold.of(context).openEndDrawer()),
+          ),
+        ],
       ),
       body: Consumer(builder: (_, watch, __) {
         final provider = watch(idiomListProvider);
@@ -203,8 +227,7 @@ class IdiomListPage extends StatelessWidget {
                   physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                   children: [
                     ...provider.list.map((x) => IdiomListTile(idiom: x)).toList(),
-                    if (provider.isAdditionalLoading)
-                    ..._getPlaceholders()
+                    if (provider.isAdditionalLoading) ..._getPlaceholders()
                   ]),
             );
           }

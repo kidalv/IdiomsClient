@@ -18,7 +18,7 @@ class DropdownSearchNew extends StatelessWidget {
       final currentWidth = MediaQuery.of(context).size.width;
       final left = (info.buttonPosition.dx + 47) / currentWidth;
       final sizeWidth = width / currentWidth;
-      final sizeHeight = 0.3;
+      const sizeHeight = 0.3;
       Navigator.of(context)
           .push(CustomDialog(provider, left, info.buttonPosition.dy, sizeWidth, sizeHeight));
     }

@@ -188,14 +188,6 @@ class AddIdiomPage extends StatelessWidget {
                           width: width * 0.6,
                           provider: provider.changeNotifier
                         ),
-                        // child: DropdownSearch(
-                        //   list: SharedPrefs().languages,
-                        //   selectedList: provider.language != null ? [provider.language] : [],
-                        //   width: width * 0.75,
-                        //   onSelect: (x) {
-                        //     provider.language = x;
-                        //   },
-                        // ),
                       );
               })
             ],
