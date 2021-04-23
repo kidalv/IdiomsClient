@@ -6,28 +6,23 @@ import 'package:idiomclient/protos/models.pb.dart';
 import 'package:idiomclient/providers/dropdown_provider.dart';
 import 'package:idiomclient/services/idiom_service.dart';
 
-class AddIdiomProvider with ChangeNotifier {
+import 'add_idiom_provider.dart';
+
+class LinkedIdiomProvider with ChangeNotifier {
   AddIdiomRequest _idiom;
-  IdiomService _service;
   LanguageReply _selectedLanguage;
-  List<IdiomLink> links;
-  List<AddIdiomRequest> newIdiomLinks;
-  bool saving;
   TextEditingController textController;
   TextEditingController meaningController;
   TextEditingController usageController;
   final DropdownProvider provider;
+  final AddIdiomProvider addIdiomProvider;
   final ChangeNotifierProvider<DropdownProvider> changeNotifier;
 
-  AddIdiomProvider(this.provider, this.changeNotifier) {
+  LinkedIdiomProvider(this.provider, this.changeNotifier, this.addIdiomProvider) {
     _idiom = AddIdiomRequest();
-    _service = IdiomService();
     textController = TextEditingController();
     meaningController = TextEditingController();
     usageController = TextEditingController();
-    saving = false;
-    links = [];
-    newIdiomLinks = [];
     provider.addListener(() {
       if (provider.selectedList != null && provider.selectedList.isNotEmpty) {
         if (language != null) {
@@ -64,29 +59,19 @@ class AddIdiomProvider with ChangeNotifier {
     provider.notifyListeners();
   }
 
-  void removeIdiomLink(IdiomLink idiom) {
-    if (idiom.idiomId == 0) {
-      links.removeWhere((x) => x.text == idiom.text);
-    } else {
-      links.removeWhere((x) => x.idiomId == idiom.idiomId);
-      notifyListeners();
-    }
-  }
-
   LanguageReply get language => _selectedLanguage;
 
   Future<void> saveIdiom() async {
     _idiom.text = textController.text;
     _idiom.meaning = meaningController.text;
     _idiom.usage = usageController.text;
-    await _addNewIdiomLinks();
-    _idiom.links.addAll(_mapLinks(links));
-    saving = true;
-    notifyListeners();
-    await _service.addIdiom(_idiom);
-    saving = false;
+    addIdiomProvider.newIdiomLinks.add(_idiom);
+    addIdiomProvider.links.add(IdiomLink()
+      ..text = _idiom.text
+      ..language = _selectedLanguage
+      ..idiomId = 0);
+    addIdiomProvider.notifyListeners();
     _resetProvider();
-    notifyListeners();
   }
 
   void _resetProvider() {
@@ -95,22 +80,6 @@ class AddIdiomProvider with ChangeNotifier {
     usageController.clear();
     meaningController.clear();
     _selectedLanguage = null;
-    links = [];
-    newIdiomLinks = [];
-  }
-
-  Future<void> _addNewIdiomLinks() async {
-    for (final idiom in newIdiomLinks) {
-      final result = await _service.addIdiom(idiom);
-      if (result != null) {
-        final link = links.firstWhere((x) => x.text == idiom.text);
-        link.idiomId = result.idiomId;
-      }
-    }
-  }
-
-  List<IdiomLinkRequest> _mapLinks(List<IdiomLink> links) {
-    return links.map((x) => IdiomLinkRequest()..idiomId = x.idiomId).toList();
   }
 
   bool buttonAvailable() =>

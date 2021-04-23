@@ -6,6 +6,7 @@ import 'package:idiomclient/components/my_button.dart';
 import 'package:idiomclient/protos/models.pb.dart';
 import 'package:idiomclient/providers/idiom_link_provider.dart';
 import 'package:idiomclient/providers/providers.dart';
+import 'package:idiomclient/screens/linked_idiom_page.dart';
 
 class IdiomSearchDialog extends ConsumerWidget {
   final ChangeNotifierProvider<IdiomLinkProvider> idiomLinkProvider;
@@ -52,7 +53,7 @@ class IdiomSearchDialog extends ConsumerWidget {
                       padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                       child: Icon(Icons.search, color: Colors.grey[400]),
                     ),
-                    Container(
+                    SizedBox(
                       width: width * 0.85 - 40 - 16 - 30 - 16 - 40,
                       child: TextField(
                         style: theme.textTheme.bodyText2,
@@ -73,15 +74,16 @@ class IdiomSearchDialog extends ConsumerWidget {
                         },
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                      child: IconButton(
-                        splashRadius: 25,
-                        padding: EdgeInsets.zero,
-                        icon: Icon(Icons.close, color: Colors.grey[400]),
-                        onPressed: provider.clear,
+                    if (provider.inputController.text.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                        child: IconButton(
+                          splashRadius: 25,
+                          padding: EdgeInsets.zero,
+                          icon: Icon(Icons.close, color: Colors.grey[400]),
+                          onPressed: provider.clear,
+                        ),
                       ),
-                    ),
                   ],
                 ),
                 AnimatedContainer(
@@ -98,7 +100,9 @@ class IdiomSearchDialog extends ConsumerWidget {
                             children: provider.idioms
                                 .map((x) => IdiomRow(
                                       idiom: x,
-                                      onPress: () {provider.addIdiom(x);},
+                                      onPress: () {
+                                        provider.addIdiom(x);
+                                      },
                                     ))
                                 .toList(),
                           ),
@@ -108,18 +112,34 @@ class IdiomSearchDialog extends ConsumerWidget {
               ],
             ),
           ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Container(
-              margin: const EdgeInsets.only(right: 20, bottom: 20, top: 30),
-              child: MyButton(
-                width: width * 0.2,
-                height: 50,
-                text: "Close",
-                onPress: () {
-                  Navigator.pop(context);
-                },
-              ),
+          Container(
+            margin: const EdgeInsets.only(right: 20, bottom: 20, top: 30),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 40.0),
+                  child: MyButton(
+                    width: width * 0.2,
+                    height: 50,
+                    text: "New Idiom",
+                    onPress: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const LinkedIdiomPage()),
+                      );
+                    },
+                  ),
+                ),
+                MyButton(
+                  width: width * 0.2,
+                  height: 50,
+                  text: "Close",
+                  onPress: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
             ),
           )
         ],

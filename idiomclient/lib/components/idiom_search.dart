@@ -56,7 +56,7 @@ class IdiomSearch extends StatelessWidget {
                     enabledBorder: InputBorder.none,
                     errorBorder: InputBorder.none,
                     disabledBorder: InputBorder.none,
-                    hintText: "language"),
+                    hintText: "Search"),
                 onChanged: (value) {
                   if (value.isNotEmpty) {
                     context.read(provider).findIdioms(value);

@@ -167,19 +167,6 @@ class IdiomListPage extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
-        // title: Row(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   children: [
-        //     Icon(Icons.search, color: theme.buttonColor,),
-        //     Container(
-        //       padding: const EdgeInsets.only(left: 10.0, bottom: 10.0, top: 10.0),
-        //       width: width * 0.6,
-        //       child: const MyTextField(
-        //         text: "Search",
-        //         noErrors: true,
-        //       ))
-        //   ],
-        // ),
         title: SizedBox(
             width: width * 0.6, child: IdiomSearch(width: width * 0.6)),
         actions: [
